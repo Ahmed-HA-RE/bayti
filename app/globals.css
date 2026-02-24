@@ -47,6 +47,26 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
   --color-icons: var(--color-icons);
+  --animate-marquee-horizontal: marquee-horizontal var(--marquee-duration)
+    infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--marquee-duration) infinite
+    linear;
+  @keyframes marquee-horizontal {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--marquee-gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--marquee-gap)));
+    }
+  }
 }
 
 :root {
@@ -63,7 +83,7 @@
   --secondary: #1a1a1a;
   --secondary-foreground: #ffffff;
   --primary-hover: #ff6b00bb;
-  --accent: oklch(0.2686 0 0);
+  --accent: #141414;
   --accent-foreground: oklch(0.98 0.016 73.684);
   --destructive: oklch(0.58 0.22 27);
   --border: #262626;
@@ -92,5 +112,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
