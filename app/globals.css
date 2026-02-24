@@ -120,3 +120,23 @@
     @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+a.link-animated {
+    position: relative;
+    text-decoration: none;
+}
+
+a.link-animated:before {
+    border-block-end: 1px solid;
+    content: '';
+    inset: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+}
+
+a.link-animated:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}

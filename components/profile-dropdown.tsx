@@ -14,10 +14,12 @@ import { LogOutIcon, Settings, User } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
 import { Skeleton } from './ui/skeleton';
+import useMedia from 'react-use/lib/useMedia';
 
 const ProfileDropdown = () => {
-  const [user, setUser] = useState<null | { name: string }>(null);
-  return user ? (
+  const [user, setUser] = useState<null | { name: string }>();
+  const isMobile = useMedia('(max-width:768px )', false);
+  return user && !isMobile ? (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
@@ -56,9 +58,11 @@ const ProfileDropdown = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  ) : (
-    <Button size={'md'}>Login</Button>
-  );
+  ) : !isMobile ? (
+    <Button variant='outline' size='md'>
+      Login
+    </Button>
+  ) : null;
 };
 
 export default ProfileDropdown;

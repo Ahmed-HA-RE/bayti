@@ -4,49 +4,9 @@ import DesktopNavigation from './desktop-navigation';
 import MobileNavigation from './mobile-navigation';
 import ProfileDropdown from '../profile-dropdown';
 
-const navigationData = [
-  {
-    title: 'Home',
-    href: '/',
-  },
-  {
-    title: 'Properties',
-    href: '/properties',
-  },
-  {
-    title: 'Services',
-    href: '/services',
-  },
-  {
-    title: 'Company',
-    items: [
-      {
-        title: 'About Us',
-        href: '/about-us',
-      },
-      {
-        title: 'Contact Us',
-        href: '/contact-us',
-      },
-      {
-        title: 'Terms & Conditions',
-        href: '/terms-and-conditions',
-      },
-      {
-        title: 'Privacy Policy',
-        href: '/privacy-policy',
-      },
-    ],
-    image: {
-      img: '/images/nav-drowpdown.jpg',
-      href: '#',
-    },
-  },
-];
-
 const Header = () => {
   return (
-    <header className='sticky z-50 w-full bg-muted'>
+    <header className='sticky z-50 w-full bg-muted border-y border-border'>
       <div className='container flex items-center justify-between py-5'>
         {/* Logo */}
         <Link href='/'>
@@ -61,11 +21,11 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <DesktopNavigation navigationData={navigationData} />
+        <DesktopNavigation />
 
         <div className='flex items-center gap-2'>
           {/* Mobile Menu Navigation */}
-          <MobileNavigation navigationData={navigationData} />
+          <MobileNavigation />
           <ProfileDropdown />
         </div>
       </div>

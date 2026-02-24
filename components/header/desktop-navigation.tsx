@@ -10,17 +10,52 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
-import { Navigation } from '@/types/navigation';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const DesktopNavigation = ({
-  navigationData,
-}: {
-  navigationData: Navigation[];
-}) => {
+const DesktopNavigation = () => {
   const pathname = usePathname();
+
+  const navigationData = [
+    {
+      title: 'Home',
+      href: '/',
+    },
+    {
+      title: 'Properties',
+      href: '/properties',
+    },
+    {
+      title: 'Services',
+      href: '/services',
+    },
+    {
+      title: 'Company',
+      items: [
+        {
+          title: 'About Us',
+          href: '/about-us',
+        },
+        {
+          title: 'Contact Us',
+          href: '/contact-us',
+        },
+        {
+          title: 'Terms & Conditions',
+          href: '/terms-and-conditions',
+        },
+        {
+          title: 'Privacy Policy',
+          href: '/privacy-policy',
+        },
+      ],
+      image: {
+        img: '/images/nav-drowpdown.jpg',
+        href: '#',
+      },
+    },
+  ];
 
   return (
     <NavigationMenu className='flex items-center max-md:hidden'>

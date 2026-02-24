@@ -20,19 +20,63 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { Navigation } from '@/types/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
-const MobileNavigation = ({
-  screenSize = 1023,
-  navigationData,
-}: {
-  screenSize?: number;
-  navigationData: Navigation[];
-}) => {
+const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
+  // for testing until i add authentication
+  const [user, setUser] = useState<null | { user: { name: string } }>(null);
+
+  const navigationData = [
+    {
+      title: 'Home',
+      href: '/',
+    },
+    {
+      title: 'Properties',
+      href: '/properties',
+    },
+    {
+      title: 'Services',
+      href: '/services',
+    },
+    {
+      title: 'Company',
+      items: [
+        {
+          title: 'About Us',
+          href: '/about-us',
+        },
+        {
+          title: 'Contact Us',
+          href: '/contact-us',
+        },
+        {
+          title: 'Terms & Conditions',
+          href: '/terms-and-conditions',
+        },
+        {
+          title: 'Privacy Policy',
+          href: '/privacy-policy',
+        },
+      ],
+    },
+    ...(user
+      ? [
+          {
+            title: 'Account',
+            href: '/account',
+          },
+          {
+            title: 'Settings',
+            href: '/settings',
+          },
+        ]
+      : []),
+  ];
+
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isMobile = useMedia(`(max-width: ${screenSize}px)`, false);
@@ -117,6 +161,25 @@ const MobileNavigation = ({
               )}
             </React.Fragment>
           ))}
+          {!user ? (
+            <Link
+              href={'/login'}
+              className={cn(
+                'hover:bg-background flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                pathname === '/login' && 'bg-background border border-border',
+              )}
+              onClick={handleLinkClick}
+            >
+              Login
+            </Link>
+          ) : (
+            <Button
+              className='w-full rounded-full mt-4'
+              variant={'destructive'}
+            >
+              Logout
+            </Button>
+          )}
         </div>
       </SheetContent>
     </Sheet>
