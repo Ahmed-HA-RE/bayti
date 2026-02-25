@@ -1,5 +1,6 @@
 import Login from '@/components/auth/login-section';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -7,7 +8,11 @@ export const metadata: Metadata = {
 };
 
 const LoginPage = () => {
-  return <Login />;
+  return (
+    <Suspense>
+      <Login />
+    </Suspense>
+  );
 };
 
 export default LoginPage;

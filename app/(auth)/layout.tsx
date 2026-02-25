@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Toaster } from 'react-hot-toast';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -23,11 +24,13 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             alt='Logo'
             width={100}
             height={100}
+            priority
             className='z-2 top-0 left-0 absolute m-4'
           />
         </div>
         {children}
       </div>
+      <Toaster position='top-center' />
     </main>
   );
 };
