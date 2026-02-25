@@ -19,14 +19,9 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
               and everyday ease.
             </p>
           </div>
-          <Image
-            src={'/svg/logo.svg'}
-            alt='Logo'
-            width={100}
-            height={100}
-            priority
-            className='z-2 top-0 left-0 absolute m-4'
-          />
+          <div className='h-[100px] w-[100px] z-2 top-0 left-4 absolute'>
+            <Image src={'/svg/logo.svg'} alt='Logo' fill />
+          </div>
         </div>
         {children}
       </div>

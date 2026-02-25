@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { CheckCircle2Icon, EyeIcon, EyeOffIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { useForm, Controller } from 'react-hook-form';
 import {
@@ -14,44 +13,80 @@ import {
   FieldLabel,
   FieldSeparator,
 } from '../ui/field';
-import { LoginFormData } from '@/types/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/schema/auth';
+import { signUpSchema } from '@/schema/auth';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import loginUser from '@/lib/actions/auth/login-user';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
 import { FcGoogle } from 'react-icons/fc';
+import { SignUpFormData } from '@/types/auth';
+import signUpUser from '@/lib/actions/auth/sign-up-user';
+import { Alert, AlertTitle } from '../ui/alert';
 
-const LoginForm = () => {
+const SignUpForm = () => {
+  const [successMessage, setSuccessMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const callbackUrl = useSearchParams().get('callbackUrl') || '/';
-  const router = useRouter();
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
-      rememberMe: false,
+      confirmPassword: '',
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    const res = await loginUser(data);
+  const onSubmit = async (data: SignUpFormData) => {
+    const res = await signUpUser(data);
 
     if (!res.success) {
       toast.error(res.message);
       return;
     }
-    toast.success(res.message);
-    router.push(callbackUrl);
+    setSuccessMessage(res.message);
+    form.reset();
   };
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
+      {successMessage && (
+        <Alert className='rounded-lg border-l-6 border-green-400 bg-white text-green-400 mb-4 flex items-start justify-between'>
+          <CheckCircle2Icon className='size-5' />
+          <AlertTitle className='text-slate-700 flex-1'>
+            {successMessage}
+          </AlertTitle>
+          <button
+            className='cursor-pointer ml-4'
+            onClick={() => setSuccessMessage('')}
+          >
+            <X className='size-4 text-slate-700' />
+          </button>
+        </Alert>
+      )}
+
       <FieldGroup>
+        {/* Name */}
+        <Controller
+          name='name'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+              <Input
+                id={field.name}
+                type='text'
+                placeholder='Enter your full name'
+                className='text-foreground'
+                aria-invalid={fieldState.invalid}
+                {...field}
+              />
+              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         {/* Email */}
         <Controller
           name='email'
@@ -103,32 +138,38 @@ const LoginForm = () => {
             </Field>
           )}
         />
-        <div className='flex items-center justify-between'>
-          {/* Remember Me */}
-          <Controller
-            name='rememberMe'
-            control={form.control}
-            render={({ field }) => (
-              <Field orientation='horizontal' className='w-auto'>
-                <Checkbox
+        {/* Confirm Password */}
+        <Controller
+          name='confirmPassword'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
+              <div className='relative'>
+                <Input
                   id={field.name}
-                  className='data-[state=checked]:bg-primary'
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                  type={isVisible ? 'text' : 'password'}
+                  placeholder='Confirm Password'
+                  className='pr-9 text-foreground'
+                  aria-invalid={fieldState.invalid}
+                  {...field}
                 />
-                <FieldLabel htmlFor={field.name} className='text-sm'>
-                  Remember Me
-                </FieldLabel>
-              </Field>
-            )}
-          />
-          <Link
-            href={'/forgot-password'}
-            className='text-foreground hover:underline cursor-pointer text-sm text-right w-auto'
-          >
-            Forgot password?
-          </Link>
-        </div>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  onClick={() => setIsVisible((prevState) => !prevState)}
+                  className={`${fieldState.error ? 'text-destructive' : 'text-foreground'} absolute top-2 right-0 rounded-l-none border-0 `}
+                >
+                  {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+                  <span className='sr-only'>
+                    {isVisible ? 'Hide password' : 'Show password'}
+                  </span>
+                </Button>
+              </div>
+              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <Button
           type='submit'
           className='w-full'
@@ -137,7 +178,7 @@ const LoginForm = () => {
           {form.formState.isSubmitting ? (
             <Spinner className='size-6' data-icon='inline-start' />
           ) : (
-            'Sign In'
+            'Sign Up'
           )}
         </Button>
         <FieldSeparator className='text-foreground '>
@@ -150,12 +191,12 @@ const LoginForm = () => {
         </Button>
 
         <p className='text-muted-foreground text-center mt-2 text-sm'>
-          Don&apos;t have any account?{' '}
+          Have an account?{' '}
           <Link
-            href={`/sign-up?callbackUrl=${callbackUrl}`}
+            href={`/login?callbackUrl=${callbackUrl}`}
             className='text-foreground hover:underline'
           >
-            Sign Up
+            Login
           </Link>
         </p>
       </FieldGroup>
@@ -163,4 +204,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
