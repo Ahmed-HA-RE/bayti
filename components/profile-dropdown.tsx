@@ -1,7 +1,6 @@
 'use client';
 
 import { Avatar } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +14,13 @@ import Image from 'next/image';
 import { Suspense, useState } from 'react';
 import { Skeleton } from './ui/skeleton';
 import useMedia from 'react-use/lib/useMedia';
+import Link from 'next/link';
+import { Button, buttonVariants } from './ui/button';
+import { cn } from '@/lib/utils';
 
 const ProfileDropdown = () => {
   const [user, setUser] = useState<null | { name: string }>();
-  const isMobile = useMedia('(max-width:768px )', false);
+  const isMobile = useMedia('(max-width:767px )', false);
   return user && !isMobile ? (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -59,9 +61,12 @@ const ProfileDropdown = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : !isMobile ? (
-    <Button variant='outline' size='md'>
+    <Link
+      href='/login'
+      className={cn(buttonVariants({ variant: 'outline' }), 'text-sm')}
+    >
       Login
-    </Button>
+    </Link>
   ) : null;
 };
 
