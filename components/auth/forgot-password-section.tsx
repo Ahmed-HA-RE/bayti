@@ -1,9 +1,8 @@
 'use client';
-
 import FadeSlideIn from '../shared/fade-slide-in';
-import SignUpForm from './sign-up-form';
+import ForgotPasswordForm from './forgot-password-form';
 
-const SignUp = () => {
+const ForgotPassword = () => {
   return (
     <FadeSlideIn
       slideType='left'
@@ -12,18 +11,18 @@ const SignUp = () => {
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
         <div className='space-y-4 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
-            Create an Account
+            Forgot Your Password?
           </h2>
           <p className='text-muted-foreground'>
-            Join us to explore homes and book visits effortlessly.
+            Don&apos;t worry, we&apos;ll help you reset it.
           </p>
         </div>
 
-        {/* Form */}
-        <SignUpForm />
+        {/* Forgot Password Form */}
+        <ForgotPasswordForm />
       </div>
     </FadeSlideIn>
   );
 };
 
-export default SignUp;
+export default ForgotPassword;

@@ -5,7 +5,7 @@ import { buttonVariants } from '../ui/button';
 import Link from 'next/link';
 
 type LinkButtonProps = {
-  variant:
+  variant?:
     | 'default'
     | 'outline'
     | 'secondary'
@@ -15,6 +15,7 @@ type LinkButtonProps = {
   href: string;
   children: React.ReactNode | string;
   className?: string;
+  size?: 'default' | 'md' | 'lg';
 };
 
 const LinkButton = ({
@@ -22,11 +23,12 @@ const LinkButton = ({
   href,
   children,
   className,
+  size = 'default',
 }: LinkButtonProps) => {
   return (
     <Link
       href={href}
-      className={cn(buttonVariants({ variant: variant }), className)}
+      className={cn(buttonVariants({ variant: variant, size }), className)}
     >
       {children}
     </Link>

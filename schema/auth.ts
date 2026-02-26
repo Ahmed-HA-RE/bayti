@@ -6,7 +6,7 @@ export const signUpSchema = z
       .string()
       .min(2, 'Name must be at least 3 characters')
       .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
-    email: z.email({ error: 'Invalid email address' }),
+    email: z.email({ error: 'Please enter a valid email address' }),
     password: z.string().min(6, 'Password must be at least 6 characters'),
     confirmPassword: z
       .string()
@@ -18,12 +18,14 @@ export const signUpSchema = z
   });
 
 export const loginSchema = z.object({
-  email: z.email({ message: 'Invalid email address' }),
+  email: z.email({ error: 'Please enter a valid email address' }),
   password: z
     .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
+    .min(6, { error: 'Password must be at least 6 characters' }),
   rememberMe: z.boolean().refine((value) => {
     if (value === false) return true;
     return value === true;
   }),
 });
+
+export const forgotPasswordSchema = loginSchema.pick({ email: true });
