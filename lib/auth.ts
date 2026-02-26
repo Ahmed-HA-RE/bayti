@@ -3,6 +3,8 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import prisma from './prisma';
 import resend from './resend';
 import VerifyEmail from '@/emails/VerifyEmail';
+import { nextCookies } from 'better-auth/next-js';
+import { customSession } from 'better-auth/plugins';
 
 const domain = process.env.DOMAIN;
 
@@ -28,4 +30,21 @@ export const auth = betterAuth({
       });
     },
   },
+  plugins: [
+    nextCookies(),
+    customSession(async ({ user, session }) => {
+      const userRole = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { role: true },
+      });
+      return {
+        ...session,
+        user: {
+          ...user,
+          image: user.image as string,
+          role: userRole?.role,
+        },
+      };
+    }),
+  ],
 });
