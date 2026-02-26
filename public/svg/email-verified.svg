@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" id="email">
+  <circle cx="37.045" cy="28.409" r="12.5" fill="#50b748" fill-rule="evenodd" transform="translate(-47.127 -30.545)scale(1.92)"></circle>
+  <g transform="matrix(.9375 0 0 .95 -173.812 -2212.082)">
+    <rect width="32" height="20" x="195" y="2345.362" fill="#fcd062" rx="1" ry="1"></rect>
+    <path fill="#f9b945" fill-opacity=".341" d="M195 2347.034v-.58l1-1.092h30l1 1.093v.58l-15.398 12.06c-.377.36-.75.356-1.223-.014z"></path>
+    <path fill="#f8b740" d="M196 2345.362a1 1 0 0 0-1 1v.531l.281.188 15.094 10.844c.472.338.842.33 1.219 0L227 2346.892v-.531a1 1 0 0 0-1-1h-30z"></path>
+  </g>
+  <g transform="translate(207 -1999.362)">
+    <circle cx="24.121" cy="1029.356" r="6.5" fill="#25b39e" transform="translate(-196.621 990.507)"></circle>
+    <circle cx="24.121" cy="1029.356" r="4.52" fill="#60c5b8" transform="translate(-196.621 990.507)"></circle>
+    <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m-174.99 2020.203 1.423 1.372 3.558-3.429"></path>
+  </g>
+</svg>

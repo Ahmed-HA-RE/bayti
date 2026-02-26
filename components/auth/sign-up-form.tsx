@@ -27,6 +27,7 @@ import { Alert, AlertTitle } from '../ui/alert';
 const SignUpForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const callbackUrl = useSearchParams().get('callbackUrl') || '/';
 
   const form = useForm<SignUpFormData>({
@@ -148,7 +149,7 @@ const SignUpForm = () => {
               <div className='relative'>
                 <Input
                   id={field.name}
-                  type={isVisible ? 'text' : 'password'}
+                  type={isConfirmVisible ? 'text' : 'password'}
                   placeholder='Confirm Password'
                   className='pr-9 text-foreground'
                   aria-invalid={fieldState.invalid}
@@ -157,12 +158,12 @@ const SignUpForm = () => {
                 <Button
                   variant='ghost'
                   size='icon'
-                  onClick={() => setIsVisible((prevState) => !prevState)}
+                  onClick={() => setIsConfirmVisible((prevState) => !prevState)}
                   className={`${fieldState.error ? 'text-destructive' : 'text-foreground'} absolute top-2 right-0 rounded-l-none border-0 `}
                 >
-                  {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+                  {isConfirmVisible ? <EyeOffIcon /> : <EyeIcon />}
                   <span className='sr-only'>
-                    {isVisible ? 'Hide password' : 'Show password'}
+                    {isConfirmVisible ? 'Hide password' : 'Show password'}
                   </span>
                 </Button>
               </div>

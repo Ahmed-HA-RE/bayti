@@ -1,6 +1,7 @@
 'use server';
 
 import { auth } from '@/lib/auth';
+import { SERVER_URL } from '@/lib/constants';
 import { signUpSchema } from '@/schema/auth';
 import { SignUpFormData } from '@/types/auth';
 
@@ -17,6 +18,7 @@ const signUpUser = async (data: SignUpFormData) => {
         name,
         email,
         password,
+        callbackURL: `${SERVER_URL}/verify-email?email=${email}`,
       },
     });
 

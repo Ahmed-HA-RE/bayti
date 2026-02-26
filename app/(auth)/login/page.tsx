@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Login to your account',
 };
 
-const LoginPage = () => {
+const LoginPage = async () => {
   return (
     <Suspense>
       <Login />

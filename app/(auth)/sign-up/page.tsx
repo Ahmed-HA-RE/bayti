@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Create a new account',
 };
 
-const SignUpPage = () => {
+const SignUpPage = async () => {
   return (
     <Suspense>
       <SignUp />

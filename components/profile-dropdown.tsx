@@ -11,17 +11,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { LogOutIcon, Settings, User } from 'lucide-react';
 import Image from 'next/image';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import { Skeleton } from './ui/skeleton';
 import useMedia from 'react-use/lib/useMedia';
 import Link from 'next/link';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
+import { auth } from '@/lib/auth';
 
-const ProfileDropdown = () => {
-  const [user, setUser] = useState<null | { name: string }>();
+const ProfileDropdown = ({
+  session,
+}: {
+  session: typeof auth.$Infer.Session | null;
+}) => {
   const isMobile = useMedia('(max-width:767px )', false);
-  return user && !isMobile ? (
+  return session && !isMobile ? (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
@@ -31,9 +35,7 @@ const ProfileDropdown = () => {
                 <Image
                   width={150}
                   height={150}
-                  src={
-                    'https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIoQvGMyLE90uEvqgyNCxV6tlesSLPOjYikTo7m'
-                  }
+                  src={session.user.image!}
                   alt='profile picture'
                   className='rounded-full'
                 />
