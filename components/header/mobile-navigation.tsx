@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useMedia } from 'react-use';
+import { useState } from 'react';
 import { ChevronRightIcon } from 'lucide-react';
 import { RiMenu3Fill } from 'react-icons/ri';
 import { GoDotFill } from 'react-icons/go';
@@ -23,12 +22,17 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { authClient } from '@/lib/authClient';
+import toast from 'react-hot-toast';
 
-const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
-  // for testing until i add authentication
-  const [user, setUser] = useState<null | { user: { name: string } }>(null);
-
+const MobileNavigation = ({
+  session,
+}: {
+  screenSize?: number;
+  session: typeof auth.$Infer.Session | null;
+}) => {
   const navigationData = [
     {
       title: 'Home',
@@ -63,7 +67,7 @@ const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
         },
       ],
     },
-    ...(user
+    ...(session
       ? [
           {
             title: 'Account',
@@ -78,19 +82,19 @@ const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
   ];
 
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const isMobile = useMedia(`(max-width: ${screenSize}px)`, false);
 
   const handleLinkClick = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (!isMobile) {
-      // ignore eslint-disable-next-line react-hooks/exhaustive-deps
-      setOpen(false);
-    }
-  }, [isMobile]);
+  const handleLogout = async () => {
+    setOpen(false);
+    await authClient.signOut();
+    router.refresh();
+    toast.success('Logged out successfully');
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -99,7 +103,7 @@ const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
           <Button
             variant='ghost'
             size='icon'
-            className='inline-flex md:hidden'
+            className='inline-flex md:hidden border-0'
           />
         }
       >
@@ -161,7 +165,7 @@ const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
               )}
             </React.Fragment>
           ))}
-          {!user ? (
+          {!session ? (
             <Link
               href={'/login'}
               className={cn(
@@ -174,8 +178,9 @@ const MobileNavigation = ({ screenSize = 768 }: { screenSize?: number }) => {
             </Link>
           ) : (
             <Button
-              className='w-full rounded-full mt-4'
+              className='w-full rounded-md mt-2'
               variant={'destructive'}
+              onClick={handleLogout}
             >
               Logout
             </Button>

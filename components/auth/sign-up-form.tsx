@@ -186,7 +186,7 @@ const SignUpForm = () => {
           Or continue with
         </FieldSeparator>
         {/* Social Login */}
-        <Button variant='outline' className='w-full text-sm'>
+        <Button variant='outline' className='w-full text-sm border my-2'>
           <FcGoogle className='size-5' />
           Sign in with Google
         </Button>

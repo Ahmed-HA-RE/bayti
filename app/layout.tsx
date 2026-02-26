@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${inter.variable} bg-background text-foreground`}>
         {children}
-        <Toaster position='top-center' />
+        <Toaster />
       </body>
     </html>
   );

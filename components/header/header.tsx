@@ -5,6 +5,7 @@ import MobileNavigation from './mobile-navigation';
 import ProfileDropdown from '../profile-dropdown';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import LinkButton from '../shared/link-button';
 
 const Header = async () => {
   const session = await auth.api.getSession({
@@ -27,13 +28,27 @@ const Header = async () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <DesktopNavigation />
-
-        <div className='flex items-center gap-2'>
-          {/* Mobile Menu Navigation */}
-          <MobileNavigation />
-          <ProfileDropdown session={session} />
+        <div className='md:block hidden'>
+          <DesktopNavigation />
         </div>
+
+        {/* Mobile Menu Navigation */}
+        <div className='md:hidden'>
+          <MobileNavigation session={session} />
+        </div>
+
+        {/* Profile Dropdown */}
+        {session ? (
+          <ProfileDropdown session={session} />
+        ) : (
+          <LinkButton
+            variant='outline'
+            className='border hidden md:flex'
+            href='/login'
+          >
+            Login
+          </LinkButton>
+        )}
       </div>
     </header>
   );

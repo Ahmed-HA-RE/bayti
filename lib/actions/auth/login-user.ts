@@ -24,7 +24,7 @@ export const loginUser = async (data: LoginFormData) => {
 
     return {
       success: true,
-      message: 'Login successful',
+      message: 'Logged in successfully',
     };
   } catch (error) {
     return {

@@ -13,29 +13,40 @@ import { LogOutIcon, Settings, User } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { Skeleton } from './ui/skeleton';
-import useMedia from 'react-use/lib/useMedia';
-import Link from 'next/link';
-import { Button, buttonVariants } from './ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
 import { auth } from '@/lib/auth';
+import { authClient } from '@/lib/authClient';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const ProfileDropdown = ({
   session,
 }: {
   session: typeof auth.$Infer.Session | null;
 }) => {
-  const isMobile = useMedia('(max-width:767px )', false);
-  return session && !isMobile ? (
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.refresh();
+    toast.success('Logged out successfully');
+  };
+
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant='ghost' size='icon' className='rounded-full'>
+          <Button
+            variant='ghost'
+            size='icon'
+            className='rounded-full md:block hidden'
+          >
             <Avatar>
               <Suspense fallback={<Skeleton className='w-10 rounded-full' />}>
                 <Image
                   width={150}
                   height={150}
-                  src={session.user.image!}
+                  src={session?.user.image ?? ''}
                   alt='profile picture'
                   className='rounded-full'
                 />
@@ -56,20 +67,13 @@ const ProfileDropdown = ({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant='destructive'>
+        <DropdownMenuItem onClick={handleLogout} variant='destructive'>
           <LogOutIcon />
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  ) : !isMobile ? (
-    <Link
-      href='/login'
-      className={cn(buttonVariants({ variant: 'outline' }), 'text-sm')}
-    >
-      Login
-    </Link>
-  ) : null;
+  );
 };
 
 export default ProfileDropdown;

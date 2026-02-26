@@ -140,11 +140,11 @@ const LoginForm = () => {
             'Sign In'
           )}
         </Button>
-        <FieldSeparator className='text-foreground '>
+        <FieldSeparator className='text-foreground my-2 '>
           Or continue with
         </FieldSeparator>
         {/* Social Login */}
-        <Button variant='outline' className='w-full text-sm'>
+        <Button variant='outline' className='w-full text-sm border'>
           <FcGoogle className='size-5' />
           Sign in with Google
         </Button>
