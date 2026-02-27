@@ -15,7 +15,7 @@ const requestResetPassword = async (email: string) => {
     await auth.api.requestPasswordReset({
       body: {
         email,
-        redirectTo: `${SERVER_URL}/forgot-password/sent`,
+        redirectTo: `${SERVER_URL}/reset-password`,
       },
     });
 
