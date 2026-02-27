@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-
 import { CheckCircle2Icon, EyeIcon, EyeOffIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,13 +12,15 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { Spinner } from '../ui/spinner';
 import { SignUpFormData } from '@/types/auth';
-import signUpUser from '@/lib/actions/auth/sign-up-user';
 import { Alert, AlertTitle } from '../ui/alert';
+import { authClient } from '@/lib/authClient';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -31,14 +32,31 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
     },
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
-    const res = await signUpUser(data);
+  if (!executeRecaptcha) {
+    return;
+  }
 
-    if (!res.success) {
-      toast.error(res.message);
+  const onSubmit = async (data: SignUpFormData) => {
+    const token = await executeRecaptcha('sign_up');
+
+    const res = await authClient.signUp.email({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      callbackURL: callbackUrl,
+      fetchOptions: {
+        headers: {
+          'x-captcha-response': token,
+        },
+      },
+    });
+    if (res.error) {
+      toast.error(res.error.message || 'An error occurred during sign up');
       return;
     }
-    setSuccessMessage(res.message);
+    setSuccessMessage(
+      'Account created successfully! Please check your email to verify your account.',
+    );
     form.reset();
   };
 

@@ -13,14 +13,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schema/auth';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import loginUser from '@/lib/actions/auth/login-user';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { authClient } from '@/lib/authClient';
 
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const callbackUrl = useSearchParams().get('callbackUrl') || '/';
   const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -31,14 +33,29 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    const res = await loginUser(data);
+  if (!executeRecaptcha) {
+    return;
+  }
 
-    if (!res.success) {
-      toast.error(res.message);
+  const onSubmit = async (data: LoginFormData) => {
+    const token = await executeRecaptcha('login');
+    const res = await authClient.signIn.email({
+      email: data.email,
+      password: data.password,
+      rememberMe: data.rememberMe,
+      callbackURL: callbackUrl,
+      fetchOptions: {
+        headers: {
+          'x-captcha-response': token,
+        },
+      },
+    });
+
+    if (res.error) {
+      toast.error(res.error.message || 'An error occurred during login');
       return;
     }
-    toast.success(res.message);
+    toast.success('Logged in successfully');
     router.push(callbackUrl);
   };
 

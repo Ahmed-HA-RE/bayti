@@ -8,13 +8,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { forgotPasswordSchema } from '@/schema/auth';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import requestResetPassword from '@/lib/actions/auth/request-reset-password';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { authClient } from '@/lib/authClient';
+import { SERVER_URL } from '@/lib/constants';
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -23,10 +26,26 @@ const ForgotPasswordForm = () => {
     },
   });
 
+  if (!executeRecaptcha) {
+    return;
+  }
+
   const onSubmit = async (data: ForgotPasswordFormData) => {
-    const res = await requestResetPassword(data.email);
-    if (!res.success) {
-      toast.error(res.message);
+    const token = await executeRecaptcha('forgot_password');
+    const res = await authClient.requestPasswordReset({
+      email: data.email,
+      redirectTo: `${SERVER_URL}/reset-password`,
+      fetchOptions: {
+        headers: {
+          'x-captcha-response': token,
+        },
+      },
+    });
+    if (res.error) {
+      toast.error(
+        res.error.message ||
+          'An error occurred while requesting password reset',
+      );
       return;
     }
     router.push('/forgot-password/sent');
