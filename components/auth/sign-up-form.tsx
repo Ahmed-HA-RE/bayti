@@ -6,29 +6,20 @@ import { CheckCircle2Icon, EyeIcon, EyeOffIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from '../ui/field';
+import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/schema/auth';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { useSearchParams } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
-import { FcGoogle } from 'react-icons/fc';
 import { SignUpFormData } from '@/types/auth';
 import signUpUser from '@/lib/actions/auth/sign-up-user';
 import { Alert, AlertTitle } from '../ui/alert';
 
-const SignUpForm = () => {
+const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-  const callbackUrl = useSearchParams().get('callbackUrl') || '/';
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -181,14 +172,6 @@ const SignUpForm = () => {
           ) : (
             'Sign Up'
           )}
-        </Button>
-        <FieldSeparator className='text-foreground my-2 '>
-          Or continue with
-        </FieldSeparator>
-        {/* Social Login */}
-        <Button variant='outline' className='w-full text-sm border'>
-          <FcGoogle className='size-5' />
-          Sign in with Google
         </Button>
 
         <p className='text-muted-foreground text-center mt-2 text-sm'>

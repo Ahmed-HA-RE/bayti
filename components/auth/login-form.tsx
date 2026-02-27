@@ -7,13 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from '../ui/field';
+import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { LoginFormData } from '@/types/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schema/auth';
@@ -22,7 +16,6 @@ import toast from 'react-hot-toast';
 import loginUser from '@/lib/actions/auth/login-user';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
-import { FcGoogle } from 'react-icons/fc';
 
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -139,14 +132,6 @@ const LoginForm = () => {
           ) : (
             'Sign In'
           )}
-        </Button>
-        <FieldSeparator className='text-foreground my-2 '>
-          Or continue with
-        </FieldSeparator>
-        {/* Social Login */}
-        <Button variant='outline' className='w-full text-sm border'>
-          <FcGoogle className='size-5' />
-          Sign in with Google
         </Button>
 
         <p className='text-muted-foreground text-center mt-2 text-sm'>

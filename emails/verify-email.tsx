@@ -20,7 +20,7 @@ config();
 
 const logoUrl =
   process.env.NODE_ENV === 'production'
-    ? `${process.env.NEXT_PUBLIC_PROD_URL}/image`
+    ? `${process.env.NEXT_PUBLIC_PROD_URL}/images`
     : `${process.env.NEXT_PUBLIC_DEV_EMAIL_URL}/static`;
 
 const VerifyEmail = ({ name, url }: { name: string; url: string }) => {

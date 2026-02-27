@@ -1,18 +1,19 @@
 import SignUp from '@/components/auth/sign-up-section';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Sign Up',
   description: 'Create a new account',
 };
 
-const SignUpPage = async () => {
-  return (
-    <Suspense>
-      <SignUp />
-    </Suspense>
-  );
+const SignUpPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) => {
+  const { callbackUrl } = (await searchParams) || '/';
+
+  return <SignUp callbackUrl={callbackUrl} />;
 };
 
 export default SignUpPage;
