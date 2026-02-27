@@ -20,7 +20,7 @@ config();
 
 const logoUrl =
   process.env.NODE_ENV === 'production'
-    ? `${process.env.NEXT_PUBLIC_PROD_URL}/svg`
+    ? `${process.env.NEXT_PUBLIC_PROD_URL}/image`
     : `${process.env.NEXT_PUBLIC_DEV_EMAIL_URL}/static`;
 
 const VerifyEmail = ({ name, url }: { name: string; url: string }) => {
@@ -44,7 +44,7 @@ const VerifyEmail = ({ name, url }: { name: string; url: string }) => {
           <Preview>Finish setting up your account.</Preview>
           <Container className='mx-auto my-[40px] max-w-[600px]'>
             <Section className='rounded border border-[#eaeaea] border-solid px-6 py-4'>
-              <Heading className=''>
+              <Heading>
                 Welcome to {APP_NAME}, {name}.
               </Heading>
               <Text className='text-base text-gray-600'>
@@ -73,7 +73,7 @@ const VerifyEmail = ({ name, url }: { name: string; url: string }) => {
             <Section className='text-center mt-6'>
               <Img
                 className='mx-auto w-[120px]'
-                src={`${logoUrl}/logo-black.svg`}
+                src={`${logoUrl}/email-logo.png`}
               />
               <Text className='text-gray-400 text-sm my-3'>
                 ©{new Date().getFullYear()} {APP_NAME}. All rights reserved.

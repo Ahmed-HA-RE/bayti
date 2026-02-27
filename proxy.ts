@@ -13,8 +13,12 @@ export const proxy = async (request: NextRequest) => {
   if (session && request.nextUrl.pathname.startsWith('/sign-up')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
+
+  if (session && request.nextUrl.pathname.startsWith('/forgot-password')) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 };
 
 export const config = {
-  matcher: ['/login', '/sign-up'],
+  matcher: ['/login', '/sign-up', '/forgot-password'],
 };

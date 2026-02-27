@@ -2,9 +2,10 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import prisma from './prisma';
 import resend from './resend';
-import VerifyEmail from '@/emails/VerifyEmail';
+import VerifyEmail from '@/emails/verify-email';
 import { nextCookies } from 'better-auth/next-js';
 import { customSession } from 'better-auth/plugins';
+import ResetPasswordEmail from '@/emails/reset-password';
 
 const domain = process.env.DOMAIN;
 
@@ -16,6 +17,16 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 6,
     requireEmailVerification: true,
+    resetPasswordTokenExpiresIn: 60 * 60 * 1000, // 1 hour
+
+    sendResetPassword: async ({ user, url }) => {
+      await resend.emails.send({
+        from: `Bayti <no-reply@${domain}>`,
+        to: user.email,
+        subject: 'Reset Your Password',
+        react: ResetPasswordEmail({ url }),
+      });
+    },
   },
   emailVerification: {
     sendOnSignUp: true,
