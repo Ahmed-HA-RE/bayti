@@ -1,13 +1,9 @@
 'use client';
-import FadeSlideIn from '../shared/fade-slide-in';
 import ForgotPasswordForm from './forgot-password-form';
 
 const ForgotPassword = () => {
   return (
-    <FadeSlideIn
-      slideType='left'
-      className='flex h-full flex-col items-center justify-center sm:px-5'
-    >
+    <div className='flex h-full flex-col items-center justify-center sm:px-5'>
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
         <div className='space-y-4 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
@@ -21,7 +17,7 @@ const ForgotPassword = () => {
         {/* Forgot Password Form */}
         <ForgotPasswordForm />
       </div>
-    </FadeSlideIn>
+    </div>
   );
 };
 

@@ -13,8 +13,8 @@ const Header = async () => {
   });
 
   return (
-    <header className='sticky z-50 w-full bg-muted border-y border-border'>
-      <div className='container flex items-center justify-between py-5'>
+    <header className='fixed top-6 left-0 right-0 w-full z-10 max-md:px-6'>
+      <div className='flex items-center justify-between bg-white max-w-3xl mx-auto p-4 py-3 shadow-sm rounded-full'>
         {/* Logo */}
         <Link href='/'>
           <Image
@@ -28,9 +28,7 @@ const Header = async () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className='md:block hidden'>
-          <DesktopNavigation />
-        </div>
+        <DesktopNavigation />
 
         {/* Mobile Menu Navigation */}
         <div className='md:hidden'>
@@ -42,8 +40,9 @@ const Header = async () => {
           <ProfileDropdown session={session} />
         ) : (
           <LinkButton
-            variant='outline'
-            className='border hidden md:flex'
+            variant='default'
+            size='md'
+            className='hidden md:flex rounded-full'
             href='/login'
           >
             Login

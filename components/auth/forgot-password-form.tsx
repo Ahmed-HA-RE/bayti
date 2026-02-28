@@ -81,7 +81,10 @@ const ForgotPasswordForm = () => {
           )}
         </Button>
       </FieldGroup>
-      <Link className='text-sm text-center mt-6 block' href='/login'>
+      <Link
+        className='text-sm text-center mt-4 block w-25 mx-auto'
+        href='/login'
+      >
         Back to login
       </Link>
     </form>

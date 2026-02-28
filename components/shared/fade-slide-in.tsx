@@ -5,12 +5,18 @@ import { motion } from 'motion/react';
 type FadeSlideInProps = {
   children: React.ReactNode;
   slideType?: 'left' | 'right' | 'up' | 'down';
+  delay?: number;
   className?: string;
 };
 
 import React from 'react';
 
-const FadeSlideIn = ({ children, slideType, className }: FadeSlideInProps) => {
+const FadeSlideIn = ({
+  children,
+  slideType,
+  className,
+  delay,
+}: FadeSlideInProps) => {
   const getInitialPosition = () => {
     switch (slideType) {
       case 'left':
@@ -28,7 +34,7 @@ const FadeSlideIn = ({ children, slideType, className }: FadeSlideInProps) => {
     <motion.div
       initial={getInitialPosition()}
       animate={{ opacity: 1, x: 0, y: 0 }}
-      transition={{ ease: 'easeOut', duration: 0.5 }}
+      transition={{ ease: 'easeOut', duration: 0.8, delay }}
       className={className}
     >
       {children}

@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
     default: APP_NAME,
   },
-  description: `${APP_NAME} is a real estate platform that helps clients find their dream home. clients can browse properties, book visits, and reserve their favorite homes. ${APP_NAME} also provides tools and resources to make informed decisions and streamline the home-buying process.`,
+  description: `${APP_NAME} is a UAE real estate platform that helps clients find their dream home. clients can browse properties, book visits, and reserve their favorite homes. ${APP_NAME} also provides tools and resources to make informed decisions and streamline the home-buying process.`,
   openGraph: {
     title: APP_NAME,
-    description: `${APP_NAME} is a real estate platform that helps clients find their dream home. clients can browse properties, book visits, and reserve their favorite homes. ${APP_NAME} also provides tools and resources to make informed decisions and streamline the home-buying process.`,
+    description: `${APP_NAME} is a UAE real estate platform that helps clients find their dream home. clients can browse properties, book visits, and reserve their favorite homes. ${APP_NAME} also provides tools and resources to make informed decisions and streamline the home-buying process.`,
     url: 'https://bayti.ahmedrehandev.net',
     siteName: APP_NAME,
   },
@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${inter.variable} bg-background text-foreground`}>
+      <body className={`${inter.variable} bg-background`}>
         {children}
         <Toaster />
       </body>

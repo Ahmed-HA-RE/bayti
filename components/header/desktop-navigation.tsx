@@ -27,18 +27,14 @@ const DesktopNavigation = () => {
       href: '/properties',
     },
     {
-      title: 'Services',
-      href: '/services',
-    },
-    {
       title: 'Company',
       items: [
         {
           title: 'About Us',
-          href: '/about-us',
+          href: '/',
         },
         {
-          title: 'Contact Us',
+          title: 'Talk to an Agent',
           href: '/contact-us',
         },
         {
@@ -55,11 +51,15 @@ const DesktopNavigation = () => {
         href: '#',
       },
     },
+    {
+      title: 'Blog',
+      href: '/blog',
+    },
   ];
 
   return (
     <NavigationMenu className='flex items-center max-md:hidden'>
-      <NavigationMenuList className='gap-1'>
+      <NavigationMenuList className='gap-6'>
         {navigationData.map((navItem) =>
           !navItem.items && !navItem.image ? (
             <NavigationMenuItem key={navItem.title}>
@@ -67,8 +67,7 @@ const DesktopNavigation = () => {
                 render={<Link href={navItem.href!} />}
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  pathname === navItem.href &&
-                    'border border-border bg-background',
+                  pathname === navItem.href && 'font-semibold',
                 )}
               >
                 {navItem.title}
@@ -76,7 +75,7 @@ const DesktopNavigation = () => {
             </NavigationMenuItem>
           ) : (
             <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuTrigger className='text-foreground bg-transparent !px-3 text-sm shadow-none [&_svg]:size-4 cursor-pointer font-light'>
+              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer font-light'>
                 {navItem.title}
               </NavigationMenuTrigger>
               <NavigationMenuContent
@@ -85,15 +84,15 @@ const DesktopNavigation = () => {
                 )}
               >
                 <div className='grid grid-cols-2 gap-2'>
-                  <ul className='bg-muted flex flex-col p-2 gap-2 rounded-md border border-border h-full'>
+                  <ul className='flex flex-col py-2 rounded-md h-full gap-4'>
                     {navItem.items?.map((item) => (
                       <li key={item.title}>
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
                           className={cn(
-                            'hover:bg-accent flex items-center gap-2 rounded-sm px-3 text-sm text-foreground',
+                            'hover:font-semibold flex items-center gap-2 rounded-sm px-3 text-base text-foreground',
                             pathname === item.href &&
-                              'bg-background border-border',
+                              'text-foreground font-semibold',
                           )}
                         >
                           {item.title}

@@ -1,5 +1,6 @@
 import GoogleRecaptcha from '@/components/shared/google-recaptcha';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
@@ -21,7 +22,9 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             </p>
           </div>
           <div className='h-[100px] w-[100px] z-2 top-0 left-6 absolute'>
-            <Image src={'/svg/logo.svg'} alt='Logo' fill />
+            <Link href='/'>
+              <Image src={'/svg/logo-white.svg'} alt='Logo' fill />
+            </Link>
           </div>
         </div>
         <GoogleRecaptcha>{children}</GoogleRecaptcha>

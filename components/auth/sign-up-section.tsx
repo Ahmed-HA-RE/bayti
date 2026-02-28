@@ -1,6 +1,5 @@
 'use client';
 
-import FadeSlideIn from '../shared/fade-slide-in';
 import SignUpForm from './sign-up-form';
 import { Button } from '../ui/button';
 import { FcGoogle } from 'react-icons/fc';
@@ -13,10 +12,7 @@ const SignUp = ({ callbackUrl }: { callbackUrl: string }) => {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <FadeSlideIn
-      slideType='left'
-      className='flex h-full flex-col items-center justify-center sm:px-5'
-    >
+    <div className='flex h-full flex-col items-center justify-center sm:px-5'>
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
         <div className='space-y-4 text-center'>
           <h2 className='text-3xl font-semibold lg:text-4xl'>
@@ -37,9 +33,9 @@ const SignUp = ({ callbackUrl }: { callbackUrl: string }) => {
               });
             });
           }}
-          size={'lg'}
+          size={'default'}
           variant='outline'
-          className='w-full border'
+          className='w-full'
           disabled={isPending}
         >
           {isPending ? (
@@ -60,7 +56,7 @@ const SignUp = ({ callbackUrl }: { callbackUrl: string }) => {
         {/* Form */}
         <SignUpForm callbackUrl={callbackUrl} />
       </div>
-    </FadeSlideIn>
+    </div>
   );
 };
 

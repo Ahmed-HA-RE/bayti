@@ -43,10 +43,6 @@ const MobileNavigation = ({
       href: '/properties',
     },
     {
-      title: 'Services',
-      href: '/services',
-    },
-    {
       title: 'Company',
       items: [
         {
@@ -54,7 +50,7 @@ const MobileNavigation = ({
           href: '/about-us',
         },
         {
-          title: 'Contact Us',
+          title: 'Talk to an Agent',
           href: '/contact-us',
         },
         {
@@ -66,6 +62,10 @@ const MobileNavigation = ({
           href: '/privacy-policy',
         },
       ],
+    },
+    {
+      title: 'Blog',
+      href: '/blog',
     },
     ...(session
       ? [
@@ -110,7 +110,7 @@ const MobileNavigation = ({
         <RiMenu3Fill className='size-6' />
         <span className='sr-only'>Menu</span>
       </SheetTrigger>
-      <SheetContent side='left' className='w-75 gap-0 p-0 bg-muted'>
+      <SheetContent side='left' className='w-75 gap-6 p-0 bg-muted'>
         <SheetHeader className='pt-6'>
           <SheetTitle hidden />
           <SheetDescription hidden />
@@ -120,7 +120,7 @@ const MobileNavigation = ({
             </div>
           </Link>
         </SheetHeader>
-        <div className='space-y-1.5 overflow-y-auto p-2'>
+        <div className='space-y-5 overflow-y-auto p-2'>
           {navigationData.map((navItem, index) => (
             <React.Fragment key={index}>
               {navItem.href ? (
@@ -128,9 +128,8 @@ const MobileNavigation = ({
                   key={navItem.title}
                   href={navItem.href}
                   className={cn(
-                    'hover:bg-background flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                    pathname === navItem.href &&
-                      'bg-background border border-border',
+                    'hover:font-semibold flex items-center gap-2 px-3 text-base',
+                    pathname === navItem.href && 'font-semibold',
                   )}
                   onClick={handleLinkClick}
                 >
@@ -138,21 +137,20 @@ const MobileNavigation = ({
                 </Link>
               ) : (
                 <Collapsible key={index} className='w-full group'>
-                  <CollapsibleTrigger className='hover:bg-background flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm cursor-pointer'>
+                  <CollapsibleTrigger className='hover:font-semibold flex w-full items-center justify-between rounded-sm px-3 text-base cursor-pointer'>
                     <div className='flex items-center gap-2'>
                       {navItem.title}
                     </div>
                     <ChevronRightIcon className='size-4 shrink-0 transition-transform duration-200 group-data-[open]:rotate-90' />
                   </CollapsibleTrigger>
-                  <CollapsibleContent className='overflow-hidden mt-2 space-y-2'>
+                  <CollapsibleContent className='overflow-hidden mt-2 space-y-4'>
                     {navItem.items?.map((item) => (
                       <Link
                         key={item.title}
                         href={item.href}
                         className={cn(
-                          'hover:bg-background ml-3 flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                          pathname === item.href &&
-                            'bg-background border border-border',
+                          'hover:font-semibold ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2',
+                          pathname === item.href && 'font-semibold',
                         )}
                         onClick={handleLinkClick}
                       >
@@ -169,7 +167,7 @@ const MobileNavigation = ({
             <Link
               href={'/login'}
               className={cn(
-                'hover:bg-background flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                'hover:font-semibold flex items-center gap-2 rounded-md text-base px-3',
                 pathname === '/login' && 'bg-background border border-border',
               )}
               onClick={handleLinkClick}

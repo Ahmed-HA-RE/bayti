@@ -88,7 +88,7 @@ const Footer = () => {
       </div>
 
       <div className='bg-muted py-6'>
-        <div className='container flex flex-col md:flex-row items-center justify-between gap-4'>
+        <div className='container flex flex-col md:flex-row items-center justify-between gap-6'>
           <p className='text-sm order-2 md:order-1'>
             {`©${new Date().getFullYear()}`} {APP_NAME}. All rights reserved.
           </p>
