@@ -1,8 +1,8 @@
 import { APP_NAME, STATISTICS } from '@/lib/constants';
-import { MotionPreset } from './shared/motion-preset';
-import { GoDotFill } from 'react-icons/go';
+import { MotionPreset } from '../shared/motion-preset';
 import Image from 'next/image';
-import { NumberTicker } from './ui/number-ticker';
+import { NumberTicker } from '../ui/number-ticker';
+import SectionHeader from '../shared/section-header';
 
 const HomeAboutSection = () => {
   return (
@@ -17,12 +17,7 @@ const HomeAboutSection = () => {
             delay={0.2}
             className='flex flex-col justify-between gap-7 lg:gap-40 lg:col-span-1'
           >
-            <div className='flex items-center gap-2'>
-              <GoDotFill />
-              <h2 className='tracking-widest uppercase text-lg'>
-                about {APP_NAME}
-              </h2>
-            </div>
+            <SectionHeader title={`About ${APP_NAME}`} />
             {/* Image */}
             <Image
               src='/images/team/team.jpg'

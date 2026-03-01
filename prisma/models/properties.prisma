@@ -1,0 +1,31 @@
+model Property {
+  id          String       @id @default(uuid())
+  name        String
+  description String
+  location    String
+  price       Int
+  area        Int
+  bedrooms    Int
+  bathrooms   Int
+  images      String[]
+  isFeatured  Boolean      @default(false)
+  reserveFees Int
+  type        PropertyType
+  amenities   String[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  bookings    Booking[]
+}
+
+model Booking {
+  id         String   @id @default(uuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  startDate  DateTime @db.Date
+  endDate    DateTime @db.Date
+  totalPrice Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

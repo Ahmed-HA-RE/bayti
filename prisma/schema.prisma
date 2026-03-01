@@ -17,3 +17,8 @@ enum Role {
   USER
   ADMIN
 }
+
+enum PropertyType {
+  RENT
+  SALE
+}

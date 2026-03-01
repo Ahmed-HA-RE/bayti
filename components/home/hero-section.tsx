@@ -1,9 +1,9 @@
 'use client';
-import LinkButton from './shared/link-button';
+import LinkButton from '../shared/link-button';
 import { GoDotFill } from 'react-icons/go';
-import { WordRotate } from './ui/word-rotate';
+import { WordRotate } from '../ui/word-rotate';
 import { ArrowRightIcon } from 'lucide-react';
-import { MotionPreset } from './shared/motion-preset';
+import { MotionPreset } from '../shared/motion-preset';
 
 const HeroSection = () => {
   return (
