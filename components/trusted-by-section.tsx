@@ -1,5 +1,3 @@
-'use client';
-
 import { MotionPreset } from './shared/motion-preset';
 import { Marquee } from './ui/marquee';
 import Image from 'next/image';
