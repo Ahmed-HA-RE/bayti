@@ -1,17 +1,17 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 interface MarqueeProps extends React.ComponentPropsWithoutRef<'div'> {
-  children: React.ReactNode
-  className?: string
-  duration?: number
-  delay?: number
-  gap?: number
-  pauseOnHover?: boolean
-  repeat?: number
-  reverse?: boolean
-  vertical?: boolean
+  children: React.ReactNode;
+  className?: string;
+  duration?: number;
+  delay?: number;
+  gap?: number;
+  pauseOnHover?: boolean;
+  repeat?: number;
+  reverse?: boolean;
+  vertical?: boolean;
 }
 
 function Marquee(props: MarqueeProps) {
@@ -22,11 +22,11 @@ function Marquee(props: MarqueeProps) {
     delay = 0,
     gap = 1,
     pauseOnHover = false,
-    repeat = 4,
+    repeat = 10,
     reverse = false,
     vertical = false,
     ...rest
-  } = props
+  } = props;
 
   return (
     <div
@@ -34,16 +34,16 @@ function Marquee(props: MarqueeProps) {
         {
           '--marquee-duration': `${duration}s`,
           '--marquee-delay': `${delay}s`,
-          '--marquee-gap': `${gap}rem`
+          '--marquee-gap': `${gap}rem`,
         } as React.CSSProperties
       }
       className={cn(
         'group flex gap-(--marquee-gap) overflow-hidden p-3',
         {
           'flex-row': !vertical,
-          'flex-col': vertical
+          'flex-col': vertical,
         },
-        className
+        className,
       )}
       {...rest}
     >
@@ -52,18 +52,21 @@ function Marquee(props: MarqueeProps) {
         .map((_, i) => (
           <div
             key={i}
-            className={cn('flex shrink-0 justify-around gap-(--marquee-gap) [animation-delay:var(--marquee-delay)]', {
-              'animate-marquee-horizontal flex-row': !vertical,
-              'animate-marquee-vertical flex-col': vertical,
-              'group-hover:[animation-play-state:paused]': pauseOnHover,
-              '[animation-direction:reverse]': reverse
-            })}
+            className={cn(
+              'flex shrink-0 justify-around gap-(--marquee-gap) [animation-delay:var(--marquee-delay)]',
+              {
+                'animate-marquee-horizontal flex-row': !vertical,
+                'animate-marquee-vertical flex-col': vertical,
+                'group-hover:[animation-play-state:paused]': pauseOnHover,
+                '[animation-direction:reverse]': reverse,
+              },
+            )}
           >
             {children}
           </div>
         ))}
     </div>
-  )
+  );
 }
 
-export { Marquee, type MarqueeProps }
+export { Marquee, type MarqueeProps };

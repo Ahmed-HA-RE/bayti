@@ -72,12 +72,12 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: oklch(18.67% 0 0);
+  --foreground: oklch(18.67% 0 0);
+  --card: oklch(18.67% 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(18.67% 0 0);
+  --popover-foreground: oklch(1 0 0);
   --primary: #ff6b00;
   --primary-foreground: oklch(0.985 0 0);
   --primary-hover: oklch(0.616 0.167 46.926);
@@ -90,7 +90,7 @@
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.922 0 0);
+  --border: oklch(0.5867 0 6.35);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -99,7 +99,7 @@
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -121,6 +121,9 @@
   .container {
     @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+  .section-spacing {
+    @apply py-8 sm:py-16 lg:py-24;
+  }
 }
 
 a.link-animated {
@@ -131,14 +134,19 @@ a.link-animated {
 a.link-animated:before {
   border-block-end: 1px solid;
   content: '';
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -5;
   position: absolute;
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease-in-out;
+  color: var(--primary);
 }
 
 a.link-animated:hover::before {
   transform: scaleX(1);
   transform-origin: left;
+  color: var(--primary);
 }

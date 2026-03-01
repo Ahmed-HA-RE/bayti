@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${inter.variable} bg-background`}>
+      <body className={`${inter.variable} bg-white text-foreground`}>
         {children}
         <Toaster />
       </body>

@@ -31,7 +31,7 @@ const Login = ({ callbackUrl }: { callbackUrl: string }) => {
           }}
           size={'default'}
           variant='outline'
-          className='w-full border'
+          className='w-full'
           disabled={isPending}
         >
           {isPending ? (

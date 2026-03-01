@@ -79,9 +79,7 @@ const DesktopNavigation = () => {
                 {navItem.title}
               </NavigationMenuTrigger>
               <NavigationMenuContent
-                className={cn(
-                  'shadow-lg bg-background rounded-lg backdrop-blur-sm w-120',
-                )}
+                className={cn('shadow-lg bg-white rounded-lg w-120')}
               >
                 <div className='grid grid-cols-2 gap-2'>
                   <ul className='flex flex-col py-2 rounded-md h-full gap-4'>

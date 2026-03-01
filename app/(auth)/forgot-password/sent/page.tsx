@@ -1,5 +1,5 @@
 import LinkButton from '@/components/shared/link-button';
-import ScaleIn from '@/components/shared/scale-in';
+import { MotionPreset } from '@/components/shared/motion-preset';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 
 const ForgotPasswordSentPage = () => {
   return (
-    <ScaleIn className='flex flex-col items-center justify-center gap-10 h-full'>
+    <MotionPreset
+      zoom
+      className='flex flex-col items-center justify-center gap-10 h-full'
+    >
       <Image
         src='/svg/email-sent.svg'
         alt='Email Sent'
@@ -37,7 +40,7 @@ const ForgotPasswordSentPage = () => {
           Back to Login
         </LinkButton>
       </div>
-    </ScaleIn>
+    </MotionPreset>
   );
 };
 

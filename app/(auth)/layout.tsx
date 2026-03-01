@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main>
+    <main className='bg-white'>
       <div className='h-dvh lg:grid lg:grid-cols-2'>
         {/* Dashboard Preview */}
         <div className='max-lg:hidden relative bg-[url("/images/auth.jpg")] bg-cover bg-center z-2 flex items-end'>
