@@ -21,8 +21,8 @@ const navigationData = [
         href: '/properties',
       },
       {
-        title: 'Services',
-        href: '/services',
+        title: 'Blog',
+        href: '/blog',
       },
     ],
   },
@@ -65,7 +65,7 @@ const Footer = () => {
                 src={'/svg/logo-white.svg'}
                 alt='Logo'
                 width={100}
-                height={100}
+                height={30}
               />
             </Link>
             <p className='text-muted-foreground md:max-w-xs lg:max-w-sm'>

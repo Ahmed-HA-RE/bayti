@@ -19,14 +19,14 @@ const HomeAboutSection = () => {
           >
             <SectionHeader title={`About ${APP_NAME}`} />
             {/* Image */}
-            <Image
-              src='/images/team/team.jpg'
-              alt='Team'
-              width={0}
-              height={0}
-              sizes='100vw'
-              className='w-full object-cover rounded-lg lg:h-[200px]'
-            />
+            <div className='relative h-[400px] lg:h-[200px] overflow-hidden rounded-lg'>
+              <Image
+                src='/images/team/team.jpg'
+                alt='Team'
+                fill
+                className='object-cover '
+              />
+            </div>
           </MotionPreset>
           <MotionPreset
             slide={{ direction: 'left' }}
@@ -36,11 +36,11 @@ const HomeAboutSection = () => {
             className='flex flex-col justify-between gap-8 lg:col-span-2'
           >
             <div className='space-y-4'>
-              <h2 className='text-2xl md:text-4xl lg:text-4xl font-bold'>
+              <h2 className='text-2xl md:text-4xl lg:text-4xl'>
                 Bayti specializes in connecting clients with premium properties
                 across the UAE.
               </h2>
-              <p className='text-muted-foreground text-sm md:text-base max-w-2xl'>
+              <p className='text-muted-foreground text-base md:text-lg max-w-2xl'>
                 Our team at {APP_NAME} carefully selects each property, ensuring
                 only the finest apartments, villas, and estates are showcased.
                 We provide personalized visits, expert guidance, and a seamless
@@ -50,8 +50,11 @@ const HomeAboutSection = () => {
             </div>
             <div className='grid grid-cols-2 md:grid-cols-3 justify-between gap-8'>
               {STATISTICS.filter((_, index) => index < 3).map((stat) => (
-                <div className='flex flex-col gap-2' key={stat.label}>
-                  <span className='text-3xl md:text-4xl font-medium'>
+                <div
+                  className='flex flex-col gap-2 items-start'
+                  key={stat.label}
+                >
+                  <span className='text-3xl md:text-4xl'>
                     <NumberTicker value={Number(stat.value.split('+')[0])} />+
                   </span>
                   <span className='text-muted-foreground text-lg'>

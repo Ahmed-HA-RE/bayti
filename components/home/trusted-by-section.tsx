@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const TrustedBySection = () => {
   return (
-    <section className='py-8 sm:py-10 lg:py-12'>
+    <section className='py-8 sm:py-16 lg:py-24'>
       <div>
         <MotionPreset
           slide={{ direction: 'right' }}
@@ -19,55 +19,56 @@ const TrustedBySection = () => {
           slide={{ direction: 'right' }}
           fade
           delay={0.1}
+          className='overflow-hidden'
         >
           <Marquee gap={2} duration={15}>
             <Image
               src='/svg/google-logo.svg'
               alt='Google Logo'
               width={100}
-              height={100}
+              height={50}
             />
             <Image
               src='/svg/microsoft-logo.svg'
               alt='Microsoft Logo'
               width={130}
-              height={130}
+              height={50}
             />
             <Image
               src='/svg/airbnb-logo.svg'
               alt='Airbnb Logo'
               width={100}
-              height={100}
+              height={50}
             />
             <Image
               src='/svg/zillow-logo.svg'
               alt='Zillow Logo'
               width={100}
-              height={100}
+              height={50}
             />
             <Image
               src='/svg/autodesk-logo.svg'
               alt='Autodesk Logo'
               width={140}
-              height={140}
+              height={50}
             />
             <Image
               src='/svg/visa-logo.svg'
               alt='Visa Logo'
               width={70}
-              height={70}
+              height={50}
             />
             <Image
               src='/svg/jll-logo.svg'
               alt='JLL Logo'
               width={70}
-              height={70}
+              height={50}
             />
             <Image
               src='/svg/cbre-logo.svg'
               alt='CBRE Logo'
               width={70}
-              height={70}
+              height={50}
             />
           </Marquee>
         </MotionPreset>

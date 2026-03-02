@@ -31,7 +31,7 @@ const DesktopNavigation = () => {
       items: [
         {
           title: 'About Us',
-          href: '/',
+          href: '/about-us',
         },
         {
           title: 'Talk to an Agent',
@@ -67,7 +67,8 @@ const DesktopNavigation = () => {
                 render={<Link href={navItem.href!} />}
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  pathname === navItem.href && 'font-semibold',
+                  'hover:font-bold',
+                  pathname === navItem.href && 'font-bold hover:font-bold ',
                 )}
               >
                 {navItem.title}
@@ -75,22 +76,22 @@ const DesktopNavigation = () => {
             </NavigationMenuItem>
           ) : (
             <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer font-light'>
+              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer font-medium'>
                 {navItem.title}
               </NavigationMenuTrigger>
               <NavigationMenuContent
                 className={cn('shadow-lg bg-white rounded-lg w-120')}
               >
                 <div className='grid grid-cols-2 gap-2'>
-                  <ul className='flex flex-col py-2 rounded-md h-full gap-4'>
+                  <ul className='flex flex-col py-2 rounded-md h-full gap-2'>
                     {navItem.items?.map((item) => (
                       <li key={item.title}>
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
                           className={cn(
-                            'hover:font-semibold flex items-center gap-2 rounded-sm px-3 text-base text-foreground',
+                            'hover:font-semibold flex items-center font-medium rounded-sm px-3 text-base',
                             pathname === item.href &&
-                              'text-foreground font-semibold',
+                              'text-foreground font-bold',
                           )}
                         >
                           {item.title}

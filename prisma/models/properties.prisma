@@ -3,13 +3,14 @@ model Property {
   name        String
   description String
   location    String
+  city        String
   price       Int
   area        Int
   bedrooms    Int
   bathrooms   Int
   images      String[]
   isFeatured  Boolean      @default(false)
-  reserveFees Int
+  reserveFees Decimal      @db.Decimal(10, 2)
   type        PropertyType
   amenities   String[]
   createdAt   DateTime     @default(now())
