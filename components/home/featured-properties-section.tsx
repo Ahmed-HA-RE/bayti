@@ -66,7 +66,7 @@ const FeaturedProperties = async () => {
                 className='group'
               >
                 <div className='flex flex-col sm:flex-row md:flex-col gap-4 sm:items-center md:items-start'>
-                  <div className='relative w-full aspect-[4/3] overflow-hidden rounded-lg flex-1'>
+                  <div className='relative w-full aspect-[3/2] overflow-hidden rounded-lg flex-1'>
                     <Image
                       src={property.images[0]}
                       alt={property.name}

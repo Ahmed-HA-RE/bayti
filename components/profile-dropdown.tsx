@@ -55,7 +55,10 @@ const ProfileDropdown = ({
           </Button>
         }
       />
-      <DropdownMenuContent align='end' className='w-40'>
+      <DropdownMenuContent
+        align='end'
+        className='w-42 bg-card text-card-foreground'
+      >
         <DropdownMenuGroup className='space-y-1'>
           <DropdownMenuItem>
             <User />

@@ -89,7 +89,7 @@ const DesktopNavigation = () => {
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
                           className={cn(
-                            'hover:font-semibold flex items-center font-medium rounded-sm px-3 text-base',
+                            'hover:font-bold flex items-center font-medium rounded-sm px-3 text-base',
                             pathname === item.href &&
                               'text-foreground font-bold',
                           )}

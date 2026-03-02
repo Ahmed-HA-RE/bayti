@@ -26,7 +26,7 @@ model Booking {
   user       User     @relation(fields: [userId], references: [id])
   startDate  DateTime @db.Date
   endDate    DateTime @db.Date
-  totalPrice Int
+  totalPrice Decimal  @db.Decimal(10, 2)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

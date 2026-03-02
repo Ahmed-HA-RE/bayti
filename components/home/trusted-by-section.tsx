@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const TrustedBySection = () => {
   return (
-    <section className='py-8 sm:py-16 lg:py-24'>
+    <section className='section-spacing'>
       <div>
         <MotionPreset
           slide={{ direction: 'right' }}
