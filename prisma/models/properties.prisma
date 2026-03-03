@@ -1,21 +1,23 @@
 model Property {
-  id          String       @id @default(uuid())
-  name        String
-  description String
-  location    String
-  city        String
-  price       Int
-  area        Int
-  bedrooms    Int
-  bathrooms   Int
-  images      String[]
-  isFeatured  Boolean      @default(false)
-  reserveFees Decimal      @db.Decimal(10, 2)
-  type        PropertyType
-  amenities   String[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  bookings    Booking[]
+  id           String       @id @default(uuid())
+  name         String
+  description  String
+  location     String
+  city         String
+  price        Int
+  area         Int
+  bedrooms     Int
+  bathrooms    Int
+  images       String[]
+  isFeatured   Boolean      @default(false)
+  reserveFees  Decimal      @db.Decimal(10, 2)
+  propertyList PropertyList
+  propertyType String
+  isAvailable  Boolean      @default(true)
+  amenities    String[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  bookings     Booking[]
 }
 
 model Booking {

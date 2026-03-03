@@ -1,3 +1,20 @@
+import { FaSwimmingPool } from 'react-icons/fa';
+import { GiHomeGarage } from 'react-icons/gi';
+import { PiSecurityCameraFill } from 'react-icons/pi';
+import { LuFence } from 'react-icons/lu';
+import { TbTableRow } from 'react-icons/tb';
+import { LuProjector } from 'react-icons/lu';
+import { RiSmartphoneFill } from 'react-icons/ri';
+import { BiCloset } from 'react-icons/bi';
+import { GiBroom } from 'react-icons/gi';
+import { BsDoorOpenFill, BsCloudSun } from 'react-icons/bs';
+import { MdOutlineOutdoorGrill } from 'react-icons/md';
+import { LiaHotTubSolid } from 'react-icons/lia';
+import { PiThermometerHotFill } from 'react-icons/pi';
+import { PiDesk } from 'react-icons/pi';
+import { CgGym } from 'react-icons/cg';
+import { GiElevator } from 'react-icons/gi';
+
 export const SERVER_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.NEXT_PUBLIC_PROD_URL
@@ -31,5 +48,93 @@ export const STEPS = [
     description:
       'Secure your chosen property and complete the process with expert guidance every step.',
     image: '/images/step-3.jpg',
+  },
+];
+
+export const AMENITIES = [
+  {
+    name: 'privatePool',
+    icon: FaSwimmingPool,
+    title: 'Private Pool',
+  },
+  {
+    name: 'garage',
+    icon: GiHomeGarage,
+    title: 'Garage',
+  },
+  {
+    name: 'security',
+    icon: PiSecurityCameraFill,
+    title: '24/7 Security',
+  },
+  {
+    name: 'garden',
+    icon: LuFence,
+    title: 'Garden',
+  },
+  {
+    name: 'outdoorKitchen',
+    icon: TbTableRow,
+    title: 'Outdoor Kitchen',
+  },
+  {
+    name: 'cinemaRoom',
+    icon: LuProjector,
+    title: 'Cinema Room',
+  },
+  {
+    name: 'smartHome',
+    icon: RiSmartphoneFill,
+    title: 'Smart Home',
+  },
+  {
+    name: 'walkInCloset',
+    icon: BiCloset,
+    title: 'Walk-in Closet',
+  },
+  {
+    name: 'maidRoom',
+    icon: GiBroom,
+    title: 'Maid Room',
+  },
+  {
+    name: 'Driver Room',
+    icon: BsDoorOpenFill,
+    title: 'Driver Room',
+  },
+  {
+    name: 'rooftopTerrace',
+    icon: BsCloudSun,
+    title: 'Rooftop Terrace',
+  },
+  {
+    name: 'bbqArea',
+    icon: MdOutlineOutdoorGrill,
+    title: 'BBQ Area',
+  },
+  {
+    name: 'jacuzzi',
+    icon: LiaHotTubSolid,
+    title: 'Jacuzzi',
+  },
+  {
+    name: 'sauna',
+    icon: PiThermometerHotFill,
+    title: 'Sauna',
+  },
+  {
+    name: 'homeOffice',
+    icon: PiDesk,
+    title: 'Home Office',
+  },
+  {
+    name: 'gym',
+    icon: CgGym,
+    title: 'Gym',
+  },
+  {
+    name: 'privateElevator',
+    icon: GiElevator,
+    title: 'Private Elevator',
   },
 ];

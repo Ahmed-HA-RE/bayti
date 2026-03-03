@@ -84,7 +84,7 @@ const Footer = () => {
                   <li key={item.title}>
                     <Link
                       href={item.href}
-                      className='text-muted-foreground hover:text-white transition-all duration-300 link-animated'
+                      className='text-muted-foreground hover:text-[#ff6b00] transition-all duration-300 link-animated'
                     >
                       <span className='relative'>{item.title}</span>
                     </Link>

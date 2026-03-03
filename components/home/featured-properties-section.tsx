@@ -25,8 +25,8 @@ const FeaturedProperties = async () => {
   return featuredProperties.length === 0 ? null : (
     <section className='section-spacing'>
       <div className='container'>
-        <div className='flex flex-col gap-6'>
-          <div className='space-y-4'>
+        <div className='flex flex-col gap-10'>
+          <div className='space-y-4 text-center md:text-left'>
             <MotionPreset fade blur slide={{ direction: 'left' }} delay={0.1}>
               <SectionHeader title='featured properties' />
             </MotionPreset>
@@ -36,7 +36,7 @@ const FeaturedProperties = async () => {
               blur
               delay={0.2}
               slide={{ direction: 'left' }}
-              className='text-3xl md:text-4xl lg:text-5xl lg:max-w-2xl leading-tight'
+              className='section-title'
             >
               Handpicked Homes for Refined Living
             </MotionPreset>
@@ -46,7 +46,7 @@ const FeaturedProperties = async () => {
               blur
               delay={0.3}
               slide={{ direction: 'left' }}
-              className='text-muted-foreground max-sm:text-base text-lg max-w-4xl'
+              className='section-subtitle'
             >
               Explore our curated selection of featured properties, showcasing
               the finest homes that epitomize luxury, comfort, and style.

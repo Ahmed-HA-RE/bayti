@@ -15,5 +15,12 @@ prisma.$extends({
         },
       },
     },
+    booking: {
+      totalPrice: {
+        compute(data) {
+          return data.totalPrice.toString();
+        },
+      },
+    },
   },
 });

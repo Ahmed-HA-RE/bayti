@@ -124,6 +124,14 @@
   .section-spacing {
     @apply py-8 sm:py-14 lg:py-20;
   }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl lg:max-w-2xl leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-muted-foreground max-sm:text-base text-lg text-center md:text-left max-w-3xl;
+  }
 }
 
 a.link-animated {
@@ -149,4 +157,15 @@ a.link-animated:hover::before {
   transform: scaleX(1);
   transform-origin: left;
   color: var(--primary);
+}
+
+@font-face {
+  font-family: 'UAESymbol';
+  src: url('/uae-symbol.ttf');
+}
+
+.dirham-symbol {
+  font-family: 'UAESymbol', sans-serif;
+  color: inherit;
+  font-weight: bold;
 }

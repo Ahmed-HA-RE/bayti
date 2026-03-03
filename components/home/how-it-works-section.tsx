@@ -14,13 +14,13 @@ const HowItWorksSection = () => {
             blur
             slide={{ direction: 'up' }}
             delay={0.1}
-            className='flex flex-col items-center gap-4'
+            className='flex flex-col items-center md:items-start gap-4'
           >
             <SectionHeader title='how it works' />
-            <h2 className='text-3xl md:text-4xl lg:text-5xl text-center'>
+            <h2 className='section-title'>
               A Seamless Journey to Your Dream Home
             </h2>
-            <p className='text-center text-muted-foreground max-sm:text-base text-lg max-w-lg sm:max-w-xl lg:max-w-3xl'>
+            <p className='section-subtitle'>
               {APP_NAME} makes finding and securing your home simple, fast and
               effortless - every step guided with care and expertise.
             </p>
@@ -36,12 +36,12 @@ const HowItWorksSection = () => {
                 key={index}
               >
                 <Card className='gap-12'>
-                  <CardHeader>
+                  <CardHeader className='px-6'>
                     <CardTitle className='uppercase tracking-wide bg-[#ff6b00] rounded-full p-2 text-white text-center text-sm'>
                       step {index + 1}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className='text-center flex flex-col justify-between gap-8'>
+                  <CardContent className='text-center flex flex-col justify-between gap-8 px-6'>
                     <div className='space-y-4'>
                       <h2 className='text-3xl font-medium'>{step.title}</h2>
                       <p className='text-muted-foreground text-base'>

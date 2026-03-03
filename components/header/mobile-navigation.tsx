@@ -128,8 +128,8 @@ const MobileNavigation = ({
                   key={navItem.title}
                   href={navItem.href}
                   className={cn(
-                    'hover:font-semibold flex items-center gap-2 px-3 text-base',
-                    pathname === navItem.href && 'font-semibold',
+                    'font-semibold hover:font-bold hover:text-[#ff6b00] flex items-center gap-2 px-3 text-base transition duration-300',
+                    pathname === navItem.href && 'font-bold text-[#ff6b00]',
                   )}
                   onClick={handleLinkClick}
                 >
@@ -137,7 +137,7 @@ const MobileNavigation = ({
                 </Link>
               ) : (
                 <Collapsible key={index} className='w-full group'>
-                  <CollapsibleTrigger className='hover:font-semibold flex w-full items-center justify-between rounded-sm px-3 text-base cursor-pointer'>
+                  <CollapsibleTrigger className='font-semibold flex w-full items-center justify-between rounded-sm px-3 text-base cursor-pointer'>
                     <div className='flex items-center gap-2'>
                       {navItem.title}
                     </div>
@@ -149,8 +149,8 @@ const MobileNavigation = ({
                         key={item.title}
                         href={item.href}
                         className={cn(
-                          'hover:font-semibold ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2',
-                          pathname === item.href && 'font-semibold',
+                          'hover:text-[#ff6b00] ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2 transition duration-300',
+                          pathname === item.href && 'font-bold text-[#ff6b00]',
                         )}
                         onClick={handleLinkClick}
                       >
@@ -167,7 +167,7 @@ const MobileNavigation = ({
             <Link
               href={'/login'}
               className={cn(
-                'hover:font-semibold flex items-center gap-2 rounded-md text-base px-3',
+                'font-semibold hover:font-bold hover:text-[#ff6b00] flex items-center gap-2 rounded-md text-base px-3 transition duration-300',
                 pathname === '/login' && 'bg-background border border-border',
               )}
               onClick={handleLinkClick}
