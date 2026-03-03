@@ -62,7 +62,10 @@ const HeroSection = () => {
               variant='default'
             >
               Browse Properties
-              <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-1 size-5' />
+              <ArrowRightIcon
+                className='transi
+              tion-transform duration-200 group-hover:translate-x-1 size-5'
+              />
             </LinkButton>
           </MotionPreset>
         </div>

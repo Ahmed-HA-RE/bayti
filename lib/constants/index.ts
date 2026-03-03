@@ -138,3 +138,76 @@ export const AMENITIES = [
     title: 'Private Elevator',
   },
 ];
+
+export const TESTIMONIALS = {
+  Row_1: [
+    {
+      name: 'Michael Roberts',
+      image: '/images/testimonials/testimonial-1.jpg',
+      username: 'michaelroberts',
+      feedback:
+        'The entire buying experience was handled with exceptional professionalism. From the first viewing to the final transfer, everything was organized perfectly. The team understood exactly what my family needed and helped us secure a beachfront villa that truly feels like home.',
+      social: 'threads',
+    },
+    {
+      name: 'Alex Johnson',
+      image: '/images/testimonials/testimonial-2.jpg',
+      username: 'alexjohnson',
+      feedback:
+        'I appreciated how transparent and honest the process was. Every detail was explained clearly, and scheduling viewings was incredibly smooth. The townhouse matched everything we discussed, and the transition into ownership felt simple and well managed.',
+      social: 'facebook',
+    },
+    {
+      image: '/images/testimonials/testimonial-7.jpg',
+      username: 'robersmith',
+      feedback:
+        'Finding a family home is about comfort and memories. Viewing with my son was special, and the team ensured every detail fit our needs.',
+      social: 'instagram',
+      type: 'primary',
+    },
+  ],
+  Row_2: [
+    {
+      name: 'John Doe',
+      image: '/images/testimonials/testimonial-3.jpg',
+      username: 'johndoe',
+      feedback:
+        'The professionalism and responsiveness exceeded my expectations. Property options were carefully curated instead of overwhelming listings, which saved significant time. The villa perfectly suits both investment and long-term living goals.',
+      social: 'linkedin',
+    },
+    {
+      name: 'Michael Weber',
+      image: '/images/testimonials/testimonial-4.jpg',
+      username: 'michaelweber',
+      feedback:
+        'Relocating to the UAE came with many uncertainties, but the experience of finding my penthouse was seamless. Communication was always clear, and every step was handled efficiently. I felt supported from the first inquiry until receiving the keys.',
+      social: 'threads',
+    },
+    {
+      image: '/images/testimonials/testimonial-8.jpg',
+      username: 'jameswalker',
+      feedback:
+        'The process was smooth, my family felt supported, and my son immediately loved the neighborhood.',
+      social: 'facebook',
+      type: 'primary',
+    },
+  ],
+  Row_3: [
+    {
+      name: 'Khaled Darwish',
+      image: '/images/testimonials/testimonial-5.jpg',
+      username: 'khaleddarwish',
+      feedback:
+        'What stood out most was the level of attention given to my requirements. The smart home features, location, and layout were exactly what I wanted. The guidance throughout negotiation and closing gave me full confidence in my investment decision.',
+      social: 'threads',
+    },
+    {
+      image: '/images/testimonials/testimonial-6.jpg',
+      username: 'karimnajjar',
+      feedback:
+        'A smooth and confident experience finding the perfect home in Dubai.',
+      social: 'facebook',
+      type: 'primary',
+    },
+  ],
+};
