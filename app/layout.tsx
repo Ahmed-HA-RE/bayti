@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 import './globals.css';
 import { APP_NAME } from '@/lib/constants';
 import { Toaster } from 'react-hot-toast';
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-sans',
   weight: ['400', '500', '600', '700', '800'],
 });
 
@@ -31,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${inter.variable} bg-white text-foreground`}>
+      <body className={`${outfit.className} bg-white text-foreground`}>
         {children}
         <Toaster />
       </body>

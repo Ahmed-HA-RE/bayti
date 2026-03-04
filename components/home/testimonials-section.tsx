@@ -1,7 +1,6 @@
 import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Marquee } from '@/components/ui/marquee';
-import Card3DEffect from '@/components/ui/card-3d-effect';
 import { MotionPreset } from '@/components/shared/motion-preset';
 import SectionHeader from '../shared/section-header';
 import { APP_NAME, TESTIMONIALS } from '@/lib/constants';
@@ -34,7 +33,7 @@ const SocialIcons = ({ icon }: { icon: string }) => {
 
 const TestimonialsSection = () => {
   return (
-    <section className='bg-[url(/images/testimonials-bg.jpg)] bg-cover bg-center relative overflow-hidden section-spacing'>
+    <section className='bg-[url(/images/testimonials-bg.jpg)] bg-cover bg-center relative overflow-hidden section-spacing '>
       <div className='absolute inset-0 bg-black/30 z-0' />
       <div className='container flex flex-col gap-12 md:gap-16 lg:gap-18 z-2'>
         {/* Header Content */}
@@ -97,64 +96,60 @@ const TestimonialsSection = () => {
             {TESTIMONIALS.Row_1.map((testimonial, index) => (
               <React.Fragment key={index}>
                 {testimonial.type === 'primary' ? (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <div
-                      className='text-card-foreground relative h-125 overflow-hidden rounded-xl bg-cover bg-bottom bg-no-repeat'
-                      style={{ backgroundImage: `url(${testimonial.image})` }}
-                    >
-                      {/* Dark Overlay */}
-                      <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
-                      <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
+                  <div
+                    className='text-card-foreground relative h-125 overflow-hidden rounded-xl bg-cover bg-bottom bg-no-repeat'
+                    style={{ backgroundImage: `url(${testimonial.image})` }}
+                  >
+                    {/* Dark Overlay */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
+                    <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
 
-                        <p>{testimonial.feedback}</p>
-                        <span className='text-muted-foreground'>
-                          @{testimonial.username}
-                        </span>
-                      </div>
+                      <p>{testimonial.feedback}</p>
+                      <span className='text-muted-foreground'>
+                        @{testimonial.username}
+                      </span>
                     </div>
-                  </Card3DEffect>
+                  </div>
                 ) : (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <Card className='gap-4 shadow-none'>
-                      <div className='flex items-center justify-between px-6'>
+                  <Card className='gap-4 shadow-none'>
+                    <div className='flex items-center justify-between px-6'>
+                      <div className='flex items-center gap-3'>
                         <div className='flex items-center gap-3'>
-                          <div className='flex items-center gap-3'>
-                            <Avatar className='size-12'>
-                              <Suspense
-                                fallback={
-                                  <Skeleton className='w-10 rounded-full' />
-                                }
-                              >
-                                <Image
-                                  width={150}
-                                  height={150}
-                                  src={testimonial.image}
-                                  alt='profile picture'
-                                  className='rounded-full object-cover'
-                                />
-                              </Suspense>
-                            </Avatar>
-                            <div className='space-y-0.5'>
-                              <h4 className='font-semibold'>
-                                {testimonial.name}
-                              </h4>
-                              <p className='text-muted-foreground'>
-                                @{testimonial.username}
-                              </p>
-                            </div>
+                          <Avatar className='size-12'>
+                            <Suspense
+                              fallback={
+                                <Skeleton className='w-10 rounded-full' />
+                              }
+                            >
+                              <Image
+                                width={150}
+                                height={150}
+                                src={testimonial.image}
+                                alt='profile picture'
+                                className='rounded-full object-cover'
+                              />
+                            </Suspense>
+                          </Avatar>
+                          <div className='space-y-0.5'>
+                            <h4 className='font-semibold'>
+                              {testimonial.name}
+                            </h4>
+                            <p className='text-muted-foreground'>
+                              @{testimonial.username}
+                            </p>
                           </div>
                         </div>
-
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
                       </div>
-                      <CardContent>
-                        <p>{testimonial.feedback}</p>
-                      </CardContent>
-                    </Card>
-                  </Card3DEffect>
+
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
+                    </div>
+                    <CardContent>
+                      <p>{testimonial.feedback}</p>
+                    </CardContent>
+                  </Card>
                 )}
               </React.Fragment>
             ))}
@@ -173,64 +168,60 @@ const TestimonialsSection = () => {
             {TESTIMONIALS.Row_2.map((testimonial, index) => (
               <React.Fragment key={index}>
                 {testimonial.type === 'primary' ? (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <div
-                      className='text-card-foreground relative h-125 overflow-hidden rounded-xl bg-cover bg-clip-content bg-bottom bg-no-repeat'
-                      style={{ backgroundImage: `url(${testimonial.image})` }}
-                    >
-                      {/* Dark Overlay */}
-                      <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
-                      <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
+                  <div
+                    className='text-card-foreground relative h-125 overflow-hidden rounded-xl bg-cover bg-clip-content bg-bottom bg-no-repeat'
+                    style={{ backgroundImage: `url(${testimonial.image})` }}
+                  >
+                    {/* Dark Overlay */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
+                    <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
 
-                        <p>{testimonial.feedback}</p>
-                        <span className='text-muted-foreground'>
-                          @{testimonial.username}
-                        </span>
-                      </div>
+                      <p>{testimonial.feedback}</p>
+                      <span className='text-muted-foreground'>
+                        @{testimonial.username}
+                      </span>
                     </div>
-                  </Card3DEffect>
+                  </div>
                 ) : (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <Card className='gap-4 shadow-none'>
-                      <div className='flex items-center justify-between px-6'>
+                  <Card className='gap-4 shadow-none'>
+                    <div className='flex items-center justify-between px-6'>
+                      <div className='flex items-center gap-3'>
                         <div className='flex items-center gap-3'>
-                          <div className='flex items-center gap-3'>
-                            <Avatar className='size-12'>
-                              <Suspense
-                                fallback={
-                                  <Skeleton className='w-10 rounded-full' />
-                                }
-                              >
-                                <Image
-                                  width={150}
-                                  height={150}
-                                  src={testimonial.image}
-                                  alt='profile picture'
-                                  className='rounded-full object-cover'
-                                />
-                              </Suspense>
-                            </Avatar>
-                            <div className='space-y-0.5'>
-                              <h4 className='font-semibold'>
-                                {testimonial.name}
-                              </h4>
-                              <p className='text-muted-foreground'>
-                                @{testimonial.username}
-                              </p>
-                            </div>
+                          <Avatar className='size-12'>
+                            <Suspense
+                              fallback={
+                                <Skeleton className='w-10 rounded-full' />
+                              }
+                            >
+                              <Image
+                                width={150}
+                                height={150}
+                                src={testimonial.image}
+                                alt='profile picture'
+                                className='rounded-full object-cover'
+                              />
+                            </Suspense>
+                          </Avatar>
+                          <div className='space-y-0.5'>
+                            <h4 className='font-semibold'>
+                              {testimonial.name}
+                            </h4>
+                            <p className='text-muted-foreground'>
+                              @{testimonial.username}
+                            </p>
                           </div>
                         </div>
-
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
                       </div>
-                      <CardContent>
-                        <p>{testimonial.feedback}</p>
-                      </CardContent>
-                    </Card>
-                  </Card3DEffect>
+
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
+                    </div>
+                    <CardContent>
+                      <p>{testimonial.feedback}</p>
+                    </CardContent>
+                  </Card>
                 )}
               </React.Fragment>
             ))}
@@ -248,64 +239,60 @@ const TestimonialsSection = () => {
             {TESTIMONIALS.Row_3.map((testimonial, index) => (
               <React.Fragment key={index}>
                 {testimonial.type === 'primary' ? (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <div
-                      className='text-card-foreground relative h-125 overflow-hidden rounded-xl  bg-cover bg-clip-content bg-bottom bg-no-repeat'
-                      style={{ backgroundImage: `url(${testimonial.image})` }}
-                    >
-                      {/* Dark Overlay */}
-                      <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
-                      <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
+                  <div
+                    className='text-card-foreground relative h-125 overflow-hidden rounded-xl  bg-cover bg-clip-content bg-bottom bg-no-repeat'
+                    style={{ backgroundImage: `url(${testimonial.image})` }}
+                  >
+                    {/* Dark Overlay */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15' />
+                    <div className='from-card absolute inset-x-0 bottom-0 flex h-2/6 flex-col justify-between gap-2 bg-gradient-to-t from-55% to-transparent px-6 pb-6'>
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
 
-                        <p>{testimonial.feedback}</p>
-                        <span className='text-muted-foreground'>
-                          @{testimonial.username}
-                        </span>
-                      </div>
+                      <p>{testimonial.feedback}</p>
+                      <span className='text-muted-foreground'>
+                        @{testimonial.username}
+                      </span>
                     </div>
-                  </Card3DEffect>
+                  </div>
                 ) : (
-                  <Card3DEffect translateDepth={0.5} rotateDepth={5}>
-                    <Card className='gap-4 shadow-none'>
-                      <div className='flex items-center justify-between px-6'>
+                  <Card className='gap-4 shadow-none'>
+                    <div className='flex items-center justify-between px-6'>
+                      <div className='flex items-center gap-3'>
                         <div className='flex items-center gap-3'>
-                          <div className='flex items-center gap-3'>
-                            <Avatar className='size-12'>
-                              <Suspense
-                                fallback={
-                                  <Skeleton className='w-10 rounded-full' />
-                                }
-                              >
-                                <Image
-                                  width={150}
-                                  height={150}
-                                  src={testimonial.image}
-                                  alt='profile picture'
-                                  className='rounded-full object-cover'
-                                />
-                              </Suspense>
-                            </Avatar>
-                            <div className='space-y-0.5'>
-                              <h4 className='font-semibold'>
-                                {testimonial.name}
-                              </h4>
-                              <p className='text-muted-foreground'>
-                                @{testimonial.username}
-                              </p>
-                            </div>
+                          <Avatar className='size-12'>
+                            <Suspense
+                              fallback={
+                                <Skeleton className='w-10 rounded-full' />
+                              }
+                            >
+                              <Image
+                                width={150}
+                                height={150}
+                                src={testimonial.image}
+                                alt='profile picture'
+                                className='rounded-full object-cover'
+                              />
+                            </Suspense>
+                          </Avatar>
+                          <div className='space-y-0.5'>
+                            <h4 className='font-semibold'>
+                              {testimonial.name}
+                            </h4>
+                            <p className='text-muted-foreground'>
+                              @{testimonial.username}
+                            </p>
                           </div>
                         </div>
-
-                        {/* Social Icons */}
-                        <SocialIcons icon={testimonial.social} />
                       </div>
-                      <CardContent>
-                        <p>{testimonial.feedback}</p>
-                      </CardContent>
-                    </Card>
-                  </Card3DEffect>
+
+                      {/* Social Icons */}
+                      <SocialIcons icon={testimonial.social} />
+                    </div>
+                    <CardContent>
+                      <p>{testimonial.feedback}</p>
+                    </CardContent>
+                  </Card>
                 )}
               </React.Fragment>
             ))}

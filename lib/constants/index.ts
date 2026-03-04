@@ -159,7 +159,7 @@ export const TESTIMONIALS = {
     },
     {
       image: '/images/testimonials/testimonial-7.jpg',
-      username: 'robersmith',
+      username: 'robertsmith',
       feedback:
         'Finding a family home is about comfort and memories. Viewing with my son was special, and the team ensured every detail fit our needs.',
       social: 'instagram',
@@ -203,7 +203,7 @@ export const TESTIMONIALS = {
     },
     {
       image: '/images/testimonials/testimonial-6.jpg',
-      username: 'karimnajjar',
+      username: 'alexcold',
       feedback:
         'A smooth and confident experience finding the perfect home in Dubai.',
       social: 'facebook',
