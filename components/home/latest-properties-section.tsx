@@ -1,9 +1,9 @@
 import prisma from '@/lib/prisma';
 import { MotionPreset } from '../shared/motion-preset';
-import SectionHeader from '../shared/section-header';
 import PropertyCard from '../shared/property-card';
 import { ArrowRightIcon } from 'lucide-react';
 import LinkButton from '../shared/link-button';
+import SectionEyebrow from '../shared/section-eyebrow';
 
 const LatestPropertiesSection = async () => {
   const latestProperties = await prisma.property.findMany({
@@ -26,7 +26,7 @@ const LatestPropertiesSection = async () => {
           slide={{ direction: 'down' }}
           className='space-y-4 mb-10 text-center md:text-left'
         >
-          <SectionHeader title='explore' />
+          <SectionEyebrow title='explore' />
           <h2 className='section-title'>Our Latest Properties</h2>
         </MotionPreset>
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-14'>

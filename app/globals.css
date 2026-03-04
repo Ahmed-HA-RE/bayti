@@ -124,6 +124,9 @@
   .section-spacing {
     @apply py-8 sm:py-14 lg:py-20;
   }
+  .section-header-spacing {
+    @apply pt-36 sm:pt-44 lg:pt-52;
+  }
 
   .section-title {
     @apply text-3xl md:text-4xl lg:text-5xl lg:max-w-2xl text-center md:text-left leading-tight;

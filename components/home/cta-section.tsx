@@ -6,7 +6,7 @@ import Image from 'next/image';
 const Cta = () => {
   return (
     <section className='bg-foreground section-spacing overflow-hidden'>
-      <div className='container relative py-20 sm:py-24 lg:py-32'>
+      <div className='container relative py-16 sm:py-24 lg:py-32'>
         {/* Background Decorative Element */}
         <div className='absolute inset-0 flex items-center justify-center z-0'>
           <div className='relative w-full h-full max-w-4xl'>
@@ -27,22 +27,22 @@ const Cta = () => {
             blur
             slide={{ direction: 'up' }}
             delay={0.1}
-            className='space-y-4 sm:space-y-5 lg:space-y-6 text-center max-w-5xl'
+            className='text-center max-w-5xl'
           >
-            <h2 className='text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-snug tracking-wide'>
-              Join us in the search <br className='hidden sm:block' />
-              for your dream home.
+            <h2 className='text-3xl md:text-4xl lg:text-6xl font-bold text-white leading-snug tracking-wide max-lg:max-w-2xl'>
+              Find your prefect property today. contact us for expert real
+              estate guidance.
             </h2>
-            <p className='text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed'>
-              Experience a seamless journey to finding your perfect property
-              with personalized guidance every step of the way.
-            </p>
           </MotionPreset>
 
           <MotionPreset fade blur delay={0.2} slide={{ direction: 'up' }}>
-            <LinkButton href='/contact-us' size='lg' className='group'>
+            <LinkButton
+              href='/contact-us'
+              size='default'
+              className='group rounded-full'
+            >
               Join Now
-              <ArrowRightIcon className='size-5 transition-transform group-hover:translate-x-2 duration-300' />
+              <ArrowRightIcon className='size-5 transition-transform group-hover:translate-x-1 duration-300' />
             </LinkButton>
           </MotionPreset>
         </div>

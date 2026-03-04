@@ -211,3 +211,38 @@ export const TESTIMONIALS = {
     },
   ],
 };
+
+export const PROPERTY_TYPES = [
+  { name: 'Apartment', value: 'apartment' },
+  { name: 'Villa', value: 'villa' },
+  { name: 'Townhouse', value: 'townhouse' },
+  { name: 'Penthouse', value: 'penthouse' },
+  { name: 'Duplex', value: 'duplex' },
+  { name: 'Studio', value: 'studio' },
+  { name: 'Traditional Home', value: 'traditional_home' },
+  { name: 'Luxury Property', value: 'luxury_property' },
+];
+
+export const PROPERTY_CITIES = [
+  { name: 'Dubai', value: 'dubai' },
+  { name: 'Abu Dhabi', value: 'abu_dhabi' },
+  { name: 'Sharjah', value: 'sharjah' },
+  { name: 'Ajman', value: 'ajman' },
+  { name: 'Ras Al Khaimah', value: 'ras_al_khaimah' },
+  { name: 'Fujairah', value: 'fujairah' },
+  { name: 'Umm Al Quwain', value: 'umm_al_quwain' },
+];
+
+export const PROPERTY_PRICE_RANGES = [
+  { name: 'Under AED 10K', value: '0-10000' },
+  { name: 'AED 10K - 50K', value: '10000-50000' },
+  { name: 'AED 50K - 100K', value: '50000-100000' },
+  { name: 'AED 100K - 500K', value: '100000-500000' },
+  { name: 'AED 500K - 1M', value: '500000-1000000' },
+  { name: 'Above AED 1M', value: '1000000' },
+];
+
+export const PROPERTY_LIST_TYPES = [
+  { name: 'For Sale', value: 'SALE' },
+  { name: 'For Rent', value: 'RENT' },
+];

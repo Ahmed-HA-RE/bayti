@@ -2,7 +2,7 @@ import { APP_NAME, STATISTICS } from '@/lib/constants';
 import { MotionPreset } from '../shared/motion-preset';
 import Image from 'next/image';
 import { NumberTicker } from '../ui/number-ticker';
-import SectionHeader from '../shared/section-header';
+import SectionEyebrow from '../shared/section-eyebrow';
 
 const HomeAboutSection = () => {
   return (
@@ -17,7 +17,7 @@ const HomeAboutSection = () => {
             delay={0.2}
             className='flex flex-col justify-between gap-7 lg:gap-40 lg:col-span-1'
           >
-            <SectionHeader title={`About ${APP_NAME}`} />
+            <SectionEyebrow title={`About ${APP_NAME}`} />
             {/* Image */}
             <div className='relative h-[400px] lg:h-[200px] overflow-hidden rounded-lg'>
               <Image

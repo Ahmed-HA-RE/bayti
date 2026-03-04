@@ -2,13 +2,13 @@ import { Avatar } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Marquee } from '@/components/ui/marquee';
 import { MotionPreset } from '@/components/shared/motion-preset';
-import SectionHeader from '../shared/section-header';
 import { APP_NAME, TESTIMONIALS } from '@/lib/constants';
 import Image from 'next/image';
 import { FaSquareFacebook, FaSquareThreads } from 'react-icons/fa6';
 import { FaLinkedin } from 'react-icons/fa';
 import React, { Suspense } from 'react';
 import { Skeleton } from '../ui/skeleton';
+import SectionEyebrow from '../shared/section-eyebrow';
 
 const SocialIcons = ({ icon }: { icon: string }) => {
   switch (icon) {
@@ -46,7 +46,7 @@ const TestimonialsSection = () => {
             transition={{ duration: 0.5 }}
             className='lg:col-span-1 text-white'
           >
-            <SectionHeader title='client stories' />
+            <SectionEyebrow title='client stories' />
           </MotionPreset>
           <div className='space-y-4 lg:col-span-2 w-full'>
             <MotionPreset

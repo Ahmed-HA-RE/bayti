@@ -1,8 +1,9 @@
 import { APP_NAME, STEPS } from '@/lib/constants';
 import { MotionPreset } from '../shared/motion-preset';
-import SectionHeader from '../shared/section-header';
+import SectionHeader from '../shared/section-eyebrow';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import Image from 'next/image';
+import SectionEyebrow from '../shared/section-eyebrow';
 
 const HowItWorksSection = () => {
   return (
@@ -16,7 +17,7 @@ const HowItWorksSection = () => {
             delay={0.1}
             className='flex flex-col items-center md:items-start gap-4'
           >
-            <SectionHeader title='how it works' />
+            <SectionEyebrow title='how it works' />
             <h2 className='section-title'>
               A Seamless Journey to Your Dream Home
             </h2>
