@@ -2,6 +2,7 @@ import FilterPropertiesSection from '@/components/properties/filter-properties-s
 import SectionHeader from '@/components/shared/section-header';
 import { APP_NAME } from '@/lib/constants';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Properties',
@@ -11,13 +12,13 @@ export const metadata: Metadata = {
 
 const PropertiesPage = () => {
   return (
-    <>
+    <Suspense>
       <SectionHeader
         title='Discover Our Modern Properties for Sale & Rent'
         subtitle={`Every ${APP_NAME} property is thoughtfully designed for comfort, style and modern living. Explore our curated selection of premium homes — each crafted to meet the highest standards of quality and elegance.`}
       />
       <FilterPropertiesSection />
-    </>
+    </Suspense>
   );
 };
 

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronRightIcon } from 'lucide-react';
 import { RiMenu3Fill } from 'react-icons/ri';
 import { GoDotFill } from 'react-icons/go';
 import { Button } from '@/components/ui/button';
+import { useMedia } from 'react-use';
 import {
   Collapsible,
   CollapsibleContent,
@@ -95,6 +96,14 @@ const MobileNavigation = ({
     router.refresh();
     toast.success('Logged out successfully');
   };
+
+  const isMobile = useMedia('(max-width: 767px)', false);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setOpen(false);
+    }
+  }, [isMobile]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
