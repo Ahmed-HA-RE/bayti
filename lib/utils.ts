@@ -16,3 +16,7 @@ export const formatPrice = (price: number) => {
     maximumFractionDigits: 1,
   });
 };
+
+export const convertToPlainObject = <T>(data: T): T => {
+  return JSON.parse(JSON.stringify(data));
+};
