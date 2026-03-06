@@ -1,6 +1,5 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { Skeleton } from '../ui/skeleton';
 import { getProperties } from '@/lib/actions/get-properties';
 import { PropertyList } from '@/lib/generated/prisma/enums';
 import PropertyCard from '../shared/property-card';
@@ -8,6 +7,7 @@ import { MotionPreset } from '../shared/motion-preset';
 import { Alert, AlertTitle } from '../ui/alert';
 import { CircleAlertIcon } from 'lucide-react';
 import SkeletonPropertyCard from '../skeleton-property-card';
+import Pagination from '../shared/pagination';
 
 type PropertiesListProps = {
   search?: string;
@@ -15,6 +15,7 @@ type PropertiesListProps = {
   location?: string;
   price?: string;
   listType?: PropertyList;
+  page?: number;
 };
 
 const PropertiesList = ({
@@ -23,17 +24,19 @@ const PropertiesList = ({
   location,
   price,
   listType,
+  page,
 }: PropertiesListProps) => {
   const { data, isFetching, isLoading } = useQuery({
-    queryKey: ['properties', { search, type, location, price, listType }],
-    queryFn: () => getProperties({ search, type, location, price, listType }),
+    queryKey: ['properties', { search, type, location, price, listType, page }],
+    queryFn: () =>
+      getProperties({ search, type, location, price, listType, page }),
     staleTime: 1000 * 60, // 1 minute
   });
 
   return (
     <section>
       <div className='container'>
-        {data && data.length === 0 ? (
+        {data && data?.properties?.length === 0 ? (
           <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200'>
             <CircleAlertIcon className='size-5' />
             <AlertTitle className='text-base'>
@@ -46,7 +49,7 @@ const PropertiesList = ({
               ? Array.from({ length: 8 }).map((_, index) => (
                   <SkeletonPropertyCard key={index} />
                 ))
-              : data?.map((property, index) => (
+              : data?.properties.map((property, index) => (
                   <MotionPreset
                     fade
                     slide={{ direction: 'up' }}
@@ -58,6 +61,9 @@ const PropertiesList = ({
                   </MotionPreset>
                 ))}
           </div>
+        )}
+        {data && data?.totalPages > 1 && (
+          <Pagination totalPages={data.totalPages} />
         )}
       </div>
     </section>

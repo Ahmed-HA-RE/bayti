@@ -46,7 +46,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
             <FaMapMarkerAlt className='size-5 text-black' />
             {property.location}, {property.city}
           </div>
-          <Separator className='my-4 bg-gray-100' />
+          <Separator className='my-2 bg-gray-200' />
           <div className='flex items-center gap-6 text-base text-muted-foreground'>
             <div className='flex items-center gap-2'>
               <LiaBedSolid className='size-6' />

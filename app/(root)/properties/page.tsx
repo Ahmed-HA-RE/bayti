@@ -19,7 +19,7 @@ const PropertiesPage = async ({
 }: {
   searchParams: Promise<SearchParams>;
 }) => {
-  const { search, type, location, price, listType } =
+  const { search, type, location, price, listType, page } =
     await loadSearchParams(searchParams);
 
   return (
@@ -37,6 +37,7 @@ const PropertiesPage = async ({
         location={location}
         price={price}
         listType={listType as PropertyList}
+        page={page}
       />
     </>
   );

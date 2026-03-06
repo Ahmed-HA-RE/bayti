@@ -90,7 +90,7 @@ const FilterPropertiesSection = () => {
               <InputGroupInput
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder='Search by title, location, or keyword...'
+                placeholder='Search by name or location...'
                 className='bg-transparent'
               />
               <InputGroupAddon align='inline-start'>
