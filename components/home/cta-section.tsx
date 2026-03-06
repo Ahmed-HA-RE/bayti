@@ -30,7 +30,7 @@ const Cta = () => {
             className='text-center max-w-5xl'
           >
             <h2 className='text-3xl md:text-4xl lg:text-6xl font-bold text-white leading-snug tracking-wide max-lg:max-w-2xl'>
-              Find your prefect property today. contact us for expert real
+              Find your prefect property today. Contact us for expert real
               estate guidance.
             </h2>
           </MotionPreset>

@@ -34,7 +34,7 @@ const PropertiesList = ({
   });
 
   return (
-    <section>
+    <section className='pb-8 sm:pb-14 lg:pb-20'>
       <div className='container'>
         {data && data?.properties?.length === 0 ? (
           <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200'>

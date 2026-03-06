@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header/header';
 import CtaSection from '@/components/home/cta-section';
+import FAQ from '@/components/shared/faq-section';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -8,6 +9,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Header */}
       <Header />
       <main className='flex-grow overflow-hidden'>{children}</main>
+      {/* FAQ */}
+      <FAQ />
       {/* Cta */}
       <CtaSection />
       {/* Footer */}

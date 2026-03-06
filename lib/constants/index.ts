@@ -246,3 +246,36 @@ export const PROPERTY_LIST_TYPES = [
   { name: 'For Sale', value: 'SALE' },
   { name: 'For Rent', value: 'RENT' },
 ];
+
+export const FAQS = [
+  {
+    question: 'What type of properties are availabe on Bayti?',
+    answer:
+      'Bayti offers a wide range of premium properties across the UAE, including apartments, villas, townhouses, penthouses, duplexes, studios, traditional homes, and luxury properties. Whether you are looking for a cozy apartment or a spacious villa, we have options to suit every preference and lifestyle.',
+  },
+  {
+    question: 'What kind of customer support does Bayti offer?',
+    answer:
+      'Bayti offers 24/7 customer support. Whether you have questions about a property, need assistance with scheduling a viewing, or require help during the buying or renting process, our dedicated support team is always available to assist you promptly and efficiently.',
+  },
+  {
+    question: 'How can I schedule a property viewing?',
+    answer:
+      'You can schedule a property viewing by logging to your account, selecting the property you are interested in, and clicking on the "Schedule Viewing" button. You can choose a convenient date and time for the viewing, pay a small fee so we can confirm the appointment, and our team will be in touch to confirm the details.',
+  },
+  {
+    question: 'How secure are transactions on Bayti?',
+    answer:
+      'Bayti ensures secure transactions through encrypted payment gateways and strict verification processes. Your personal and financial information is protected at all times, providing a safe and trustworthy environment for all property transactions.',
+  },
+  {
+    question: 'What happens after I reserve a property viewing?',
+    answer:
+      'Once you reserve a property viewing on Bayti, our clients will review and confirm your appointment. You will receive a confirmation with the selected date and time, along with the property details. On the scheduled day, you can visit the property with our team and explore it in person before making any further decisions.',
+  },
+  {
+    question: 'How long is a property reservation valid?',
+    answer:
+      'A property viewing reservation on Bayti is valid for 24 hours. This reservation temporarily secures your viewing slot and prevents scheduling conflicts with other users. If the viewing is not confirmed within that period, the reservation may expire and the time slot will become available again.',
+  },
+];

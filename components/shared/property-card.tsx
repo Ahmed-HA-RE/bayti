@@ -42,9 +42,9 @@ const PropertyCard = ({ property }: { property: Property }) => {
         </CardHeader>
         <CardContent className='px-0 flex flex-col gap-2'>
           <h3 className='text-2xl font-medium'>{property.name}</h3>
-          <div className='flex items-center gap-2 text-base text-muted-foreground'>
-            <FaMapMarkerAlt className='size-5 text-black' />
-            {property.location}, {property.city}
+          <div className='flex items-center gap-2 text-base text-muted-foreground capitalize'>
+            <FaMapMarkerAlt className='size-5 text-black ' />
+            {property.location}, {property.city.replace(/_/g, ' ')}
           </div>
           <Separator className='my-2 bg-gray-200' />
           <div className='flex items-center gap-6 text-base text-muted-foreground'>
