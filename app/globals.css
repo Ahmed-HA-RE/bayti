@@ -125,7 +125,7 @@
     @apply py-8 sm:py-14 lg:py-20;
   }
   .section-header-spacing {
-    @apply pt-36 sm:pt-44 lg:pt-52;
+    @apply pt-36 md:pt-44;
   }
 
   .section-title {

@@ -20,3 +20,11 @@ export const formatPrice = (price: number) => {
 export const convertToPlainObject = <T>(data: T): T => {
   return JSON.parse(JSON.stringify(data));
 };
+
+export const formatCityName = (city: string) => {
+  return city
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map((word) => capitalizeFirstLetter(word))
+    .join(' ');
+};

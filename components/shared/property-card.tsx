@@ -2,7 +2,7 @@ import { Property } from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '../ui/badge';
-import { capitalizeFirstLetter } from '@/lib/utils';
+import { capitalizeFirstLetter, formatCityName } from '@/lib/utils';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { LiaBedSolid } from 'react-icons/lia';
@@ -18,7 +18,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
     property.bathrooms === 1 ? '1 Bath' : `${property.bathrooms} Baths`;
 
   return (
-    <Link href={`/properties/${property.id}`} className='group'>
+    <Link href={`/property/${property.id}`} className='group'>
       <Card className='border-0 gap-5'>
         <CardHeader className='px-0'>
           <div className='relative aspect-[3/2] w-full rounded-4xl overflow-hidden'>
@@ -44,7 +44,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
           <h3 className='text-2xl font-medium'>{property.name}</h3>
           <div className='flex items-center gap-2 text-base text-muted-foreground capitalize'>
             <FaMapMarkerAlt className='size-5 text-black ' />
-            {property.location}, {property.city.replace(/_/g, ' ')}
+            {property.location}, {formatCityName(property.city)}
           </div>
           <Separator className='my-2 bg-gray-200' />
           <div className='flex items-center gap-6 text-base text-muted-foreground'>
