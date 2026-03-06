@@ -1,3 +1,4 @@
+import PropertyGallery from '@/components/property/property-gallery';
 import PropertyHeader from '@/components/property/property-header';
 import prisma from '@/lib/prisma';
 import type { Metadata } from 'next';
@@ -53,6 +54,9 @@ const PropertyPage = async ({
   return (
     <>
       <PropertyHeader property={property} />
+      <PropertyGallery
+        galleryImage={{ images: property.images, alt: property.name }}
+      />
     </>
   );
 };
