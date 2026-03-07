@@ -21,18 +21,18 @@ model Property {
 }
 
 model Booking {
-  id         String       @id @default(uuid())
+  id         String        @id @default(uuid())
   propertyId String
-  property   Property     @relation(fields: [propertyId], references: [id])
+  property   Property      @relation(fields: [propertyId], references: [id])
   userId     String
-  user       User         @relation(fields: [userId], references: [id])
-  startDate  DateTime     @db.Date
-  endDate    DateTime     @db.Date
+  user       User          @relation(fields: [userId], references: [id])
+  startDate  DateTime      @db.Date
+  endDate    DateTime      @db.Date
   type       PropertyList
   userEmail  String
   userPhone  String
-  totalPrice Decimal      @db.Decimal(10, 2)
-  isPaid     Boolean      @default(false)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  totalPrice Decimal       @db.Decimal(10, 2)
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 }

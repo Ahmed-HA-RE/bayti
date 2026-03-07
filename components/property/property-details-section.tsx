@@ -14,6 +14,7 @@ import AgentContactForm from './agent-contact-form';
 import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import ReservePropertyDialog from './reservation/reserve-property-dialog';
 
 const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   const amentiesList = AMENITIES.filter((amenity) =>
@@ -54,10 +55,24 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                   ))}
                 </div>
               </div>
-              <LinkButton href='/contact-us' className='group self-start'>
-                Ask for Details
-                <ArrowRightIcon className='transition-transform group-hover:translate-x-1' />
-              </LinkButton>
+              <div className='flex items-center gap-4'>
+                {session && property.propertyList === 'SALE' ? (
+                  <ReservePropertyDialog
+                    property={property}
+                    session={session}
+                  />
+                ) : (
+                  session && property.propertyList === 'RENT' && <div /> // Placeholder till i add rent functionality
+                )}
+                <LinkButton
+                  variant='outline'
+                  href='/contact-us'
+                  className='group self-start'
+                >
+                  Ask for Details
+                  <ArrowRightIcon className='transition-transform group-hover:translate-x-1' />
+                </LinkButton>
+              </div>
             </div>
           </MotionPreset>
 

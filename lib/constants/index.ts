@@ -249,7 +249,7 @@ export const PROPERTY_LIST_TYPES = [
 
 export const FAQS = [
   {
-    question: 'What type of properties are availabe on Bayti?',
+    question: 'What type of properties are available on Bayti?',
     answer:
       'Bayti offers a wide range of premium properties across the UAE, including apartments, villas, townhouses, penthouses, duplexes, studios, traditional homes, and luxury properties. Whether you are looking for a cozy apartment or a spacious villa, we have options to suit every preference and lifestyle.',
   },
@@ -278,4 +278,9 @@ export const FAQS = [
     answer:
       'A property viewing reservation on Bayti is valid for 24 hours. This reservation temporarily secures your viewing slot and prevents scheduling conflicts with other users. If the viewing is not confirmed within that period, the reservation may expire and the time slot will become available again.',
   },
+];
+export const PROPERTY_RESERVE_BULLET_POINTS = [
+  'Reserve a property visit by paying a small refundable fee to secure your preferred time slot.',
+  'The fee helps ensure serious inquiries and allows us to organize viewings efficiently with our agents.',
+  'The reservation fee will be deducted from your final purchase or refunded if you decide not to proceed. Please bring a valid ID for verification during the visit.',
 ];

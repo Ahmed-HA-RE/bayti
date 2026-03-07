@@ -22,3 +22,10 @@ enum PropertyList {
   RENT
   SALE
 }
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  REFUNDED
+}
