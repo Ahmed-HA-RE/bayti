@@ -5,6 +5,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String    @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
   role          Role      @default(USER)
+  phoneNumber   String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]

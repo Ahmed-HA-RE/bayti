@@ -22,24 +22,37 @@ import { User2Icon } from 'lucide-react';
 import { FiMail } from 'react-icons/fi';
 import { BsTelephone } from 'react-icons/bs';
 import { Alert, AlertTitle } from '../ui/alert';
+import { auth } from '@/lib/auth';
+import LinkButton from '../shared/link-button';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { contactAgent } from '@/lib/actions/contact-agent';
 
-const AgentContactForm = () => {
+const AgentContactForm = ({
+  session,
+}: {
+  session: typeof auth.$Infer.Session | null;
+}) => {
+  const pathname = usePathname();
+  const [message, setMessage] = useState('');
+
   const form = useForm<ContactAgentFormData>({
     resolver: zodResolver(contactAgentSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
+      name: session?.user.name || '',
+      email: session?.user.email || '',
+      phone: session?.user.phoneNumber || '',
     },
   });
 
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const onSubmit = async (data: ContactAgentFormData) => {
+    const res = await contactAgent(data);
+    setMessage(res.message);
   };
 
   return form.formState.isSubmitSuccessful ? (
     <Alert className='bg-foreground text-white rounded-none border-0 py-3 px-4 text-center'>
-      <AlertTitle>Thank you! Your submission has been received.</AlertTitle>
+      <AlertTitle>{message}</AlertTitle>
     </Alert>
   ) : (
     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -116,14 +129,21 @@ const AgentContactForm = () => {
             </Field>
           )}
         />
-        <Button
-          disabled={form.formState.isSubmitting}
-          size='default'
-          type='submit'
-          className='self-start mt-2 w-full'
-        >
-          {form.formState.isSubmitting ? 'Sending...' : 'Contact Agent'}
-        </Button>
+
+        {!session ? (
+          <LinkButton className='mt-2' href={`/login?callbackUrl=${pathname}`}>
+            Login to Contact Agent
+          </LinkButton>
+        ) : (
+          <Button
+            disabled={form.formState.isSubmitting}
+            size='default'
+            type='submit'
+            className='mt-2'
+          >
+            {form.formState.isSubmitting ? 'Sending...' : 'Contact Agent'}
+          </Button>
+        )}
       </FieldGroup>
     </form>
   );

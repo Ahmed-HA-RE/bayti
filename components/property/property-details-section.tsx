@@ -9,15 +9,20 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 import { Separator } from '../ui/separator';
 import { BsTelephone } from 'react-icons/bs';
-
 import { LuMapPin } from 'react-icons/lu';
 import AgentContactForm from './agent-contact-form';
 import { FiMail } from 'react-icons/fi';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
-const PropertyDetailsSection = ({ property }: { property: Property }) => {
+const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   const amentiesList = AMENITIES.filter((amenity) =>
     property.amenities.includes(amenity.name),
   );
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <section className='pb-8 md:pb-12 lg:pb-14'>
@@ -122,7 +127,7 @@ const PropertyDetailsSection = ({ property }: { property: Property }) => {
                   </div>
                 </div>
                 {/* Contact Form */}
-                <AgentContactForm />
+                <AgentContactForm session={session} />
               </CardContent>
             </Card>
           </MotionPreset>

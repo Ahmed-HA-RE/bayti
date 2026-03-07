@@ -1,7 +1,7 @@
 import z from 'zod';
 import parsePhoneNumber from 'libphonenumber-js';
 
-const phoneNumber = z.string().refine(
+const phoneNumber = z.string({ error: 'Phone number is required' }).refine(
   (value) => {
     const parsedNumber = parsePhoneNumber(value, 'AE');
     return parsedNumber?.isValid();
