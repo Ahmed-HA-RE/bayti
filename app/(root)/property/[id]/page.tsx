@@ -1,5 +1,6 @@
-import PropertyGallery from '@/components/property/property-gallery';
-import PropertyHeader from '@/components/property/property-header';
+import PropertyDetailsSection from '@/components/property/property-details-section';
+import PropertyGallerySection from '@/components/property/property-gallery-section';
+import PropertyHeaderSection from '@/components/property/property-header-section';
 import prisma from '@/lib/prisma';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
@@ -53,10 +54,11 @@ const PropertyPage = async ({
 
   return (
     <>
-      <PropertyHeader property={property} />
-      <PropertyGallery
+      <PropertyHeaderSection property={property} />
+      <PropertyGallerySection
         galleryImage={{ images: property.images, alt: property.name }}
       />
+      <PropertyDetailsSection property={property} />
     </>
   );
 };

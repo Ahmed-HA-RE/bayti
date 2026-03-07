@@ -6,15 +6,15 @@ import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
 import 'photoswipe/style.css';
 
-type PropertyGallery = {
+type PropertyGallerySectionProps = {
   images: string[];
   alt: string;
 };
 
-const PropertyGallery = ({
+const PropertyGallerySection = ({
   galleryImage,
 }: {
-  galleryImage: PropertyGallery;
+  galleryImage: PropertyGallerySectionProps;
 }) => {
   return (
     <section className='py-8 md:py-12 lg:py-14'>
@@ -60,4 +60,4 @@ const PropertyGallery = ({
   );
 };
 
-export default PropertyGallery;
+export default PropertyGallerySection;

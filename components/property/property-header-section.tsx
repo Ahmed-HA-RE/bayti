@@ -3,7 +3,7 @@ import { MotionPreset } from '../shared/motion-preset';
 import { Separator } from '../ui/separator';
 import { formatCityName, formatPrice } from '@/lib/utils';
 
-const PropertyHeader = ({ property }: { property: Property }) => {
+const PropertyHeaderSection = ({ property }: { property: Property }) => {
   return (
     <section className='section-header-spacing'>
       <div className='container'>
@@ -23,7 +23,7 @@ const PropertyHeader = ({ property }: { property: Property }) => {
             blur
             slide={{ direction: 'up' }}
             delay={0.2}
-            className='flex flex-col md:flex-row items-start md:items-center justify-between max-md:gap-6'
+            className='flex flex-col lg:flex-row items-start lg:items-center justify-between max-lg:gap-6'
           >
             {/* Left side */}
             <div className='flex items-center'>
@@ -55,20 +55,21 @@ const PropertyHeader = ({ property }: { property: Property }) => {
             </div>
 
             {/* Right side  */}
-            <span className='flex items-center'>
-              <h4 className='capitalize'>
-                {formatCityName(property.city)}, UAE
-              </h4>
-              <span className='mx-3'>-</span>
-              {/* Price */}
-              <span className='flex items-center gap-1'>
-                <p className='dirham-symbol text-base !font-light'>&#xea;</p>
-                <p className='text-base'>{formatPrice(property.price)}</p>{' '}
+            <div className='flex flex-wrap items-center gap-3'>
+              <span className='inline-flex items-center text-base'>
+                {property.location}, {formatCityName(property.city)}, UAE
+              </span>
+              —{/* Price */}
+              <span className='inline-flex items-center gap-1'>
+                <p className='dirham-symbol text-lg !font-light'>&#xea;</p>
+                <p className='text-lg font-semibold'>
+                  {formatPrice(property.price)}
+                </p>
                 {property.propertyList === 'RENT' && (
                   <span className='text-sm text-muted-foreground'>/month</span>
                 )}
               </span>
-            </span>
+            </div>
           </MotionPreset>
         </div>
       </div>
@@ -76,4 +77,4 @@ const PropertyHeader = ({ property }: { property: Property }) => {
   );
 };
 
-export default PropertyHeader;
+export default PropertyHeaderSection;

@@ -15,7 +15,7 @@ type LinkButtonProps = {
   href: string;
   children: React.ReactNode | string;
   className?: string;
-  size?: 'default' | 'md' | 'lg';
+  size?: 'default' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg';
 };
 
 const LinkButton = ({

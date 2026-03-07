@@ -6,9 +6,9 @@ import { TbTableRow } from 'react-icons/tb';
 import { LuProjector } from 'react-icons/lu';
 import { RiSmartphoneFill } from 'react-icons/ri';
 import { BiCloset } from 'react-icons/bi';
-import { GiBroom } from 'react-icons/gi';
+
 import { BsDoorOpenFill, BsCloudSun } from 'react-icons/bs';
-import { MdOutlineOutdoorGrill } from 'react-icons/md';
+import { MdOutlineOutdoorGrill, MdMeetingRoom } from 'react-icons/md';
 import { LiaHotTubSolid } from 'react-icons/lia';
 import { PiThermometerHotFill } from 'react-icons/pi';
 import { PiDesk } from 'react-icons/pi';
@@ -94,7 +94,7 @@ export const AMENITIES = [
   },
   {
     name: 'maidRoom',
-    icon: GiBroom,
+    icon: MdMeetingRoom,
     title: 'Maid Room',
   },
   {

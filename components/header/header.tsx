@@ -41,8 +41,8 @@ const Header = async () => {
         ) : (
           <LinkButton
             variant='default'
-            size='md'
-            className='hidden md:flex rounded-full'
+            size='default'
+            className='hidden md:flex rounded-full px-4 py-2'
             href='/login'
           >
             Login

@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.shadcnstudio.com',
         port: '',
       },
+      // For testing purposes
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+      },
       {
         protocol: 'https',
         hostname: '*.ufs.sh',
