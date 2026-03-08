@@ -1,5 +1,5 @@
 model Property {
-  id           String       @id @default(uuid())
+  id           String        @id @default(uuid())
   name         String
   description  String
   location     String
@@ -9,30 +9,45 @@ model Property {
   bedrooms     Int
   bathrooms    Int
   images       String[]
-  isFeatured   Boolean      @default(false)
-  reserveFees  Decimal      @db.Decimal(10, 2)
+  isFeatured   Boolean       @default(false)
   propertyList PropertyList
   propertyType String
-  isAvailable  Boolean      @default(true)
+  isAvailable  Boolean       @default(true)
   amenities    String[]
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  bookings     Booking[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[]
+  rentings     Renting[]
 }
 
-model Booking {
-  id         String        @id @default(uuid())
+model Reservation {
+  id         String   @id @default(uuid())
   propertyId String
-  property   Property      @relation(fields: [propertyId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id])
   userId     String
-  user       User          @relation(fields: [userId], references: [id])
-  startDate  DateTime      @db.Date
-  endDate    DateTime      @db.Date
-  type       PropertyList
+  user       User     @relation(fields: [userId], references: [id])
+  date       DateTime @db.Date
+  startTime  DateTime @db.Time
+  endTime    DateTime @db.Time
   userEmail  String
   userPhone  String
-  totalPrice Decimal       @db.Decimal(10, 2)
-  status     BookingStatus @default(PENDING)
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  status     Status   @default(PENDING)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Renting {
+  id         String   @id @default(uuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  startMonth DateTime @db.Date
+  endMonth   DateTime @db.Date
+  userEmail  String
+  userPhone  String
+  fees       Decimal  @db.Decimal(10, 2)
+  status     Status   @default(PENDING)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

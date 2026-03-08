@@ -79,7 +79,7 @@ function Field({
       role='group'
       data-slot='field'
       data-orientation={orientation}
-      className={cn(fieldVariants({ orientation }), className, 'gap-4')}
+      className={cn(fieldVariants({ orientation }), className, 'gap-2.5')}
       {...props}
     />
   );
@@ -216,7 +216,7 @@ function FieldError({
     <div
       role='alert'
       data-slot='field-error'
-      className={cn('text-destructive text-sm font-normal', className)}
+      className={cn('text-destructive text-xs font-normal', className)}
       {...props}
     >
       {content}

@@ -18,7 +18,6 @@ export const samplePropertiesData = [
       '/images/properties/a4.jpg',
     ],
     isFeatured: true,
-    reserveFees: 500.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -48,7 +47,6 @@ export const samplePropertiesData = [
       '/images/properties/b4.jpg',
     ],
     isFeatured: true,
-    reserveFees: 300.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -78,7 +76,6 @@ export const samplePropertiesData = [
       '/images/properties/c4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 800.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -108,7 +105,6 @@ export const samplePropertiesData = [
       '/images/properties/d4.jpg',
     ],
     isFeatured: true,
-    reserveFees: 600.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -138,7 +134,6 @@ export const samplePropertiesData = [
       '/images/properties/e4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 200.0,
     propertyList: PropertyList.RENT,
     propertyType: 'villa',
     amenities: [
@@ -167,7 +162,6 @@ export const samplePropertiesData = [
       '/images/properties/f4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 700.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -197,7 +191,6 @@ export const samplePropertiesData = [
       '/images/properties/g4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 600.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -227,7 +220,6 @@ export const samplePropertiesData = [
       '/images/properties/h4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 150.0,
     propertyList: PropertyList.RENT,
     propertyType: 'villa',
     amenities: [
@@ -257,7 +249,6 @@ export const samplePropertiesData = [
       '/images/properties/i4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 550.0,
     propertyList: PropertyList.SALE,
     propertyType: 'villa',
     amenities: [
@@ -287,7 +278,6 @@ export const samplePropertiesData = [
       '/images/properties/j4.jpg',
     ],
     isFeatured: false,
-    reserveFees: 200.0,
     propertyList: PropertyList.RENT,
     propertyType: 'villa',
     amenities: [

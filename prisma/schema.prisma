@@ -23,7 +23,7 @@ enum PropertyList {
   SALE
 }
 
-enum BookingStatus {
+enum Status {
   PENDING
   CONFIRMED
   CANCELLED

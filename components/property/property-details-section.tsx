@@ -65,7 +65,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                   session && property.propertyList === 'RENT' && <div /> // Placeholder till i add rent functionality
                 )}
                 <LinkButton
-                  variant='outline'
+                  variant='secondary'
                   href='/contact-us'
                   className='group self-start'
                 >

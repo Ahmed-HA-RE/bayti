@@ -7,16 +7,17 @@ const phoneNumber = z.string({ error: 'Phone number is required' }).refine(
     return parsedNumber?.isValid();
   },
   {
-    error: 'Invalid UAE phone number',
+    error: 'Invalid phone number',
   },
 );
 
 export const contactAgentSchema = z.object({
   name: z
     .string({ error: 'Invalid name' })
-    .min(2, 'Name must be at least 2 characters'),
+    .min(2, 'Name must be at least 2 characters')
+    .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
   email: z.email({ error: 'Email is required' }),
-  phone: phoneNumber,
+  phoneNumber: phoneNumber,
 });
 
 export type ContactAgentFormData = z.infer<typeof contactAgentSchema>;

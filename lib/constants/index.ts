@@ -279,8 +279,10 @@ export const FAQS = [
       'A property viewing reservation on Bayti is valid for 24 hours. This reservation temporarily secures your viewing slot and prevents scheduling conflicts with other users. If the viewing is not confirmed within that period, the reservation may expire and the time slot will become available again.',
   },
 ];
-export const PROPERTY_RESERVE_BULLET_POINTS = [
-  'Reserve a property visit by paying a small refundable fee to secure your preferred time slot.',
-  'The fee helps ensure serious inquiries and allows us to organize viewings efficiently with our agents.',
-  'The reservation fee will be deducted from your final purchase or refunded if you decide not to proceed. Please bring a valid ID for verification during the visit.',
+
+export const RESERVING_TIMES = [
+  { title: '9:00 AM - 11:00 AM', value: '09:00 - 11:00' },
+  { title: '11:00 AM - 1:00 PM', value: '11:00 - 13:00' },
+  { title: '1:00 PM - 3:00 PM', value: '13:00 - 15:00' },
+  { title: '3:00 PM - 5:00 PM', value: '15:00 - 17:00' },
 ];

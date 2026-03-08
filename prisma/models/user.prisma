@@ -1,16 +1,17 @@
 model User {
-  id            String    @id
+  id            String        @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
-  image         String    @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
-  role          Role      @default(USER)
+  emailVerified Boolean       @default(false)
+  image         String        @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
+  role          Role          @default(USER)
   phoneNumber   String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   sessions      Session[]
   accounts      Account[]
-  bookings      Booking[]
+  reservations  Reservation[]
+  rentings      Renting[]
 
   @@unique([email])
   @@map("user")
