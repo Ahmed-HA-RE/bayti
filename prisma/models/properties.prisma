@@ -1,5 +1,5 @@
 model Property {
-  id           String        @id @default(uuid())
+  id           String       @id @default(uuid())
   name         String
   description  String
   location     String
@@ -9,18 +9,17 @@ model Property {
   bedrooms     Int
   bathrooms    Int
   images       String[]
-  isFeatured   Boolean       @default(false)
+  isFeatured   Boolean      @default(false)
   propertyList PropertyList
   propertyType String
-  isAvailable  Boolean       @default(true)
+  isAvailable  Boolean      @default(true)
   amenities    String[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  reservations Reservation[]
-  rentings     Renting[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  bookings     Booking[]
 }
 
-model Reservation {
+model Booking {
   id              String   @id @default(uuid())
   propertyId      String
   property        Property @relation(fields: [propertyId], references: [id])
@@ -35,20 +34,4 @@ model Reservation {
   status          Status   @default(PENDING)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-}
-
-model Renting {
-  id         String   @id @default(uuid())
-  propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  startMonth DateTime @db.Date
-  endMonth   DateTime @db.Date
-  userEmail  String
-  userPhone  String
-  fees       Decimal  @db.Decimal(10, 2)
-  status     Status   @default(PENDING)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }

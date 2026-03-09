@@ -2,6 +2,7 @@ import { Property } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
 import { Separator } from '../ui/separator';
 import { formatCityName, formatPrice } from '@/lib/utils';
+import { LuMapPinHouse } from 'react-icons/lu';
 
 const PropertyHeaderSection = ({ property }: { property: Property }) => {
   return (
@@ -55,20 +56,26 @@ const PropertyHeaderSection = ({ property }: { property: Property }) => {
             </div>
 
             {/* Right side  */}
-            <div className='flex flex-wrap items-center gap-3'>
-              <span className='inline-flex items-center text-base'>
-                {property.location}, {formatCityName(property.city)}, UAE
-              </span>
-              —{/* Price */}
-              <span className='inline-flex items-center gap-1'>
-                <p className='dirham-symbol text-lg !font-light'>&#xea;</p>
-                <p className='text-lg font-semibold'>
+            <div className='flex flex-col gap-2'>
+              <div className='flex items-center gap-2 text-sm text-muted-foreground'>
+                <LuMapPinHouse className='size-4' />
+                <span>
+                  {property.location}, {formatCityName(property.city)}, UAE
+                </span>
+              </div>
+              <div className='flex items-center gap-1.5'>
+                <span className='dirham-symbol text-2xl text-foreground'>
+                  &#xea;
+                </span>
+                <span className='text-2xl font-bold tracking-tight'>
                   {formatPrice(property.price)}
-                </p>
+                </span>
                 {property.propertyList === 'RENT' && (
-                  <span className='text-sm text-muted-foreground'>/month</span>
+                  <span className='text-sm font-medium text-muted-foreground'>
+                    /month
+                  </span>
                 )}
-              </span>
+              </div>
             </div>
           </MotionPreset>
         </div>

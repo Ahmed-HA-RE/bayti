@@ -14,8 +14,8 @@ import AgentContactForm from './agent-contact-form';
 import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import ReservePropertyDialog from './reservation/reserve-property-dialog';
 import prisma from '@/lib/prisma';
+import ViewingRequestDialog from './book-visit-dialog';
 
 const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   const amentiesList = AMENITIES.filter((amenity) =>
@@ -26,7 +26,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
     headers: await headers(),
   });
 
-  const reservationStatus = await prisma.reservation.findFirst({
+  const requestViewingStatus = await prisma.viewingRequest.findFirst({
     where: {
       propertyId: property.id,
       userId: session?.user.id,
@@ -67,15 +67,11 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                 </div>
               </div>
               <div className='flex items-center gap-4'>
-                {session && property.propertyList === 'SALE' ? (
-                  <ReservePropertyDialog
-                    property={property}
-                    session={session}
-                    reservationStatus={reservationStatus?.status}
-                  />
-                ) : (
-                  session && property.propertyList === 'RENT' && <div /> // Placeholder till i add rent functionality
-                )}
+                <ViewingRequestDialog
+                  property={property}
+                  session={session}
+                  reservationStatus={requestViewingStatus?.status}
+                />
                 <LinkButton
                   variant='secondary'
                   href='/contact-us'

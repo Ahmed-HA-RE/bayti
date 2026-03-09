@@ -281,8 +281,8 @@ export const FAQS = [
 ];
 
 export const RESERVING_TIMES = [
-  { title: '9:00 AM - 11:00 AM', value: '09:00 - 11:00' },
-  { title: '11:00 AM - 1:00 PM', value: '11:00 - 13:00' },
-  { title: '1:00 PM - 3:00 PM', value: '13:00 - 15:00' },
-  { title: '3:00 PM - 5:00 PM', value: '15:00 - 17:00' },
+  { title: '9:00 AM - 11:00 AM', value: '09:00:00 - 11:00:00' },
+  { title: '11:00 AM - 1:00 PM', value: '11:00:00 - 13:00:00' },
+  { title: '1:00 PM - 3:00 PM', value: '13:00:00 - 15:00:00' },
+  { title: '3:00 PM - 5:00 PM', value: '15:00:00 - 17:00:00' },
 ];

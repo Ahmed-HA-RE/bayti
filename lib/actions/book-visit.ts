@@ -1,17 +1,17 @@
 'use server';
 
 import {
-  reservePropertyDialogSchema,
-  ReservePropertyDialogFormData,
-} from '@/schema/reserve-property-dialog';
+  BookVisitDialogFormData,
+  bookVisitDialogSchema,
+} from '@/schema/book-visit-dialog';
 import { revalidatePath } from 'next/cache';
 import { auth } from '../auth';
 import { headers } from 'next/headers';
 import prisma from '../prisma';
 import { set } from 'date-fns';
 
-export const reserveProperty = async (
-  data: ReservePropertyDialogFormData,
+export const bookVisit = async (
+  data: BookVisitDialogFormData,
   propertyId: string,
 ) => {
   try {
@@ -21,14 +21,14 @@ export const reserveProperty = async (
 
     if (!session) throw new Error('Unauthorized to perform this action');
 
-    const validatedData = reservePropertyDialogSchema.safeParse(data);
+    const validatedData = bookVisitDialogSchema.safeParse(data);
 
     if (!validatedData.success) throw new Error('Invalid form data');
 
     const { name, email, phoneNumber, date, timeRange } = validatedData.data;
 
-    // Check if client has already reserved a viewing for the same property of the same day
-    const reservation = await prisma.reservation.findFirst({
+    // Check if client has already requested a book visit for the same property of the same day
+    const bookVisitRequest = await prisma.viewingRequest.findFirst({
       where: {
         propertyId,
         userId: session.user.id,
@@ -36,9 +36,9 @@ export const reserveProperty = async (
       },
     });
 
-    if (reservation) {
+    if (bookVisitRequest) {
       throw new Error(
-        'You already have an active reservation for this property.',
+        'You already have an active book visit request for this property.',
       );
     }
 
@@ -59,8 +59,23 @@ export const reserveProperty = async (
       milliseconds: 0,
     });
 
-    // Else create a new reservation
-    await prisma.reservation.create({
+    // Check if the requested time slot overlaps with any existing reservations for the same property
+    const alreadyReserved = await prisma.viewingRequest.findFirst({
+      where: {
+        propertyId,
+        status: { in: ['PENDING', 'CONFIRMED'] },
+        startTime,
+        endTime,
+      },
+    });
+
+    if (alreadyReserved)
+      throw new Error(
+        'The selected time slot is not available anymore. Please choose a different time.',
+      );
+
+    // Else create a new viewing request
+    await prisma.viewingRequest.create({
       data: {
         propertyId,
         userId: session.user.id,
@@ -75,7 +90,7 @@ export const reserveProperty = async (
 
     revalidatePath(`/property/${propertyId}`);
 
-    return { success: true, message: 'Reservation has been requested.' };
+    return { success: true, message: 'Your visit request has been submitted.' };
   } catch (error) {
     return { success: false, message: (error as Error).message };
   }

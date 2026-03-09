@@ -2,13 +2,13 @@ import z from 'zod';
 import { contactAgentSchema } from './contact-agent';
 import { isWithinInterval, addWeeks, startOfDay } from 'date-fns';
 
-export const reservePropertyDialogSchema = z.object({
+export const bookVisitDialogSchema = z.object({
   name: contactAgentSchema.shape.name,
   email: contactAgentSchema.shape.email,
   phoneNumber: contactAgentSchema.shape.phoneNumber,
   date: z.date({ error: 'Please select a date' }).refine(
     (date) => {
-      // Reservations can only be made for dates within the next 2 weeks
+      // Viewing requests can only be made for dates within the next 2 weeks
       const today = startOfDay(new Date());
       const twoWeeksFromNow = addWeeks(today, 2);
       return isWithinInterval(date, { start: today, end: twoWeeksFromNow });
@@ -24,6 +24,4 @@ export const reservePropertyDialogSchema = z.object({
   ),
 });
 
-export type ReservePropertyDialogFormData = z.infer<
-  typeof reservePropertyDialogSchema
->;
+export type BookVisitDialogFormData = z.infer<typeof bookVisitDialogSchema>;

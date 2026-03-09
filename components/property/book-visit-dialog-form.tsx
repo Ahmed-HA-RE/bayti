@@ -1,4 +1,5 @@
 'use client';
+
 import {
   InputGroup,
   InputGroupAddon,
@@ -7,7 +8,7 @@ import {
 import { User2Icon, CalendarIcon, ChevronDownIcon } from 'lucide-react';
 import { FiAlertTriangle, FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { Property } from '@/lib/generated/prisma/client';
 import {
   Popover,
@@ -22,10 +23,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  ReservePropertyDialogFormData,
-  reservePropertyDialogSchema,
-} from '@/schema/reserve-property-dialog';
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -36,24 +33,29 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { RESERVING_TIMES } from '@/lib/constants';
-import { reserveProperty } from '@/lib/actions/reserve-property';
 import toast from 'react-hot-toast';
+import {
+  bookVisitDialogSchema,
+  BookVisitDialogFormData,
+} from '@/schema/book-visit-dialog';
+import { bookVisit } from '@/lib/actions/book-visit';
+import { Spinner } from '../ui/spinner';
 
-type ReservePropertyDialogFormProps = {
+type BookVisitDialogFormProps = {
   session: typeof auth.$Infer.Session;
   property: Property;
   setOpenDialog: (open: boolean) => void;
 };
 
-const ReservePropertyDialogForm = ({
+const BookVisitDialogForm = ({
   session,
   property,
   setOpenDialog,
-}: ReservePropertyDialogFormProps) => {
+}: BookVisitDialogFormProps) => {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<ReservePropertyDialogFormData>({
-    resolver: zodResolver(reservePropertyDialogSchema),
+  const form = useForm<BookVisitDialogFormData>({
+    resolver: zodResolver(bookVisitDialogSchema),
     defaultValues: {
       name: session.user.name || '',
       email: session.user.email || '',
@@ -64,8 +66,8 @@ const ReservePropertyDialogForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: ReservePropertyDialogFormData) => {
-    const res = await reserveProperty(data, property.id);
+  const onSubmit = async (data: BookVisitDialogFormData) => {
+    const res = await bookVisit(data, property.id);
     if (!res.success) {
       form.setError('root', { message: res.message });
       return;
@@ -243,11 +245,18 @@ const ReservePropertyDialogForm = ({
           />
         </div>
         <Button disabled={isPending} type='submit' className='self-start'>
-          {isPending ? 'Requesting...' : 'Request Viewing'}
+          {isPending ? (
+            <>
+              {' '}
+              <Spinner /> Requesting...
+            </>
+          ) : (
+            'Request Viewing'
+          )}
         </Button>
       </FieldGroup>
     </form>
   );
 };
 
-export default ReservePropertyDialogForm;
+export default BookVisitDialogForm;
