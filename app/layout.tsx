@@ -33,7 +33,11 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${inter.className} bg-white text-foreground`}>
         <Providers>{children}</Providers>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            duration: 4000,
+          }}
+        />
       </body>
     </html>
   );

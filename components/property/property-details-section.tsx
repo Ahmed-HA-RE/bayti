@@ -15,6 +15,7 @@ import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import ReservePropertyDialog from './reservation/reserve-property-dialog';
+import prisma from '@/lib/prisma';
 
 const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   const amentiesList = AMENITIES.filter((amenity) =>
@@ -23,6 +24,16 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
 
   const session = await auth.api.getSession({
     headers: await headers(),
+  });
+
+  const reservationStatus = await prisma.reservation.findFirst({
+    where: {
+      propertyId: property.id,
+      userId: session?.user.id,
+    },
+    select: {
+      status: true,
+    },
   });
 
   return (
@@ -60,6 +71,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                   <ReservePropertyDialog
                     property={property}
                     session={session}
+                    reservationStatus={reservationStatus?.status}
                   />
                 ) : (
                   session && property.propertyList === 'RENT' && <div /> // Placeholder till i add rent functionality

@@ -19,7 +19,7 @@ export const contactAgent = async (data: ContactAgentFormData) => {
 
     if (!validatedData.success) throw new Error('Invalid form data');
 
-    const { name, email, phone } = validatedData.data;
+    const { name, email, phoneNumber } = validatedData.data;
 
     // Here you can implement the logic to send the contact details to the agent
     // For example, you can send an email to the agent with the contact details

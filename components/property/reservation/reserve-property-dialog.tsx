@@ -10,23 +10,29 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { auth } from '@/lib/auth';
-import { Property } from '@/lib/generated/prisma/client';
+import { Property, Status } from '@/lib/generated/prisma/client';
 import { usePathname } from 'next/navigation';
 import LinkButton from '../../shared/link-button';
 import { ArrowRightIcon } from 'lucide-react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import ReservePropertyDialogForm from './reserve-property-dialog-form';
+import { useState } from 'react';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 
 type ReservePropertyDialogProps = {
   property: Property;
   session: typeof auth.$Infer.Session | null;
+  reservationStatus?: Status;
 };
 
 const ReservePropertyDialog = ({
   property,
   session,
+  reservationStatus,
 }: ReservePropertyDialogProps) => {
+  const [openDialog, setOpenDialog] = useState(false);
+
   const pathname = usePathname();
 
   // If no session, show login link
@@ -39,10 +45,13 @@ const ReservePropertyDialog = ({
     );
   }
 
+  const isAllowedToReserve =
+    reservationStatus !== 'PENDING' && reservationStatus !== 'CONFIRMED';
+
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger render={<Button />}>
-        Reserve Now
+        {!isAllowedToReserve ? 'View Reservation' : 'Reserve Now'}
         <FaCalendarAlt className='size-4' />
       </DialogTrigger>
       <DialogContent className='gap-6 px-6 sm:max-w-2xl'>
@@ -54,19 +63,34 @@ const ReservePropertyDialog = ({
             Secure your preferred time to view this property.
           </DialogDescription>
         </DialogHeader>
-
-        <div className='space-y-6 pt-2'>
-          <ReservePropertyDialogForm session={session} property={property} />
-        </div>
-        <Link
-          href='/reservation-info'
-          className='text-sm font-medium text-center'
-        >
-          Not sure?{' '}
-          <span className='hover:text-[#ff6b00] underline-offset-2 hover:underline'>
-            Learn how property viewings work.
-          </span>
-        </Link>
+        {!isAllowedToReserve ? (
+          <Alert variant='success'>
+            <FaCalendarAlt className='size-5' />
+            <AlertTitle>
+              You have a {reservationStatus.toLowerCase()} reservation for this
+              property. Please check your{' '}
+              <Link href='/account/reservations'>reservations</Link> in your
+              account settings for details.
+            </AlertTitle>
+          </Alert>
+        ) : (
+          <div className='space-y-6 pt-2'>
+            <ReservePropertyDialogForm
+              session={session}
+              property={property}
+              setOpenDialog={setOpenDialog}
+            />
+            <Link
+              href='/reservation-info'
+              className='text-sm font-medium block text-center text-muted-foreground'
+            >
+              Not sure?{' '}
+              <span className='text-[#ff6b00] underline-offset-2 hover:underline'>
+                Learn how property viewings work.
+              </span>
+            </Link>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

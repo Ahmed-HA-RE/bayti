@@ -5,7 +5,7 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group';
 import { User2Icon, CalendarIcon, ChevronDownIcon } from 'lucide-react';
-import { FiMail } from 'react-icons/fi';
+import { FiAlertTriangle, FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import { Button } from '../../ui/button';
 import { Property } from '@/lib/generated/prisma/client';
@@ -24,7 +24,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ReservePropertyDialogFormData,
   reservePropertyDialogSchema,
-} from '@/schema/reserve-property-modal';
+} from '@/schema/reserve-property-dialog';
 import {
   Field,
   FieldError,
@@ -36,18 +36,21 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { RESERVING_TIMES } from '@/lib/constants';
+import { reserveProperty } from '@/lib/actions/reserve-property';
+import toast from 'react-hot-toast';
 
 type ReservePropertyDialogFormProps = {
   session: typeof auth.$Infer.Session;
   property: Property;
+  setOpenDialog: (open: boolean) => void;
 };
 
 const ReservePropertyDialogForm = ({
   session,
   property,
+  setOpenDialog,
 }: ReservePropertyDialogFormProps) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const form = useForm<ReservePropertyDialogFormData>({
     resolver: zodResolver(reservePropertyDialogSchema),
@@ -55,18 +58,33 @@ const ReservePropertyDialogForm = ({
       name: session.user.name || '',
       email: session.user.email || '',
       phoneNumber: session?.user.phoneNumber || '',
-      date: new Date(),
+      date: undefined,
       timeRange: '',
     },
     mode: 'onChange',
   });
 
-  const onSubmit = (data: ReservePropertyDialogFormData) => {
-    console.log('Form Data:', data);
+  const onSubmit = async (data: ReservePropertyDialogFormData) => {
+    const res = await reserveProperty(data, property.id);
+    if (!res.success) {
+      form.setError('root', { message: res.message });
+      return;
+    } else {
+      setOpenDialog(false);
+      toast.success(res.message);
+    }
   };
+
+  const { isSubmitting: isPending, isSubmitted } = form.formState;
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
+      {isSubmitted && form.formState.errors.root && (
+        <Alert variant={'error'} className='max-w-2xl mx-auto mb-6'>
+          <FiAlertTriangle />
+          <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+        </Alert>
+      )}
       <FieldGroup>
         {/* Name */}
         <Controller
@@ -165,7 +183,9 @@ const ReservePropertyDialogForm = ({
                       >
                         <span className='flex items-center text-muted-foreground'>
                           <CalendarIcon className='mr-2' />
-                          {date ? date.toLocaleDateString() : 'Pick a date'}
+                          {field.value
+                            ? field.value.toLocaleDateString()
+                            : 'Pick a date'}
                         </span>
                         <ChevronDownIcon />
                       </Button>
@@ -178,11 +198,10 @@ const ReservePropertyDialogForm = ({
                   >
                     <Calendar
                       mode='single'
-                      selected={date}
+                      selected={field.value}
                       required
                       disabled={[{ before: new Date() }, { dayOfWeek: [0, 6] }]}
                       onSelect={(date) => {
-                        setDate(date);
                         setOpen(false);
                         field.onChange(date);
                       }}
@@ -205,7 +224,6 @@ const ReservePropertyDialogForm = ({
                   id={field.name}
                   value={field.value}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     field.onChange(e.target.value);
                   }}
                   className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
@@ -224,8 +242,8 @@ const ReservePropertyDialogForm = ({
             )}
           />
         </div>
-        <Button type='submit' className='self-end'>
-          Reserve Now
+        <Button disabled={isPending} type='submit' className='self-start'>
+          {isPending ? 'Requesting...' : 'Request Viewing'}
         </Button>
       </FieldGroup>
     </form>

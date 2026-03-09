@@ -21,19 +21,20 @@ model Property {
 }
 
 model Reservation {
-  id         String   @id @default(uuid())
-  propertyId String
-  property   Property @relation(fields: [propertyId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  date       DateTime @db.Date
-  startTime  DateTime @db.Time
-  endTime    DateTime @db.Time
-  userEmail  String
-  userPhone  String
-  status     Status   @default(PENDING)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id              String   @id @default(uuid())
+  propertyId      String
+  property        Property @relation(fields: [propertyId], references: [id])
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  date            DateTime
+  startTime       DateTime @db.Time
+  endTime         DateTime @db.Time
+  userName        String
+  userEmail       String
+  userPhoneNumber String
+  status          Status   @default(PENDING)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Renting {

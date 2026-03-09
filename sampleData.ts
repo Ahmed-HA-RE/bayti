@@ -34,7 +34,7 @@ export const samplePropertiesData = [
     name: 'Green Haven Loft',
     description:
       'A bright and modern studio in the heart of Downtown Dubai, offering spectacular views of Burj Khalifa. The open living space maximizes functionality, featuring a compact yet well-equipped kitchen and a stylish bathroom. Large windows ensure an abundance of natural light. This studio is perfect for individuals or investors seeking a central location close to Dubai Mall, metro stations, and the city’s premier entertainment venues.',
-    location: 'Mohammed Bin Rashid Boulevard, Downtown Dubai',
+    location: 'Mohammed Bin Rashid Boulevard, Downtown',
     city: 'Dubai',
     price: 1200000,
     area: 500,
@@ -265,7 +265,7 @@ export const samplePropertiesData = [
     name: 'The Horizon Lofts',
     description:
       'A cozy 1-bedroom apartment in Al Khalidiyah, Abu Dhabi, perfect for singles or couples. The apartment offers a comfortable living area, functional kitchen, and a modern bathroom. Located within walking distance to shops, restaurants, and public transport, providing easy access to city conveniences while maintaining a quiet and friendly environment.',
-    location: 'Al Khalidiyah, Abu Dhabi',
+    location: 'Al Corniche, Abu Dhabi',
     city: 'Abu Dhabi',
     price: 9000,
     area: 500,
