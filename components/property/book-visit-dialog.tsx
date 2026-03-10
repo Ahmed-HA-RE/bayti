@@ -55,12 +55,12 @@ const BookVisitDialog = ({
       </DialogTrigger>
       <DialogContent className='gap-6 px-6 sm:max-w-2xl'>
         <DialogHeader className=''>
-          <DialogTitle className='text-3xl font-normal leading-snug mb-2'>
-            Book a visit for:{' '}
+          <DialogTitle className='text-3xl font-normal leading-tight mb-0.5'>
+            Schedule a visit for{' '}
             <span className='font-semibold'>{property.name}</span>
           </DialogTitle>
           <DialogDescription className='text-base'>
-            Submit your preferred date and time to schedule a property viewing.
+            Choose your preferred date and time to arrange a property visit.
           </DialogDescription>
         </DialogHeader>
         {!isAllowedToRequestViewing ? (

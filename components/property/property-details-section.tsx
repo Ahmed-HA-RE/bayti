@@ -26,7 +26,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
     headers: await headers(),
   });
 
-  const requestViewingStatus = await prisma.viewingRequest.findFirst({
+  const requestViewingStatus = await prisma.booking.findFirst({
     where: {
       propertyId: property.id,
       userId: session?.user.id,

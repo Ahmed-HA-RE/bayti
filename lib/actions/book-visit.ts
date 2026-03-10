@@ -9,6 +9,10 @@ import { auth } from '../auth';
 import { headers } from 'next/headers';
 import prisma from '../prisma';
 import { set } from 'date-fns';
+import resend from '../resend';
+import BookVisitConfirmationEmail from '@/emails/book-visit-confirmation';
+
+const domain = process.env.DOMAIN;
 
 export const bookVisit = async (
   data: BookVisitDialogFormData,
@@ -28,7 +32,7 @@ export const bookVisit = async (
     const { name, email, phoneNumber, date, timeRange } = validatedData.data;
 
     // Check if client has already requested a book visit for the same property of the same day
-    const bookVisitRequest = await prisma.viewingRequest.findFirst({
+    const bookVisitRequest = await prisma.booking.findFirst({
       where: {
         propertyId,
         userId: session.user.id,
@@ -60,7 +64,7 @@ export const bookVisit = async (
     });
 
     // Check if the requested time slot overlaps with any existing reservations for the same property
-    const alreadyReserved = await prisma.viewingRequest.findFirst({
+    const alreadyReserved = await prisma.booking.findFirst({
       where: {
         propertyId,
         status: { in: ['PENDING', 'CONFIRMED'] },
@@ -75,7 +79,7 @@ export const bookVisit = async (
       );
 
     // Else create a new viewing request
-    await prisma.viewingRequest.create({
+    const newBooking = await prisma.booking.create({
       data: {
         propertyId,
         userId: session.user.id,
@@ -86,7 +90,21 @@ export const bookVisit = async (
         startTime,
         endTime,
       },
+      include: { property: true },
     });
+
+    // Send confirmation email to the user
+    const { error } = await resend.emails.send({
+      from: `Bayti Support <support@${domain}>`,
+      to: email,
+      replyTo: process.env.EMAIL,
+      subject: 'We received your visit request!',
+      react: BookVisitConfirmationEmail({
+        booking: newBooking,
+      }),
+    });
+
+    if (error) throw new Error('Something went wrong. Please try again later.');
 
     revalidatePath(`/property/${propertyId}`);
 

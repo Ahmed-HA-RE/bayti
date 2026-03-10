@@ -7,7 +7,7 @@ const phoneNumber = z.string({ error: 'Phone number is required' }).refine(
     return parsedNumber?.isValid();
   },
   {
-    error: 'Invalid phone number',
+    error: 'Please enter a valid number',
   },
 );
 

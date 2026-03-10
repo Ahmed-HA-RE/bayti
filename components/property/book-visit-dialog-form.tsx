@@ -94,10 +94,10 @@ const BookVisitDialogForm = ({
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+              <FieldLabel>Full Name</FieldLabel>
               <InputGroup>
                 <InputGroupAddon>
-                  <User2Icon className='size-4' />
+                  <User2Icon />
                 </InputGroupAddon>
                 <InputGroupInput
                   type='text'
@@ -120,7 +120,7 @@ const BookVisitDialogForm = ({
               <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
               <InputGroup>
                 <InputGroupAddon>
-                  <FiMail className='size-4' />
+                  <FiMail />
                 </InputGroupAddon>
                 <InputGroupInput
                   type='email'
@@ -224,13 +224,17 @@ const BookVisitDialogForm = ({
                 </FieldLabel>
                 <NativeSelect
                   id={field.name}
+                  aria-invalid={fieldState.invalid}
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(e.target.value);
                   }}
-                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                  className='bg-transparent p-0 shadow-none focus:ring-0'
                 >
-                  <NativeSelectOption value={''}>
+                  <NativeSelectOption
+                    value={''}
+                    aria-invalid={fieldState.invalid}
+                  >
                     Select a time range
                   </NativeSelectOption>
                   {RESERVING_TIMES.map((t, index) => (
