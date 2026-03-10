@@ -37,7 +37,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   });
 
   return (
-    <section className='pb-8 md:pb-12 lg:pb-14'>
+    <section className='section-spacing'>
       <div className='container'>
         <div className='flex flex-col md:flex-row gap-10 lg:gap-16'>
           {/* Left Side */}

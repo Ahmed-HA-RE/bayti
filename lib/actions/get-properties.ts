@@ -26,7 +26,7 @@ export const getProperties = async ({
     ? {
         OR: [
           { name: { contains: search, mode: 'insensitive' } },
-          { location: { contains: search, mode: 'insensitive' } },
+          { address: { contains: search, mode: 'insensitive' } },
           { city: { contains: search, mode: 'insensitive' } },
         ],
       }
