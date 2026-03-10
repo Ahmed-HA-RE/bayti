@@ -39,9 +39,7 @@ const PropertiesList = ({
         {data && data?.properties?.length === 0 ? (
           <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200'>
             <CircleAlertIcon className='size-5' />
-            <AlertTitle className='text-base'>
-              No properties found matching your criteria.
-            </AlertTitle>
+            <AlertTitle className='text-base'>No properties found.</AlertTitle>
           </Alert>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>

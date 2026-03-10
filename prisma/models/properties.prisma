@@ -2,7 +2,9 @@ model Property {
   id           String       @id @default(uuid())
   name         String
   description  String
-  location     String
+  address      String
+  longitude    Float
+  latitude     Float
   city         String
   price        Int
   area         Int

@@ -44,7 +44,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
           <h3 className='text-2xl font-medium'>{property.name}</h3>
           <div className='flex items-center gap-2 text-base text-muted-foreground capitalize'>
             <FaMapMarkerAlt className='size-5 text-black ' />
-            {property.location}, {formatCityName(property.city)}
+            {property.address}, {formatCityName(property.city)}
           </div>
           <Separator className='my-2 bg-gray-200' />
           <div className='flex items-center gap-6 text-base text-muted-foreground'>

@@ -79,7 +79,7 @@ const BookVisitConfirmationEmail = ({
                   {format(booking.endTime, 'hh:mm a')}
                 </li>
                 <li>
-                  Property Location: {booking.property.location},{' '}
+                  Property Location: {booking.property.address},{' '}
                   {booking.property.city}
                 </li>
               </ul>
@@ -131,7 +131,7 @@ BookVisitConfirmationEmail.PreviewProps = {
     endTime: new Date(new Date().getTime() + 60 * 60 * 1000),
     property: {
       name: 'Luxurious Villa in Beverly Hills',
-      location: 'Beverly Hills',
+      address: 'Beverly Hills',
       city: 'Los Angeles',
     },
   },

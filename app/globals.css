@@ -115,6 +115,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
 }
 
 @layer utilities {
@@ -122,7 +128,7 @@
     @apply w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8;
   }
   .section-spacing {
-    @apply py-8 sm:py-14 lg:py-20;
+    @apply py-12 sm:py-16 lg:py-20;
   }
   .section-header-spacing {
     @apply pt-36 md:pt-44;

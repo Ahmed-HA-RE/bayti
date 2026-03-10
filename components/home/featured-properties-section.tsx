@@ -13,7 +13,7 @@ const FeaturedProperties = async () => {
       id: true,
       images: true,
       name: true,
-      location: true,
+      address: true,
       city: true,
     },
     take: 3,
@@ -77,7 +77,7 @@ const FeaturedProperties = async () => {
                   <div className='space-y-2 flex-1'>
                     <h3 className='text-xl'>{property.name}</h3>
                     <p className='text-muted-foreground'>
-                      {property.location}, {property.city}
+                      {property.address}, {property.city}
                     </p>
                   </div>
                 </div>

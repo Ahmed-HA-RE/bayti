@@ -60,7 +60,7 @@ const PropertyHeaderSection = ({ property }: { property: Property }) => {
               <div className='flex items-center gap-2 text-sm text-muted-foreground'>
                 <LuMapPinHouse className='size-4' />
                 <span>
-                  {property.location}, {formatCityName(property.city)}, UAE
+                  {property.address}, {formatCityName(property.city)}, UAE
                 </span>
               </div>
               <div className='flex items-center gap-1.5'>

@@ -1,6 +1,7 @@
 import PropertyDetailsSection from '@/components/property/property-details-section';
 import PropertyGallerySection from '@/components/property/property-gallery-section';
 import PropertyHeaderSection from '@/components/property/property-header-section';
+import PropertyMapSection from '@/components/property/property-map-section';
 import prisma from '@/lib/prisma';
 import { convertToPlainObject } from '@/lib/utils';
 import type { Metadata } from 'next';
@@ -59,7 +60,11 @@ const PropertyPage = async ({
       <PropertyGallerySection
         galleryImage={{ images: property.images, alt: property.name }}
       />
-      <PropertyDetailsSection property={convertToPlainObject(property)} />
+      <PropertyDetailsSection property={property} />
+      <PropertyMapSection
+        longitude={property.longitude}
+        latitude={property.latitude}
+      />
     </>
   );
 };
