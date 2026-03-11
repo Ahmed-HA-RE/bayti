@@ -9,7 +9,7 @@ const SectionHeader = ({
   subtitle: string;
 }) => {
   return (
-    <section className='section-header-spacing'>
+    <section className='section-top-spacing'>
       <div className='container'>
         <div className='flex flex-col items-center justify-center gap-4'>
           <MotionPreset fade slide={{ direction: 'right' }} delay={0.1} blur>

@@ -112,7 +112,7 @@ const MobileNavigation = ({
           <Button
             variant='ghost'
             size='icon'
-            className='inline-flex md:hidden border-0'
+            className='inline-flex md:hidden border-0 aria-expanded:bg-transparent'
           />
         }
       >

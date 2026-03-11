@@ -3,7 +3,7 @@ import Header from '@/components/header/header';
 import CtaSection from '@/components/home/cta-section';
 import FAQ from '@/components/shared/faq-section';
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='flex flex-col min-h-screen'>
       {/* Header */}

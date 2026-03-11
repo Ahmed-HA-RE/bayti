@@ -67,8 +67,7 @@ const DesktopNavigation = () => {
                 render={<Link href={navItem.href!} />}
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  'hover:text-[#ff6b00] hover:font-bold',
-                  pathname === navItem.href && 'text-[#ff6b00] font-bold',
+                  pathname === navItem.href && 'font-bold',
                 )}
               >
                 {navItem.title}
@@ -76,7 +75,7 @@ const DesktopNavigation = () => {
             </NavigationMenuItem>
           ) : (
             <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer font-medium'>
+              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer '>
                 {navItem.title}
               </NavigationMenuTrigger>
               <NavigationMenuContent
@@ -89,9 +88,8 @@ const DesktopNavigation = () => {
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
                           className={cn(
-                            'hover:font-bold hover:text-[#ff6b00] flex items-center font-medium rounded-sm px-3 text-base',
-                            pathname === item.href &&
-                              'text-[#ff6b00] font-bold',
+                            'flex items-center  rounded-sm px-3 text-base text-foreground',
+                            pathname === item.href && 'font-bold',
                           )}
                         >
                           {item.title}

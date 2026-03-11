@@ -29,7 +29,7 @@ const LatestPropertiesSection = async () => {
           <SectionEyebrow title='explore' />
           <h2 className='section-title'>Our Latest Properties</h2>
         </MotionPreset>
-        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-14'>
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
           {latestProperties.map((property, index) => (
             <MotionPreset
               fade
@@ -53,10 +53,9 @@ const LatestPropertiesSection = async () => {
             href='/properties'
             className='group max-sm:w-full'
             variant='default'
-            size='lg'
           >
             View All Properties
-            <ArrowRightIcon className='text-white group-hover:translate-x-2 transition-transform duration-200 size-5' />
+            <ArrowRightIcon className='text-white group-hover:translate-x-2 transition-transform duration-200 size-4' />
           </LinkButton>
         </MotionPreset>
       </div>

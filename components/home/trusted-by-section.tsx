@@ -7,14 +7,6 @@ const TrustedBySection = () => {
     <section className='section-spacing'>
       <div>
         <MotionPreset
-          slide={{ direction: 'right' }}
-          fade
-          className='mb-8 text-2xl md:text-2xl font-bold text-center'
-          component='h2'
-        >
-          Trusted by teams worldwide
-        </MotionPreset>
-        <MotionPreset
           component='div'
           slide={{ direction: 'right' }}
           fade

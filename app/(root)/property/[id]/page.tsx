@@ -56,10 +56,10 @@ const PropertyPage = async ({
 
   return (
     <>
-      <PropertyHeaderSection property={property} />
       <PropertyGallerySection
         galleryImage={{ images: property.images, alt: property.name }}
       />
+      <PropertyHeaderSection property={property} />
       <PropertyDetailsSection property={property} />
       <PropertyMapSection
         longitude={property.longitude}

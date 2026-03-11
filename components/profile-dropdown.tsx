@@ -18,12 +18,35 @@ import { auth } from '@/lib/auth';
 import { authClient } from '@/lib/authClient';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 const ProfileDropdown = ({
   session,
 }: {
   session: typeof auth.$Infer.Session | null;
 }) => {
+  const navigationList =
+    session?.user.role === 'ADMIN'
+      ? [
+          {
+            label: 'Dashboard',
+            href: '/admin/dashboard',
+            icon: <User />,
+          },
+        ]
+      : [
+          {
+            label: 'Account',
+            href: '/account',
+            icon: <User />,
+          },
+          {
+            label: 'Settings',
+            href: '/settings',
+            icon: <Settings />,
+          },
+        ];
+
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -60,14 +83,12 @@ const ProfileDropdown = ({
         className='w-42 bg-card text-card-foreground'
       >
         <DropdownMenuGroup className='space-y-1'>
-          <DropdownMenuItem>
-            <User />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            Settings
-          </DropdownMenuItem>
+          {navigationList.map((item, index) => (
+            <DropdownMenuItem render={<Link href={item.href} />} key={index}>
+              {item.icon}
+              {item.label}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} variant='destructive'>
