@@ -28,13 +28,42 @@ import { auth } from '@/lib/auth';
 import { authClient } from '@/lib/authClient';
 import toast from 'react-hot-toast';
 
+type NavigationMenu = {
+  title: string;
+  href?: string;
+  items?: {
+    title: string;
+    href: string;
+  }[];
+};
+
 const MobileNavigation = ({
   session,
 }: {
   screenSize?: number;
   session: typeof auth.$Infer.Session | null;
 }) => {
-  const navigationData = [
+  const adminNavigationData: NavigationMenu[] =
+    session && session.user.role === 'ADMIN'
+      ? [
+          {
+            title: 'Dashboard',
+            href: '/admin/dashboard',
+          },
+        ]
+      : [];
+
+  const userNavigationData: NavigationMenu[] =
+    session && session.user.role === 'USER'
+      ? [
+          {
+            title: 'Account',
+            href: '/account',
+          },
+        ]
+      : [];
+
+  const baseNavigationData: NavigationMenu[] = [
     {
       title: 'Home',
       href: '/',
@@ -68,18 +97,8 @@ const MobileNavigation = ({
       title: 'Blog',
       href: '/blog',
     },
-    ...(session
-      ? [
-          {
-            title: 'Account',
-            href: '/account',
-          },
-          {
-            title: 'Settings',
-            href: '/settings',
-          },
-        ]
-      : []),
+    ...adminNavigationData,
+    ...userNavigationData,
   ];
 
   const pathname = usePathname();
@@ -107,17 +126,15 @@ const MobileNavigation = ({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger
-        render={
-          <Button
-            variant='ghost'
-            size='icon'
-            className='inline-flex md:hidden border-0 aria-expanded:bg-transparent'
-          />
-        }
-      >
-        <RiMenu3Fill className='size-6' />
-        <span className='sr-only'>Menu</span>
+      <SheetTrigger asChild>
+        <Button
+          variant='ghost'
+          size='icon'
+          className='inline-flex md:hidden border-0 aria-expanded:bg-transparent'
+        >
+          <RiMenu3Fill className='size-6' />
+          <span className='sr-only'>Menu</span>
+        </Button>
       </SheetTrigger>
       <SheetContent side='left' className='w-75 gap-6 p-0 bg-muted'>
         <SheetHeader className='pt-6'>
@@ -130,15 +147,15 @@ const MobileNavigation = ({
           </Link>
         </SheetHeader>
         <div className='space-y-5 overflow-y-auto p-2'>
-          {navigationData.map((navItem, index) => (
+          {baseNavigationData.map((navItem, index) => (
             <React.Fragment key={index}>
               {navItem.href ? (
                 <Link
                   key={navItem.title}
                   href={navItem.href}
                   className={cn(
-                    'font-semibold hover:font-bold hover:text-[#ff6b00] flex items-center gap-2 px-3 text-base transition duration-300',
-                    pathname === navItem.href && 'font-bold text-[#ff6b00]',
+                    'flex items-center gap-2 px-3 text-base transition duration-300',
+                    pathname === navItem.href && 'font-bold',
                   )}
                   onClick={handleLinkClick}
                 >
@@ -146,7 +163,7 @@ const MobileNavigation = ({
                 </Link>
               ) : (
                 <Collapsible key={index} className='w-full group'>
-                  <CollapsibleTrigger className='font-semibold flex w-full items-center justify-between rounded-sm px-3 text-base cursor-pointer'>
+                  <CollapsibleTrigger className='flex w-full items-center justify-between rounded-sm px-3 text-base cursor-pointer'>
                     <div className='flex items-center gap-2'>
                       {navItem.title}
                     </div>
@@ -159,7 +176,7 @@ const MobileNavigation = ({
                         href={item.href}
                         className={cn(
                           'hover:text-[#ff6b00] ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2 transition duration-300',
-                          pathname === item.href && 'font-bold text-[#ff6b00]',
+                          pathname === item.href && 'font-bold',
                         )}
                         onClick={handleLinkClick}
                       >

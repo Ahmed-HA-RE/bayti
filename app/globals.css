@@ -86,7 +86,7 @@
   --secondary-hover: oklch(0.3467 0 3.18);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: #ff6b00;
   --accent-foreground: #ff6b00;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);

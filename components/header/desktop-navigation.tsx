@@ -64,13 +64,13 @@ const DesktopNavigation = () => {
           !navItem.items && !navItem.image ? (
             <NavigationMenuItem key={navItem.title}>
               <NavigationMenuLink
-                render={<Link href={navItem.href!} />}
+                asChild
                 className={cn(
                   navigationMenuTriggerStyle(),
                   pathname === navItem.href && 'font-bold',
                 )}
               >
-                {navItem.title}
+                <Link href={navItem.href!}>{navItem.title}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ) : (
@@ -85,14 +85,16 @@ const DesktopNavigation = () => {
                   <ul className='flex flex-col py-2 rounded-md h-full gap-2'>
                     {navItem.items?.map((item) => (
                       <li key={item.title}>
-                        <NavigationMenuLink
-                          render={<Link href={item.href} />}
-                          className={cn(
-                            'flex items-center  rounded-sm px-3 text-base text-foreground',
-                            pathname === item.href && 'font-bold',
-                          )}
-                        >
-                          {item.title}
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              'flex items-center  rounded-sm px-3 text-base text-foreground',
+                              pathname === item.href && 'font-bold',
+                            )}
+                          >
+                            {item.title}
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                     ))}

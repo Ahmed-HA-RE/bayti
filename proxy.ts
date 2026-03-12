@@ -23,8 +23,21 @@ export const proxy = async (request: NextRequest) => {
   if (!token && request.nextUrl.pathname.startsWith('/reset-password')) {
     return NextResponse.redirect(new URL('/forgot-password', request.url));
   }
+
+  if (
+    (!session || session.user.role === 'USER') &&
+    request.nextUrl.pathname.startsWith('/admin')
+  ) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 };
 
 export const config = {
-  matcher: ['/login', '/sign-up', '/forgot-password', '/reset-password'],
+  matcher: [
+    '/login',
+    '/sign-up',
+    '/forgot-password',
+    '/reset-password',
+    '/admin:path*',
+  ],
 };

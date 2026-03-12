@@ -13,12 +13,12 @@ import { LogOutIcon, Settings, User } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { Skeleton } from './ui/skeleton';
-import { Button } from './ui/button';
 import { auth } from '@/lib/auth';
 import { authClient } from '@/lib/authClient';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const ProfileDropdown = ({
   session,
@@ -48,6 +48,7 @@ const ProfileDropdown = ({
         ];
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -57,36 +58,36 @@ const ProfileDropdown = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant='ghost'
-            size='icon'
-            className='rounded-full md:block hidden'
-          >
-            <Avatar>
-              <Suspense fallback={<Skeleton className='w-10 rounded-full' />}>
-                <Image
-                  width={150}
-                  height={150}
-                  src={session?.user.image ?? ''}
-                  alt='profile picture'
-                  className='rounded-full'
-                />
-              </Suspense>
-            </Avatar>
-          </Button>
-        }
-      />
+      <DropdownMenuTrigger className='cursor-pointer' asChild>
+        <Avatar>
+          <Suspense fallback={<Skeleton className='w-10 rounded-full' />}>
+            <Image
+              width={150}
+              height={150}
+              src={session?.user.image ?? ''}
+              alt='profile picture'
+              className='rounded-full'
+            />
+          </Suspense>
+        </Avatar>
+      </DropdownMenuTrigger>
       <DropdownMenuContent
         align='end'
-        className='w-42 bg-card text-card-foreground'
+        className='w-42 bg-card text-card-foreground py-2'
       >
         <DropdownMenuGroup className='space-y-1'>
           {navigationList.map((item, index) => (
-            <DropdownMenuItem render={<Link href={item.href} />} key={index}>
-              {item.icon}
-              {item.label}
+            <DropdownMenuItem asChild key={index}>
+              <Link
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-2',
+                  pathname === item.href && 'bg-orange-50 text-accent',
+                )}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
