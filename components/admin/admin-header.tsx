@@ -20,6 +20,8 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+const iconStyles = 'text-foreground size-5 shrink-0';
+
 export type NavigationData = {
   title: string;
   href?: string;
@@ -33,15 +35,13 @@ export type NavigationData = {
 
 const navigationData: NavigationData[] = [
   {
-    title: 'Home',
-    icon: <MdDashboard className='text-foreground size-5 shrink-0' />,
+    title: 'Dashboard',
+    icon: <MdDashboard className={iconStyles} />,
     href: '/admin/dashboard',
   },
   {
     title: 'Properties',
-    icon: (
-      <MdMapsHomeWork className='text-foreground size-5 shrink-0 transition' />
-    ),
+    icon: <MdMapsHomeWork className={iconStyles} />,
     items: [
       {
         title: 'All Properties',
@@ -55,12 +55,12 @@ const navigationData: NavigationData[] = [
   },
   {
     title: 'Users',
-    icon: <FaUsers className='text-foreground size-5 shrink-0 ' />,
+    icon: <FaUsers className={iconStyles} />,
     href: '/admin/users',
   },
   {
     title: 'Agents',
-    icon: <MdRealEstateAgent className='text-foreground size-5 shrink-0' />,
+    icon: <MdRealEstateAgent className={iconStyles} />,
     items: [
       {
         title: 'All Agents',
@@ -74,13 +74,8 @@ const navigationData: NavigationData[] = [
   },
   {
     title: 'Settings',
-    icon: <IoSettings className='text-foreground size-5 shrink-0' />,
+    icon: <IoSettings className={iconStyles} />,
     href: '/admin/settings',
-  },
-  {
-    title: 'Back to Site',
-    icon: <LuArrowLeftFromLine className='text-foreground size-5 shrink-0' />,
-    href: '/',
   },
 ];
 
@@ -95,10 +90,10 @@ const AdminHeader = async () => {
 
   return (
     <header className='sticky top-0 z-50 border-b'>
-      <div className='container flex items-center justify-between gap-8 px-4 py-6'>
+      <div className='container flex items-center justify-between gap-8 p-4'>
         <div className='flex items-center gap-2'>
           <MenuSheet navigationData={navigationData} />
-          <Link href='/'>
+          <Link href='/admin/dashboard'>
             <Image
               src={'/svg/logo.svg'}
               alt='Logo'
@@ -107,57 +102,66 @@ const AdminHeader = async () => {
               priority
             />
           </Link>
-        </div>
-        <NavigationMenu viewport={false} className='hidden lg:block'>
-          <NavigationMenuList className='flex-wrap justify-start'>
-            {navigationData.map((navItem) => {
-              if (navItem.href) {
-                // Root link item
+          <NavigationMenu viewport={false} className='hidden lg:block'>
+            <NavigationMenuList className='justify-start gap-5'>
+              {navigationData.map((navItem) => {
+                if (navItem.href) {
+                  // Root link item
+                  return (
+                    <NavigationMenuItem key={navItem.title}>
+                      <NavigationMenuLink
+                        href={navItem.href}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          'flex flex-row items-center gap-1.5',
+                        )}
+                      >
+                        {navItem.icon}
+                        {navItem.title}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  );
+                }
+
+                // Section with dropdown
                 return (
                   <NavigationMenuItem key={navItem.title}>
-                    <NavigationMenuLink
-                      href={navItem.href}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        'flex flex-row items-center gap-1.5',
-                      )}
-                    >
+                    <NavigationMenuTrigger className='gap-1 p-2'>
                       {navItem.icon}
                       {navItem.title}
-                    </NavigationMenuLink>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className='data-[motion=from-start]:slide-in-from-left-30! data-[motion=to-start]:slide-out-to-left-30! data-[motion=from-end]:slide-in-from-right-30! data-[motion=to-end]:slide-out-to-right-30! absolute w-auto'>
+                      <ul className='grid w-42 gap-2'>
+                        {navItem.items?.map((item) => (
+                          <li key={item.title}>
+                            <NavigationMenuLink
+                              href={item.href}
+                              className='flex flex-row items-center gap-1.5 hover:text-accent '
+                            >
+                              {item.icon}
+                              {item.title}
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
                   </NavigationMenuItem>
                 );
-              }
+              })}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        <div className='flex items-center gap-6'>
+          <Link
+            href='/'
+            className='items-center gap-2 text-sm hidden lg:inline-flex hover:text-accent transition'
+          >
+            <LuArrowLeftFromLine className='text-foreground size-5 shrink-0' />
+            Back to Site
+          </Link>
 
-              // Section with dropdown
-              return (
-                <NavigationMenuItem key={navItem.title}>
-                  <NavigationMenuTrigger className='gap-1.5 mx-2'>
-                    {navItem.icon}
-                    {navItem.title}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className='data-[motion=from-start]:slide-in-from-left-30! data-[motion=to-start]:slide-out-to-left-30! data-[motion=from-end]:slide-in-from-right-30! data-[motion=to-end]:slide-out-to-right-30! absolute w-auto'>
-                    <ul className='grid w-42 gap-4'>
-                      <li>
-                        {navItem.items?.map((item) => (
-                          <NavigationMenuLink
-                            key={item.title}
-                            href={item.href}
-                            className='flex flex-row items-center gap-1.5 hover:text-accent'
-                          >
-                            {item.icon}
-                            {item.title}
-                          </NavigationMenuLink>
-                        ))}
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
-        <ProfileDropdown session={session} />
+          <ProfileDropdown session={session} />
+        </div>
       </div>
     </header>
   );

@@ -71,7 +71,7 @@ export const getProperties = async ({
       ...locationFilter,
       ...priceFilter,
       ...listTypeFilter,
-      isAvailable: true,
+      status: 'AVAILABLE',
     },
     orderBy: {
       createdAt: 'desc',
@@ -87,7 +87,7 @@ export const getProperties = async ({
       ...locationFilter,
       ...priceFilter,
       ...listTypeFilter,
-      isAvailable: true,
+      status: 'AVAILABLE',
     },
   });
 

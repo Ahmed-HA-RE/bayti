@@ -10,7 +10,7 @@ const HeroSection = async () => {
   const property = await prisma.property.findMany({
     where: {
       isFeatured: false,
-      isAvailable: true,
+      status: 'AVAILABLE',
     },
     take: 1,
     orderBy: {

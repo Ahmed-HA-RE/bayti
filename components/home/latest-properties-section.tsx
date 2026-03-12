@@ -9,7 +9,7 @@ const LatestPropertiesSection = async () => {
   const latestProperties = await prisma.property.findMany({
     where: {
       isFeatured: false,
-      isAvailable: true,
+      status: 'AVAILABLE',
     },
     orderBy: {
       createdAt: 'desc',

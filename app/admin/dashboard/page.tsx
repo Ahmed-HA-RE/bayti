@@ -1,5 +1,11 @@
+import Statistics from '@/components/admin/statistics';
+
 const AdminHomePage = () => {
-  return <div>hi</div>;
+  return (
+    <>
+      <Statistics />
+    </>
+  );
 };
 
 export default AdminHomePage;

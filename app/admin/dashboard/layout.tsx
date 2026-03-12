@@ -1,6 +1,16 @@
 import { Card, CardContent } from '@/components/ui/card';
 import AdminHeader from '@/components/admin/admin-header';
 import { APP_NAME } from '@/lib/constants';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Admin Dashboard',
+    template: '%s - Admin Dashboard',
+  },
+  description:
+    'Manage properties, users, agents, and bookings from the Bayti Admin Dashboard. Monitor listings, update property information, and oversee platform activity in one centralized management panel.',
+};
 
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const currentYear = new Date().getFullYear();
@@ -8,7 +18,7 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className='flex min-h-dvh flex-col'>
       <AdminHeader />
       <main className='container flex-1 py-6'>
-        <Card className='rounded-xl'>
+        <Card className='rounded-lg'>
           <CardContent>{children}</CardContent>
         </Card>
       </main>

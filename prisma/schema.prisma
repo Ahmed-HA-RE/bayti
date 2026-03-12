@@ -13,6 +13,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum PropertyStatus {
+  AVAILABLE
+  SOLD
+  RENTED
+}
+
 enum Role {
   USER
   ADMIN
