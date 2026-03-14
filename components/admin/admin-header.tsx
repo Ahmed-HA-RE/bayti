@@ -89,7 +89,7 @@ const AdminHeader = async () => {
   }
 
   return (
-    <header className='sticky top-0 z-50 border-b'>
+    <header className='sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm'>
       <div className='container flex items-center justify-between gap-8 p-4'>
         <div className='flex items-center gap-2'>
           <MenuSheet navigationData={navigationData} />
