@@ -80,6 +80,14 @@ const MobileNavigation = ({
           href: '/about-us',
         },
         {
+          title: 'Team',
+          href: '/team',
+        },
+        {
+          title: 'Agents',
+          href: '/agents',
+        },
+        {
           title: 'Talk to an Agent',
           href: '/contact-us',
         },
@@ -154,8 +162,8 @@ const MobileNavigation = ({
                   key={navItem.title}
                   href={navItem.href}
                   className={cn(
-                    'flex items-center gap-2 px-3 text-base transition duration-300',
-                    pathname === navItem.href && 'font-bold',
+                    'flex items-center gap-2 px-3 text-base transition duration-300 hover:text-accent',
+                    pathname === navItem.href && 'text-accent font-bold',
                   )}
                   onClick={handleLinkClick}
                 >
@@ -167,16 +175,16 @@ const MobileNavigation = ({
                     <div className='flex items-center gap-2'>
                       {navItem.title}
                     </div>
-                    <ChevronRightIcon className='size-4 shrink-0 transition-transform duration-200 group-data-[open]:rotate-90' />
+                    <ChevronRightIcon className='size-4 shrink-0 transition-transform duration-200 group-data-open:rotate-90' />
                   </CollapsibleTrigger>
-                  <CollapsibleContent className='overflow-hidden mt-2 space-y-4'>
+                  <CollapsibleContent className='overflow-hidden mt-2 space-y-4 data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down transition-all duration-300'>
                     {navItem.items?.map((item) => (
                       <Link
                         key={item.title}
                         href={item.href}
                         className={cn(
-                          'hover:text-[#ff6b00] ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2 transition duration-300',
-                          pathname === item.href && 'font-bold',
+                          'hover:text-accent ml-3 flex items-center gap-2 rounded-md px-3 text-base mt-2 transition duration-300',
+                          pathname === item.href && 'text-accent font-bold',
                         )}
                         onClick={handleLinkClick}
                       >
@@ -193,8 +201,8 @@ const MobileNavigation = ({
             <Link
               href={'/login'}
               className={cn(
-                'font-semibold hover:font-bold hover:text-[#ff6b00] flex items-center gap-2 rounded-md text-base px-3 transition duration-300',
-                pathname === '/login' && 'bg-background border border-border',
+                'hover:text-accent text-base px-3 transition duration-300 block',
+                pathname === '/login' && 'text-accent font-bold',
               )}
               onClick={handleLinkClick}
             >

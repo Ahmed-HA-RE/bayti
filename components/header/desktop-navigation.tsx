@@ -12,7 +12,6 @@ import {
 } from '../ui/navigation-menu';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const DesktopNavigation = () => {
   const pathname = usePathname();
@@ -32,6 +31,14 @@ const DesktopNavigation = () => {
         {
           title: 'About Us',
           href: '/about-us',
+        },
+        {
+          title: 'Team',
+          href: '/team',
+        },
+        {
+          title: 'Agents',
+          href: '/agents',
         },
         {
           title: 'Talk to an Agent',
@@ -58,61 +65,52 @@ const DesktopNavigation = () => {
   ];
 
   return (
-    <NavigationMenu className='flex items-center max-md:hidden'>
-      <NavigationMenuList className='gap-6'>
-        {navigationData.map((navItem) =>
-          !navItem.items && !navItem.image ? (
+    <NavigationMenu>
+      <NavigationMenuList className='gap-4'>
+        {navigationData.map((navItem) => {
+          if (!navItem.items) {
+            return (
+              <NavigationMenuItem key={navItem.title}>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    pathname === navItem.href && 'text-accent',
+                  )}
+                >
+                  <Link href={navItem.href}>{navItem.title}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            );
+          }
+
+          return (
             <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuLink
-                asChild
-                className={cn(
-                  navigationMenuTriggerStyle(),
-                  pathname === navItem.href && 'font-bold',
-                )}
+              <NavigationMenuTrigger
+                className={cn(navigationMenuTriggerStyle())}
               >
-                <Link href={navItem.href!}>{navItem.title}</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ) : (
-            <NavigationMenuItem key={navItem.title}>
-              <NavigationMenuTrigger className='text-foreground bg-transparent text-base shadow-none [&_svg]:size-4 cursor-pointer '>
                 {navItem.title}
               </NavigationMenuTrigger>
-              <NavigationMenuContent
-                className={cn('shadow-lg bg-white rounded-lg w-120')}
-              >
-                <div className='grid grid-cols-2 gap-2'>
-                  <ul className='flex flex-col py-2 rounded-md h-full gap-2'>
-                    {navItem.items?.map((item) => (
-                      <li key={item.title}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={item.href}
-                            className={cn(
-                              'flex items-center  rounded-sm px-3 text-base text-foreground',
-                              pathname === item.href && 'font-bold',
-                            )}
-                          >
-                            {item.title}
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className='relative flex flex-col h-full overflow-hidden'>
-                    <Image
-                      src={navItem.image?.img as string}
-                      fill
-                      alt='navigation image'
-                      className='h-full w-full rounded-md object-cover'
-                    />
-                    <span className='absolute inset-0 h-full bg-gradient-to-t from-black/60 to-transparent' />
-                  </div>
-                </div>
+              <NavigationMenuContent>
+                <ul className='w-80 grid grid-cols-2 gap-2'>
+                  {navItem.items.map((item) => (
+                    <li key={item.title}>
+                      <NavigationMenuLink
+                        asChild
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          pathname === item.href && 'text-accent',
+                        )}
+                      >
+                        <Link href={item.href}>{item.title}</Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-          ),
-        )}
+          );
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );

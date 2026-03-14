@@ -18,7 +18,7 @@ const Header = async () => {
         'fixed top-0 left-0 right-0 w-full z-20 py-4 transition duration-300 max-lg:px-4',
       )}
     >
-      <div className='mx-auto max-w-2xl rounded-lg bg-white p-4 shadow-sm'>
+      <div className='mx-auto max-w-3xl rounded-lg bg-white p-4 shadow-sm'>
         <div className='flex items-center justify-between'>
           {/* Logo */}
           <Link href='/'>
@@ -33,7 +33,9 @@ const Header = async () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <DesktopNavigation />
+          <div className='hidden md:block'>
+            <DesktopNavigation />
+          </div>
 
           {/* Mobile Menu Navigation */}
           <div className='md:hidden'>
