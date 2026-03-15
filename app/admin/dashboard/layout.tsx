@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import AdminHeader from '@/components/admin/admin-header';
 import { APP_NAME } from '@/lib/constants';
 import { Metadata } from 'next';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const metadata: Metadata = {
   title: {
@@ -18,9 +19,11 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className='flex min-h-dvh flex-col'>
       <AdminHeader />
       <main className='container flex-1 py-6'>
-        <Card className='rounded-lg'>
-          <CardContent>{children}</CardContent>
-        </Card>
+        <TooltipProvider>
+          <Card className='rounded-lg'>
+            <CardContent>{children}</CardContent>
+          </Card>
+        </TooltipProvider>
       </main>
       <footer className='border-t py-4'>
         <div className='container'>

@@ -19,8 +19,9 @@ import {
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LuArrowBigRightDash } from 'react-icons/lu';
+import { LuArrowBigRightDash, LuArrowLeftFromLine } from 'react-icons/lu';
 import { NavigationData } from './admin-header';
+import LogoutButton from '../shared/logout-button';
 
 const MenuSheet = ({
   navigationData,
@@ -97,6 +98,19 @@ const MenuSheet = ({
               </Collapsible>
             );
           })}
+        </div>
+        <div className='p-4 border-t'>
+          <div className='flex flex-col items-start gap-4'>
+            <Link
+              href='/'
+              className='flex items-center gap-2 text-sm hover:text-accent transition'
+              onClick={handleLinkClick}
+            >
+              <LuArrowLeftFromLine className='text-foreground size-5 shrink-0' />
+              Back to Site
+            </Link>
+            <LogoutButton setOpen={setOpen} />
+          </div>
         </div>
       </SheetContent>
     </Sheet>
