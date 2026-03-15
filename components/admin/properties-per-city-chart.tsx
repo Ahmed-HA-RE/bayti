@@ -45,7 +45,7 @@ const PropertiesPerCityChart = ({ data }: PropertiesPerCityChartProps) => {
   const totalCities = chartData.length;
 
   return (
-    <Card className='gap-4'>
+    <Card className='gap-4 h-full'>
       <CardHeader className='border-b'>
         <div className='flex flex-col gap-1'>
           <CardTitle>Properties by Cities</CardTitle>

@@ -131,7 +131,7 @@ const AdminHeader = async () => {
                       {navItem.title}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className='data-[motion=from-start]:slide-in-from-left-30! data-[motion=to-start]:slide-out-to-left-30! data-[motion=from-end]:slide-in-from-right-30! data-[motion=to-end]:slide-out-to-right-30! absolute w-auto'>
-                      <ul className='grid w-42 gap-2'>
+                      <ul className='grid w-42'>
                         {navItem.items?.map((item) => (
                           <li key={item.title}>
                             <NavigationMenuLink

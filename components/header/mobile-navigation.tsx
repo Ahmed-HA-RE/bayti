@@ -23,10 +23,9 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { auth } from '@/lib/auth';
-import { authClient } from '@/lib/authClient';
-import toast from 'react-hot-toast';
+import LogoutButton from '../shared/logout-button';
 
 type NavigationMenu = {
   title: string;
@@ -110,18 +109,10 @@ const MobileNavigation = ({
   ];
 
   const pathname = usePathname();
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleLinkClick = () => {
     setOpen(false);
-  };
-
-  const handleLogout = async () => {
-    setOpen(false);
-    await authClient.signOut();
-    router.refresh();
-    toast.success('Logged out successfully');
   };
 
   const isMobile = useMedia('(max-width: 767px)', false);
@@ -209,13 +200,7 @@ const MobileNavigation = ({
               Login
             </Link>
           ) : (
-            <Button
-              className='w-full rounded-md mt-2'
-              variant={'destructive'}
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+            <LogoutButton setOpen={setOpen} />
           )}
         </div>
       </SheetContent>

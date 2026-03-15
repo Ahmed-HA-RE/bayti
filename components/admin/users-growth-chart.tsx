@@ -24,7 +24,7 @@ const UsersGrowthTable = ({
   const isGrowthPositive = growthRate >= 0;
 
   return (
-    <Card className='gap-4 lg:col-span-1'>
+    <Card className='gap-4 h-full'>
       <CardHeader>
         <div className='flex flex-col gap-1'>
           <CardTitle>Users Growth</CardTitle>

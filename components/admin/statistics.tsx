@@ -11,7 +11,8 @@ import { Users2Icon, CalendarClockIcon, ClipboardListIcon } from 'lucide-react';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 
 const Statistics = async () => {
-  const cardStyles = 'rounded-lg py-4';
+  const cardStyles =
+    'rounded-lg py-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1';
 
   const [
     totalProperties,
@@ -61,7 +62,7 @@ const Statistics = async () => {
   ];
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4'>
       {stats.map((stat) => (
         <Card key={stat.title} className={cardStyles}>
           <CardHeader className='flex flex-row items-center justify-between space-y-0'>
