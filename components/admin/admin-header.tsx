@@ -110,14 +110,16 @@ const AdminHeader = async () => {
                   return (
                     <NavigationMenuItem key={navItem.title}>
                       <NavigationMenuLink
-                        href={navItem.href}
+                        asChild
                         className={cn(
                           navigationMenuTriggerStyle(),
                           'flex flex-row items-center gap-1.5',
                         )}
                       >
-                        {navItem.icon}
-                        {navItem.title}
+                        <Link href={navItem.href}>
+                          {navItem.icon}
+                          {navItem.title}
+                        </Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   );
@@ -136,10 +138,13 @@ const AdminHeader = async () => {
                           <li key={item.title}>
                             <NavigationMenuLink
                               href={item.href}
-                              className='flex flex-row items-center gap-1.5 hover:text-accent '
+                              className='flex flex-row items-center gap-1.5 hover:text-accent'
+                              asChild
                             >
-                              {item.icon}
-                              {item.title}
+                              <Link href={item.href}>
+                                {item.icon}
+                                {item.title}
+                              </Link>
                             </NavigationMenuLink>
                           </li>
                         ))}

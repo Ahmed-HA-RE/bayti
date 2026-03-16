@@ -1,4 +1,5 @@
-import { PropertyList } from './lib/generated/prisma/enums';
+import { PropertyList } from './lib/generated/prisma';
+import { AgentStatus } from './lib/generated/prisma';
 
 export const samplePropertiesData = [
   {
@@ -419,6 +420,57 @@ export const samplePropertiesData = [
       'guestParking',
       'garden',
       'homeOffice',
+    ],
+  },
+];
+
+export const sampleAgentsData = [
+  {
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phoneNumber: '+971501234567',
+    location: 'Al Barsha South',
+    city: 'dubai',
+    image: '/images/testimonials/testimonial-3.jpg',
+    role: 'Project manager',
+    status: AgentStatus.ACTIVE,
+    socialMediaLinks: [
+      {
+        platform: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/john-doe',
+      },
+      {
+        platform: 'Instagram',
+        url: 'https://www.instagram.com/john.doe',
+      },
+      {
+        platform: 'Whatsapp',
+        url: 'https://wa.me/971501234567',
+      },
+    ],
+  },
+  {
+    name: 'Brad Smith',
+    email: 'brad.smith@example.com',
+    phoneNumber: '+971501234567',
+    location: 'Al Barsha South',
+    city: 'dubai',
+    image: '/images/testimonials/testimonial-1.jpg',
+    role: 'Industrial and Office Brokerage',
+    status: AgentStatus.INACTIVE,
+    socialMediaLinks: [
+      {
+        platform: 'Facebook',
+        url: 'https://www.facebook.com/brad.smith',
+      },
+      {
+        platform: 'Instagram',
+        url: 'https://www.instagram.com/brad.smith',
+      },
+      {
+        platform: 'Whatsapp',
+        url: 'https://wa.me/971501234567',
+      },
     ],
   },
 ];

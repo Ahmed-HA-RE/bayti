@@ -222,7 +222,7 @@ const columns: ColumnDef<
                 className='rounded-full'
                 asChild
               >
-                <Link href={`/properties/${row.original.id}`}>
+                <Link href={`/admin/properties/${row.original.id}/view`}>
                   <IoEyeOutline className='size-5' />
                 </Link>
               </Button>
@@ -428,9 +428,7 @@ const RowActions = ({
       <DropdownMenuContent align='start' className='w-auto py-2'>
         <DropdownMenuGroup className='space-y-1'>
           <DropdownMenuItem asChild>
-            <Link href={`/admin/dashboard/property/${propertyId}/edit`}>
-              Edit
-            </Link>
+            <Link href={`/admin/property/${propertyId}/edit`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Mark as {capitalizeFirstLetter(propertyStatus)}

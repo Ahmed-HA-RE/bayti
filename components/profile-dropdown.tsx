@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOutIcon, Settings, User } from 'lucide-react';
+import { LogOutIcon, User } from 'lucide-react';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { Skeleton } from './ui/skeleton';
@@ -39,11 +39,6 @@ const ProfileDropdown = ({
             label: 'Account',
             href: '/account',
             icon: <User />,
-          },
-          {
-            label: 'Settings',
-            href: '/settings',
-            icon: <Settings />,
           },
         ];
 

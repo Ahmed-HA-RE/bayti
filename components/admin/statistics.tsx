@@ -1,16 +1,21 @@
-import {
-  getTotalBookings,
-  getTotalProperties,
-  getTotalUsers,
-  getTotalUpcomingBookings,
-  getTotalSoldProperties,
-} from '@/lib/actions/admin/get-statistcs';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { TbHomeStats } from 'react-icons/tb';
 import { Users2Icon, CalendarClockIcon, ClipboardListIcon } from 'lucide-react';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+import prisma from '@/lib/prisma';
 
 const Statistics = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session || session.user.role !== 'ADMIN') {
+    return redirect('/login');
+  }
+
   const cardStyles =
     'rounded-lg py-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1';
 
@@ -21,11 +26,21 @@ const Statistics = async () => {
     totalUpcomingBookings,
     totalSoldProperties,
   ] = await Promise.all([
-    getTotalProperties(),
-    getTotalUsers(),
-    getTotalBookings(),
-    getTotalUpcomingBookings(),
-    getTotalSoldProperties(),
+    prisma.property.count(),
+    prisma.user.count(),
+    prisma.booking.count(),
+    prisma.booking.count({
+      where: {
+        date: {
+          gt: new Date(),
+        },
+      },
+    }),
+    prisma.property.count({
+      where: {
+        status: 'SOLD',
+      },
+    }),
   ]);
 
   const stats = [

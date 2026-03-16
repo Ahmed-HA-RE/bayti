@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const currentYear = new Date().getFullYear();
+
   return (
     <div className='flex min-h-dvh flex-col'>
       <AdminHeader />
