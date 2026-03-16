@@ -10,7 +10,7 @@ export const adminGetAgents = async ({
   search,
   location,
   page,
-  limit = 1,
+  limit = 10,
 }: {
   search?: string;
   location?: string;
@@ -35,7 +35,7 @@ export const adminGetAgents = async ({
   // Location filter
   const locationFilter: Prisma.AgentWhereInput = location
     ? {
-        location: { contains: location, mode: 'insensitive' },
+        city: { contains: location, mode: 'insensitive' },
       }
     : {};
 
@@ -55,7 +55,7 @@ export const adminGetAgents = async ({
       createdAt: 'desc',
     },
 
-    skip: page ? (page - 1) * limit : 0,
+    skip: page && (page - 1) * limit,
     take: limit,
   });
 

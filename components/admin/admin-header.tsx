@@ -138,7 +138,7 @@ const AdminHeader = async () => {
                           <li key={item.title}>
                             <NavigationMenuLink
                               href={item.href}
-                              className='flex flex-row items-center gap-1.5 hover:text-accent'
+                              className='flex flex-row items-center gap-1.5 hover:text-accent focus:bg-transparent'
                               asChild
                             >
                               <Link href={item.href}>

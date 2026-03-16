@@ -1,6 +1,6 @@
 'use client';
 
-import { FunnelIcon, SearchIcon, XIcon } from 'lucide-react';
+import { FunnelIcon, SearchIcon } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../ui/native-select';
 import {
   PROPERTY_CITIES,
@@ -8,48 +8,17 @@ import {
   PROPERTY_PRICE_RANGES,
   PROPERTY_TYPES,
 } from '@/lib/constants';
-import { debounce, parseAsString, useQueryState } from 'nuqs';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from '../ui/input-group';
-import { Button } from '../ui/button';
 import { MotionPreset } from '../shared/motion-preset';
+import { useFilters } from '@/hooks/useFilters';
 
 const FilterPropertiesSection = () => {
-  const [search, setSearch] = useQueryState(
-    'search',
-    parseAsString
-      .withOptions({ shallow: false, limitUrlUpdates: debounce(300) })
-      .withDefault(''),
-  );
-  const [type, setType] = useQueryState(
-    'type',
-    parseAsString.withOptions({ shallow: false }).withDefault(''),
-  );
-  const [location, setLocation] = useQueryState(
-    'location',
-    parseAsString.withOptions({ shallow: false }).withDefault(''),
-  );
-  const [price, setPrice] = useQueryState(
-    'price',
-    parseAsString.withOptions({ shallow: false }).withDefault(''),
-  );
-  const [listType, setListType] = useQueryState(
-    'listType',
-    parseAsString.withOptions({ shallow: false }).withDefault(''),
-  );
-
-  const isAnyFilterActive = search || type || location || price || listType;
-
-  const clearAll = () => {
-    setSearch('');
-    setType('');
-    setLocation('');
-    setPrice('');
-    setListType('');
-  };
+  const [{ search, listType, location, price, type }, setFilters] =
+    useFilters();
 
   return (
     <section className='section-spacing'>
@@ -60,26 +29,13 @@ const FilterPropertiesSection = () => {
         className='mx-auto max-w-5xl px-4 sm:px-6 lg:px-8'
       >
         {/* Header Row */}
-        <div className='mb-4 flex items-center justify-between'>
-          <div className='flex items-center gap-2.5'>
-            <span className='flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm'>
-              <FunnelIcon className='size-4' />
-            </span>
-            <h2 className='text-lg font-semibold tracking-tight'>
-              Find Your Property
-            </h2>
-          </div>
-
-          {isAnyFilterActive && (
-            <Button
-              variant='ghost'
-              onClick={clearAll}
-              className='flex items-center gap-1.5 rounded-lg text-sm text-muted-foreground transition hover:text-red-500 p-0'
-            >
-              <XIcon className='size-3.5' />
-              Clear Filters
-            </Button>
-          )}
+        <div className='flex items-center gap-2.5 mb-4'>
+          <span className='flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm'>
+            <FunnelIcon className='size-4' />
+          </span>
+          <h2 className='text-lg font-semibold tracking-tight'>
+            Find Your Property
+          </h2>
         </div>
 
         {/* Filter Card */}
@@ -89,7 +45,7 @@ const FilterPropertiesSection = () => {
             <InputGroup>
               <InputGroupInput
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setFilters({ search: e.target.value })}
                 placeholder='Search by name or location...'
                 className='bg-transparent'
               />
@@ -107,7 +63,7 @@ const FilterPropertiesSection = () => {
               </p>
               <NativeSelect
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => setFilters({ type: e.target.value })}
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
               >
                 <NativeSelectOption value=''>All Types</NativeSelectOption>
@@ -125,7 +81,7 @@ const FilterPropertiesSection = () => {
               </p>
               <NativeSelect
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={(e) => setFilters({ location: e.target.value })}
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
               >
                 <NativeSelectOption value=''>All Locations</NativeSelectOption>
@@ -143,7 +99,7 @@ const FilterPropertiesSection = () => {
               </p>
               <NativeSelect
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setFilters({ price: e.target.value })}
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
               >
                 <NativeSelectOption value=''>Any Price</NativeSelectOption>
@@ -161,7 +117,7 @@ const FilterPropertiesSection = () => {
               </p>
               <NativeSelect
                 value={listType}
-                onChange={(e) => setListType(e.target.value)}
+                onChange={(e) => setFilters({ listType: e.target.value })}
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
               >
                 <NativeSelectOption value=''>Buy or Rent</NativeSelectOption>
