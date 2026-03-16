@@ -2,7 +2,7 @@ import FilterPropertiesSection from '@/components/properties/filter-properties-s
 import PropertiesList from '@/components/properties/properties-list';
 import SectionHeader from '@/components/shared/section-header';
 import { APP_NAME } from '@/lib/constants';
-import { PropertyList } from '@/lib/generated/prisma/enums';
+import { PropertyList } from '@/lib/generated/prisma';
 import { loadSearchParams } from '@/lib/searchParams';
 import { Metadata } from 'next';
 import { SearchParams } from 'nuqs/server';

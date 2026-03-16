@@ -8,13 +8,10 @@ import {
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useQueryState, parseAsInteger } from 'nuqs';
+import { useFilters } from '@/hooks/useFilters';
 
 const Pagination = ({ totalPages }: { totalPages: number }) => {
-  const [currentPage, setCurrentPage] = useQueryState(
-    'page',
-    parseAsInteger.withDefault(1).withOptions({ shallow: false }),
-  );
+  const [{ page: currentPage }, setFilters] = useFilters();
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -23,7 +20,7 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
       <PaginationContent>
         <PaginationItem>
           <Button
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setFilters({ page: currentPage - 1 })}
             variant={'ghost'}
             disabled={currentPage === 1}
           >
@@ -41,7 +38,7 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
                 page === currentPage &&
                   'border-primary! rounded-none border-0 border-b-2 bg-transparent! !shadow-none',
               )}
-              onClick={() => setCurrentPage(page)}
+              onClick={() => setFilters({ page })}
             >
               {page}
             </Button>
@@ -49,7 +46,7 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
         ))}
         <PaginationItem>
           <Button
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => setFilters({ page: currentPage + 1 })}
             variant={'ghost'}
             disabled={currentPage === totalPages}
           >
