@@ -19,7 +19,7 @@ export const agentSchema = z.object({
       ['image/jpeg', 'image/png', 'image/jpg'],
       'Only JPEG and PNG images are allowed',
     )
-    .max(5_000_000, 'Image size must be less than 5MB')
+    .max(4_000_000, 'Image size must be less than 4MB')
     .optional(),
   phoneNumber: phoneNumber,
   role: z

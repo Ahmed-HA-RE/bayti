@@ -224,13 +224,9 @@ const AgentsDataTable = () => {
             <h2 className='text-3xl md:text-3xl font-semibold tracking-tight'>
               Agents
             </h2>
-            <Button
-              size={'default'}
-              asChild
-              className='py-3 px-4 w-full sm:w-auto'
-            >
+            <Button size={'sm'} asChild className=' w-full sm:w-auto'>
               <Link href='/admin/agents/new'>
-                <FaPlus className='size-3' />
+                <FaPlus className='size-2.5' />
                 Add Agent
               </Link>
             </Button>

@@ -26,8 +26,13 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { CITIES, SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
-import { PlusIcon, Trash2Icon, LinkIcon } from 'lucide-react';
+import { PlusIcon, Trash2Icon, LinkIcon, AlertCircleIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { Spinner } from '@/components/ui/spinner';
+import { addAgent } from '@/lib/actions/admin/add-agent';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { Alert, AlertTitle } from '@/components/ui/alert';
 
 type SocialMediaLink = {
   platform: string;
@@ -35,6 +40,8 @@ type SocialMediaLink = {
 };
 
 const AgentForm = ({ agent }: { agent?: Agent }) => {
+  const router = useRouter();
+
   const form = useForm<AgentFormData>({
     resolver: zodResolver(agentSchema),
     defaultValues: {
@@ -51,14 +58,31 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
   });
 
   const isImageUploaded = form.watch('image');
+  const selectedSocialMediaLinks = form
+    .watch('socialMediaLinks')
+    ?.map((link) => link.platform)
+    .filter((platform) => platform !== '');
 
-  const onSubmit = (data: AgentFormData) => {
+  const onSubmit = async (data: AgentFormData) => {
     if (!isImageUploaded) {
       form.setError('image', {
         type: 'manual',
         message: 'Image is required',
       });
+      return;
     }
+
+    const res = await addAgent(data);
+
+    if (!res.success) {
+      form.setError('root', {
+        type: 'manual',
+        message: res.message || 'Failed to add agent. Please try again.',
+      });
+      return;
+    }
+    toast.success(res.message);
+    router.push('/admin/agents');
   };
 
   const { fields, append, remove } = useFieldArray({
@@ -66,8 +90,19 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
     name: 'socialMediaLinks',
   });
 
+  const isPending = form.formState.isSubmitting;
+
   return (
     <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
+      {form.formState.errors.root && (
+        <Alert variant='error'>
+          <AlertCircleIcon />
+          <AlertTitle className='flex items-center'>
+            {form.formState.errors.root.message}
+          </AlertTitle>
+        </Alert>
+      )}
+
       {/* Personal Information */}
       <Card>
         <CardHeader className='border-b pb-4'>
@@ -182,7 +217,6 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
           </FieldGroup>
         </CardContent>
       </Card>
-
       {/* Professional Details */}
       <Card>
         <CardHeader className='border-b pb-4'>
@@ -204,7 +238,7 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor={field.name}>
-                      Role / Title <span className='text-destructive'>*</span>
+                      Role <span className='text-destructive'>*</span>
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -296,7 +330,6 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
           </FieldGroup>
         </CardContent>
       </Card>
-
       {/* Social Media Links */}
       <Card>
         <CardHeader className='border-b pb-4'>
@@ -371,6 +404,9 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
                                 <NativeSelectOption
                                   key={platform.value}
                                   value={platform.value}
+                                  disabled={selectedSocialMediaLinks?.includes(
+                                    platform.value,
+                                  )}
                                 >
                                   {platform.name}
                                 </NativeSelectOption>
@@ -433,13 +469,20 @@ const AgentForm = ({ agent }: { agent?: Agent }) => {
           )}
         </CardContent>
       </Card>
-
       {/* Actions */}
       <div className='flex items-center justify-end gap-3 pb-4'>
         <Button asChild type='button' variant='outline'>
           <Link href='/admin/agents'>Cancel</Link>
         </Button>
-        <Button type='submit'>Add Agent</Button>
+        <Button type='submit' disabled={isPending}>
+          {isPending ? (
+            <>
+              <Spinner className='size-4' /> Adding...
+            </>
+          ) : (
+            'Add Agent'
+          )}
+        </Button>
       </div>
     </form>
   );
