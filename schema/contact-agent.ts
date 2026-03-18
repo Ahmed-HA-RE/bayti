@@ -1,15 +1,17 @@
 import z from 'zod';
 import parsePhoneNumber from 'libphonenumber-js';
 
-const phoneNumber = z.string({ error: 'Phone number is required' }).refine(
-  (value) => {
-    const parsedNumber = parsePhoneNumber(value, 'AE');
-    return parsedNumber?.isValid();
-  },
-  {
-    error: 'Please enter a valid number',
-  },
-);
+export const phoneNumber = z
+  .string({ error: 'Phone number is required' })
+  .refine(
+    (value) => {
+      const parsedNumber = parsePhoneNumber(value, 'AE');
+      return parsedNumber?.isValid();
+    },
+    {
+      error: 'Please enter a valid number',
+    },
+  );
 
 export const contactAgentSchema = z.object({
   name: z

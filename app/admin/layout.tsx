@@ -1,8 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import AdminHeader from '@/components/admin/admin-header';
-import { APP_NAME } from '@/lib/constants';
 import { Metadata } from 'next';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import AdminFooter from '@/components/admin/admin-footer';
 
 export const metadata: Metadata = {
   title: {
@@ -14,8 +14,6 @@ export const metadata: Metadata = {
 };
 
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <div className='flex min-h-dvh flex-col'>
       <AdminHeader />
@@ -26,13 +24,7 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </Card>
         </TooltipProvider>
       </main>
-      <footer className='border-t py-4'>
-        <div className='container'>
-          <p className='text-center text-sm text-muted-foreground'>
-            © {currentYear} {APP_NAME}. Admin Dashboard v1.0
-          </p>
-        </div>
-      </footer>
+      <AdminFooter />
     </div>
   );
 };

@@ -223,7 +223,7 @@ export const PROPERTY_TYPES = [
   { name: 'Luxury Property', value: 'luxury_property' },
 ];
 
-export const PROPERTY_CITIES = [
+export const CITIES = [
   { name: 'Dubai', value: 'dubai' },
   { name: 'Abu Dhabi', value: 'abu_dhabi' },
   { name: 'Sharjah', value: 'sharjah' },
@@ -285,4 +285,23 @@ export const RESERVING_TIMES = [
   { title: '11:00 AM - 1:00 PM', value: '11:00:00 - 13:00:00' },
   { title: '1:00 PM - 3:00 PM', value: '13:00:00 - 15:00:00' },
   { title: '3:00 PM - 5:00 PM', value: '15:00:00 - 17:00:00' },
+];
+
+export const SOCIAL_MEDIA_PLATFORMS = [
+  {
+    name: 'Facebook',
+    value: 'facebook',
+  },
+  {
+    name: 'Instagram',
+    value: 'instagram',
+  },
+  {
+    name: 'LinkedIn',
+    value: 'linkedin',
+  },
+  {
+    name: 'Threads',
+    value: 'threads',
+  },
 ];

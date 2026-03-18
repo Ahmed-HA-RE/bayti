@@ -41,7 +41,7 @@ import {
 } from '../../ui/input-group';
 import { SearchIcon, ArrowUpDown } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../../ui/native-select';
-import { PROPERTY_CITIES } from '@/lib/constants';
+import { CITIES } from '@/lib/constants';
 import { useQuery } from '@tanstack/react-query';
 import { adminGetAgents } from '@/lib/actions/admin/get-agents';
 import SkeletonTable from '@/components/shared/table-skeleton';
@@ -256,7 +256,7 @@ const AgentsDataTable = () => {
               className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
             >
               <NativeSelectOption value=''>All Locations</NativeSelectOption>
-              {PROPERTY_CITIES.map((city) => (
+              {CITIES.map((city) => (
                 <NativeSelectOption key={city.value} value={city.value}>
                   {city.name}
                 </NativeSelectOption>

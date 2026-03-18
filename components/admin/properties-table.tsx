@@ -51,7 +51,7 @@ import {
 } from '../ui/input-group';
 import { SearchIcon } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../ui/native-select';
-import { PROPERTY_CITIES, PROPERTY_TYPES } from '@/lib/constants';
+import { CITIES, PROPERTY_TYPES } from '@/lib/constants';
 
 const columns: ColumnDef<
   Pick<
@@ -306,7 +306,7 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
                   <NativeSelectOption value=''>
                     All Locations
                   </NativeSelectOption>
-                  {PROPERTY_CITIES.map((city) => (
+                  {CITIES.map((city) => (
                     <NativeSelectOption key={city.value} value={city.value}>
                       {city.name}
                     </NativeSelectOption>

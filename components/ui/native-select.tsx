@@ -24,7 +24,7 @@ function NativeSelect({
       <select
         data-slot='native-select'
         data-size={size}
-        className='h-12 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 pr-8 pl-3.5 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:ring-1 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] data-[size=sm]:py-0.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 cursor-pointer focus-visible:border-primary focus-visible:ring-primary text-muted-foreground'
+        className='h-12 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 pr-8 pl-3.5 text-sm transition-colors outline-none select-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:ring-1 disabled:pointer-events-none disabled:cursor-not-allowed  aria-invalid:ring-1 aria-invalid:ring-destructive data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] data-[size=sm]:py-0.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 cursor-pointer focus-visible:border-primary focus-visible:ring-primary text-foreground'
         {...props}
       />
       <ChevronDownIcon

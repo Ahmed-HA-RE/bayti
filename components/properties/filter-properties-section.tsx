@@ -3,7 +3,7 @@
 import { FunnelIcon, SearchIcon } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../ui/native-select';
 import {
-  PROPERTY_CITIES,
+  CITIES,
   PROPERTY_LIST_TYPES,
   PROPERTY_PRICE_RANGES,
   PROPERTY_TYPES,
@@ -85,7 +85,7 @@ const FilterPropertiesSection = () => {
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
               >
                 <NativeSelectOption value=''>All Locations</NativeSelectOption>
-                {PROPERTY_CITIES.map((city) => (
+                {CITIES.map((city) => (
                   <NativeSelectOption key={city.value} value={city.value}>
                     {city.name}
                   </NativeSelectOption>
