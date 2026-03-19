@@ -42,12 +42,14 @@ import {
 import { SearchIcon, ArrowUpDown } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../../ui/native-select';
 import { CITIES } from '@/lib/constants';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { adminGetAgents } from '@/lib/actions/admin/agent/get-agents';
 import SkeletonTable from '@/components/shared/table-skeleton';
 import { useFilters } from '@/hooks/useFilters';
 import TablePagination from '@/components/shared/table-pagination';
 import { FaPlus } from 'react-icons/fa';
+import { toggleAgentStatus } from '@/lib/actions/admin/agent/toggle-agent-status';
+import toast from 'react-hot-toast';
 
 const columns: ColumnDef<Agent & { _count: { properties: number } }>[] = [
   {
@@ -353,7 +355,20 @@ const RowActions = ({
   agentId: string;
   status: AgentStatus;
 }) => {
+  const queryClient = useQueryClient();
   const agentStatus = status.toLowerCase() === 'active' ? 'active' : 'inactive';
+
+  const toggleStatus = async () => {
+    const res = await toggleAgentStatus(agentId, status);
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success(res.message);
+    queryClient.invalidateQueries({ queryKey: ['admin-agents'] });
+  };
 
   return (
     <DropdownMenu>
@@ -379,6 +394,7 @@ const RowActions = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             variant={agentStatus === 'active' ? 'destructive' : 'success'}
+            onClick={toggleStatus}
           >
             {agentStatus === 'active' ? 'Deactivate' : 'Activate'}
           </DropdownMenuItem>
