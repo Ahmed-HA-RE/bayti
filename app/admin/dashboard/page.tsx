@@ -28,6 +28,7 @@ const AdminHomePage = async () => {
             gte: startOfMonth(new Date()),
             lte: endOfMonth(new Date()),
           },
+          role: 'USER',
         },
       }),
       prisma.user.count({
@@ -36,6 +37,7 @@ const AdminHomePage = async () => {
             gte: startOfWeek(new Date()),
             lte: endOfWeek(new Date()),
           },
+          role: 'USER',
         },
       }),
 

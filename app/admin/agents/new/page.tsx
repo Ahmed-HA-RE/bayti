@@ -1,4 +1,4 @@
-import AddAgentDetails from '@/components/admin/agents/add-agent-details';
+import AddAgentDetails from '@/components/admin/agents/admin-add-agent-details';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

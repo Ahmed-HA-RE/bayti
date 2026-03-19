@@ -1,6 +1,7 @@
 import z from 'zod';
 import { phoneNumber } from './contact-agent';
 import { CITIES, SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
+import { AgentStatus } from '@/lib/generated/prisma';
 
 function z_enumFromArray(array: string[], errorMessage?: string) {
   return z.enum([array[0], ...array.slice(1)], errorMessage);
@@ -19,7 +20,7 @@ export const agentSchema = z.object({
       ['image/jpeg', 'image/png', 'image/jpg'],
       'Only JPEG and PNG images are allowed',
     )
-    .max(4_000_000, 'Image size must be less than 4MB')
+    .max(1_000_000, 'Image size must be 1MB or less')
     .optional(),
   phoneNumber: phoneNumber,
   role: z
@@ -34,7 +35,10 @@ export const agentSchema = z.object({
     CITIES.map((city) => city.value),
     'Select a valid city',
   ),
-  status: z.enum(['ACTIVE', 'INACTIVE'], 'Define the status of the agent'),
+  status: z_enumFromArray(
+    [AgentStatus.ACTIVE, AgentStatus.INACTIVE],
+    'Define the status of the agent',
+  ),
   socialMediaLinks: z
     .array(
       z.object({

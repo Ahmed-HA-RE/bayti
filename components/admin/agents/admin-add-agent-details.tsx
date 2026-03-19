@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator';
-import AgentForm from './agent-form';
+import AgentForm from './agent-form/agent-form';
 
-const AddAgentDetails = () => {
+const AdminAddAgentDetails = () => {
   return (
     <div className=' mx-auto space-y-8 '>
       {/* Page Title */}
@@ -16,9 +16,9 @@ const AddAgentDetails = () => {
       <Separator />
 
       {/* Agent Details Form */}
-      <AgentForm />
+      <AgentForm type='add' />
     </div>
   );
 };
 
-export default AddAgentDetails;
+export default AdminAddAgentDetails;

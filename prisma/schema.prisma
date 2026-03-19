@@ -160,6 +160,7 @@ model Agent {
   name             String
   email            String      @unique
   image            String
+  imageKey         String
   phoneNumber      String
   role             String
   location         String

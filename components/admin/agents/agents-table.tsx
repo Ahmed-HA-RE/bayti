@@ -43,7 +43,7 @@ import { SearchIcon, ArrowUpDown } from 'lucide-react';
 import { NativeSelect, NativeSelectOption } from '../../ui/native-select';
 import { CITIES } from '@/lib/constants';
 import { useQuery } from '@tanstack/react-query';
-import { adminGetAgents } from '@/lib/actions/admin/get-agents';
+import { adminGetAgents } from '@/lib/actions/admin/agent/get-agents';
 import SkeletonTable from '@/components/shared/table-skeleton';
 import { useFilters } from '@/hooks/useFilters';
 import TablePagination from '@/components/shared/table-pagination';
@@ -200,6 +200,7 @@ const AgentsDataTable = () => {
   const { data, isFetching, isError } = useQuery({
     queryKey: ['admin-agents', search, location, page],
     queryFn: () => adminGetAgents({ search, location, page }),
+    staleTime: 60 * 1000, // 1 min
   });
 
   // memoize table instance to prevent unnecessary re-renders

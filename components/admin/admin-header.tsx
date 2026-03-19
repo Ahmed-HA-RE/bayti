@@ -49,7 +49,7 @@ const navigationData: NavigationData[] = [
       },
       {
         title: 'Add Property',
-        href: '/admin/properties/add',
+        href: '/admin/properties/new',
       },
     ],
   },
@@ -68,7 +68,7 @@ const navigationData: NavigationData[] = [
       },
       {
         title: 'Add Agent',
-        href: '/admin/agents/add',
+        href: '/admin/agents/new',
       },
     ],
   },

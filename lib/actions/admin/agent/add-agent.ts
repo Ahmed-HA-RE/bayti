@@ -1,6 +1,7 @@
 'use server';
 
 import { auth } from '@/lib/auth';
+import { AgentStatus } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
 import { AgentFormData, agentSchema } from '@/schema/agent';
 import { headers } from 'next/headers';
@@ -48,6 +49,10 @@ export const addAgent = async (data: AgentFormData) => {
       throw new Error('Failed to upload profile picture.');
 
     const imageUrl = uploadResult[0].data?.ufsUrl;
+    const imageKey = uploadResult[0].data?.key;
+
+    if (!imageUrl || !imageKey)
+      throw new Error('Failed to retrieve uploaded image URL.');
 
     // Create the new agent in the database
     await prisma.agent.create({
@@ -58,8 +63,10 @@ export const addAgent = async (data: AgentFormData) => {
         city: validatedData.data.city,
         location: validatedData.data.location,
         role: validatedData.data.role,
-        status: validatedData.data.status,
-        image: imageUrl!,
+        status: validatedData.data.status as AgentStatus,
+        image: imageUrl,
+        imageKey: imageKey,
+        socialMediaLinks: validatedData.data.socialMediaLinks,
       },
     });
 

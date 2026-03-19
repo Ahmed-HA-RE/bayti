@@ -7,7 +7,7 @@ const f = createUploadthing();
 export const myFileRouter = {
   profileImage: f({
     image: {
-      maxFileSize: '4MB',
+      maxFileSize: '1MB',
       maxFileCount: 1,
     },
   })
