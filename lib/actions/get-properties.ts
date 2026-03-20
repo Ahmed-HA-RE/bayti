@@ -1,7 +1,11 @@
 'use server';
 
 import prisma from '../prisma';
-import { Prisma, PropertyList } from '../generated/prisma/client';
+import {
+  Prisma,
+  PropertyList,
+  PropertyStatus,
+} from '../generated/prisma/client';
 import { convertToPlainObject } from '../utils';
 
 export const getProperties = async ({
@@ -10,6 +14,7 @@ export const getProperties = async ({
   location,
   price,
   listType,
+  status,
   page = 1,
   limit = 6,
 }: {
@@ -19,6 +24,7 @@ export const getProperties = async ({
   price?: string;
   listType?: PropertyList;
   page?: number;
+  status?: PropertyStatus;
   limit?: number;
 }) => {
   // Search filter
@@ -64,6 +70,11 @@ export const getProperties = async ({
     ? { propertyList: listType }
     : {};
 
+  // Status filter
+  const statusFilter: Prisma.PropertyWhereInput = status
+    ? { status }
+    : { status: 'AVAILABLE' };
+
   const properties = await prisma.property.findMany({
     where: {
       ...searchFilter,
@@ -71,7 +82,7 @@ export const getProperties = async ({
       ...locationFilter,
       ...priceFilter,
       ...listTypeFilter,
-      status: 'AVAILABLE',
+      ...statusFilter,
     },
     orderBy: {
       createdAt: 'desc',
@@ -87,7 +98,7 @@ export const getProperties = async ({
       ...locationFilter,
       ...priceFilter,
       ...listTypeFilter,
-      status: 'AVAILABLE',
+      ...statusFilter,
     },
   });
 

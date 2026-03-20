@@ -12,6 +12,7 @@ export const useFilters = () => {
     type: parseAsString.withOptions({ shallow: false }).withDefault(''),
     listType: parseAsString.withOptions({ shallow: false }).withDefault(''),
     price: parseAsString.withOptions({ shallow: false }).withDefault(''),
+    status: parseAsString.withOptions({ shallow: false }).withDefault(''),
     page: parseAsInteger.withDefault(1).withOptions({ shallow: false }),
   });
 };

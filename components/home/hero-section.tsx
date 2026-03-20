@@ -23,7 +23,7 @@ const HeroSection = () => {
           blur
           slide={{ direction: 'up' }}
           delay={0.3}
-          className='text-white text-center md:text-lg mt-7 max-w-md md:max-w-xl lg:max-w-3xl font-medium'
+          className='text-white text-center md:text-lg mt-4 max-w-md md:max-w-xl lg:max-w-3xl font-medium'
         >
           Find homes that suit your vibe, your budget, and your future. Whether
           you&apos;re looking to rent or buy, we&apos;ve got you covered with

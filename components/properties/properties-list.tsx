@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { getProperties } from '@/lib/actions/get-properties';
+
 import { PropertyList } from '@/lib/generated/prisma';
 import PropertyCard from '../shared/property-card';
 import { MotionPreset } from '../shared/motion-preset';
@@ -8,6 +8,7 @@ import { Alert, AlertTitle } from '../ui/alert';
 import { CircleAlertIcon } from 'lucide-react';
 import SkeletonPropertyCard from '../skeleton-property-card';
 import Pagination from './pagination';
+import { getProperties } from '@/lib/actions/get-properties';
 
 type PropertiesListProps = {
   search?: string;

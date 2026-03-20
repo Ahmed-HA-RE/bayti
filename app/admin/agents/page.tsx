@@ -1,4 +1,4 @@
-import AgentsDataTable from '@/components/admin/agents/agents-table';
+import AdminAgentsDataTable from '@/components/admin/agents/admin-agents-table';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const AdminAgentsPage = async () => {
   return (
     <Suspense>
-      <AgentsDataTable />
+      <AdminAgentsDataTable />
     </Suspense>
   );
 };

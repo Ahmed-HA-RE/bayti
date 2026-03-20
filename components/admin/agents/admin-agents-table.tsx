@@ -28,7 +28,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { cn, formatCityName } from '@/lib/utils';
-import { Card } from '../../ui/card';
 import { Agent, AgentStatus } from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import { format } from 'date-fns';
@@ -53,20 +52,7 @@ import toast from 'react-hot-toast';
 
 const columns: ColumnDef<Agent & { _count: { properties: number } }>[] = [
   {
-    accessorKey: 'id',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          size='icon'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='gap-1 text-muted-foreground'
-        >
-          No.
-          <ArrowUpDown className='size-4' aria-hidden='true' />
-        </Button>
-      );
-    },
+    header: 'No.',
     cell: ({ row }) => <span className='text-foreground'>{row.index + 1}</span>,
   },
   {
@@ -146,8 +132,20 @@ const columns: ColumnDef<Agent & { _count: { properties: number } }>[] = [
   },
 
   {
-    header: 'Listings',
     accessorKey: 'properties',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          size='icon'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          className='gap-1 text-muted-foreground'
+        >
+          Listings
+          <ArrowUpDown className='size-4' aria-hidden='true' />
+        </Button>
+      );
+    },
     cell: ({ row }) => <span>{row.original._count.properties}</span>,
   },
 
@@ -195,7 +193,7 @@ const columns: ColumnDef<Agent & { _count: { properties: number } }>[] = [
   },
 ];
 
-const AgentsDataTable = () => {
+const AdminAgentsDataTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [{ page, search, location }, setFilters] = useFilters();
 
@@ -220,121 +218,110 @@ const AgentsDataTable = () => {
   });
 
   return (
-    <Card className='w-full border-0 py-0'>
-      <div className=''>
-        <div className='px-2  pb-6'>
-          <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
-            <h2 className='text-3xl md:text-3xl font-semibold tracking-tight'>
-              Agents
-            </h2>
-            <Button size={'sm'} asChild className=' w-full sm:w-auto'>
-              <Link href='/admin/agents/new'>
-                <FaPlus className='size-2.5' />
-                Add Agent
-              </Link>
-            </Button>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 sm:mt-6'>
-            {/* Search filter */}
-            <InputGroup>
-              <InputGroupInput
-                placeholder='Search by name...'
-                className='bg-transparent'
-                value={search}
-                onChange={(e) => setFilters({ search: e.target.value })}
-              />
-              <InputGroupAddon align='inline-start'>
-                <SearchIcon className='text-muted-foreground' />
-              </InputGroupAddon>
-            </InputGroup>
-
-            {/* Location Filter */}
-            <NativeSelect
-              value={location}
-              onChange={(e) => setFilters({ location: e.target.value })}
-              className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
-            >
-              <NativeSelectOption value=''>All Locations</NativeSelectOption>
-              {CITIES.map((city) => (
-                <NativeSelectOption key={city.value} value={city.value}>
-                  {city.name}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
-          </div>
+    <div>
+      <div className='px-2 pb-6'>
+        <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
+          <h2 className='text-3xl font-semibold tracking-tight'>Agents</h2>
+          <Button size={'sm'} asChild className=' w-full sm:w-auto'>
+            <Link href='/admin/agents/new'>
+              <FaPlus className='size-2.5' />
+              Add Agent
+            </Link>
+          </Button>
         </div>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className='h-14 border-t hover:bg-transparent'
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      style={{ width: `${header.getSize()}px` }}
-                      className='text-muted-foreground first:pl-6 last:pr-6 last:text-center px-6'
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 sm:mt-6'>
+          {/* Search filter */}
+          <InputGroup>
+            <InputGroupInput
+              placeholder='Search by name...'
+              className='bg-transparent'
+              value={search}
+              onChange={(e) => setFilters({ search: e.target.value })}
+            />
+            <InputGroupAddon align='inline-start'>
+              <SearchIcon className='text-muted-foreground' />
+            </InputGroupAddon>
+          </InputGroup>
+
+          {/* Location Filter */}
+          <NativeSelect
+            value={location}
+            onChange={(e) => setFilters({ location: e.target.value })}
+            className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+          >
+            <NativeSelectOption value=''>All Locations</NativeSelectOption>
+            {CITIES.map((city) => (
+              <NativeSelectOption key={city.value} value={city.value}>
+                {city.name}
+              </NativeSelectOption>
             ))}
-          </TableHeader>
-          <TableBody>
-            {isFetching ? (
-              <SkeletonTable />
-            ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className='hover:bg-transparent'
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className='h-14 first:pl-8 last:w-29 last:px-4 px-4 last:text-center'
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : table.getRowModel().rows.length === 0 ? (
+          </NativeSelect>
+        </div>
+      </div>
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow
+              key={headerGroup.id}
+              className='h-14 border-t hover:bg-transparent'
+            >
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead
+                    key={header.id}
+                    style={{ width: `${header.getSize()}px` }}
+                    className='text-muted-foreground first:pl-6 last:pr-6 last:text-center px-6'
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {isFetching ? (
+            <SkeletonTable columns={9} />
+          ) : table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                className='hover:bg-transparent'
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell
+                    key={cell.id}
+                    className='h-14 first:pl-8 last:w-29 last:px-4 px-4 last:text-center'
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : table.getRowModel().rows.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
+                No results.
+              </TableCell>
+            </TableRow>
+          ) : (
+            isError && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className='h-24 text-center text-destructive'
                 >
-                  No results.
+                  Error loading agents. Please try again.
                 </TableCell>
               </TableRow>
-            ) : (
-              isError && (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className='h-24 text-center text-destructive'
-                  >
-                    Error loading agents. Please try again.
-                  </TableCell>
-                </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
+            )
+          )}
+        </TableBody>
+      </Table>
       {/* Pagination */}
       {data && data.totalPages > 1 && (
         <TablePagination
@@ -342,11 +329,11 @@ const AgentsDataTable = () => {
           results={data.agents.length}
         />
       )}
-    </Card>
+    </div>
   );
 };
 
-export default AgentsDataTable;
+export default AdminAgentsDataTable;
 
 const RowActions = ({
   agentId,

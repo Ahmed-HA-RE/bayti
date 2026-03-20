@@ -4,6 +4,14 @@ import AdminHeader from '@/components/admin/admin-header';
 import AdminSidebar from '@/components/admin/admin-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import prisma from '@/lib/prisma';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Admin Dashboard',
+    template: '%s | Admin Dashboard',
+  },
+};
 
 const AdminDashboardLayout = async ({
   children,

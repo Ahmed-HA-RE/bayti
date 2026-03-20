@@ -1,11 +1,13 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from '@tanstack/react-table';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -36,8 +38,12 @@ import {
   formatCityName,
   formatPrice,
 } from '@/lib/utils';
-import { Card } from '../ui/card';
-import { Property } from '@/lib/generated/prisma/client';
+import { Card } from '../../ui/card';
+import {
+  Property,
+  PropertyList,
+  PropertyStatus,
+} from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import { format } from 'date-fns';
 import { usePathname } from 'next/navigation';
@@ -48,10 +54,16 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '../ui/input-group';
-import { SearchIcon } from 'lucide-react';
-import { NativeSelect, NativeSelectOption } from '../ui/native-select';
+} from '../../ui/input-group';
+import { ArrowUpDown, SearchIcon } from 'lucide-react';
+import { NativeSelect, NativeSelectOption } from '../../ui/native-select';
 import { CITIES, PROPERTY_TYPES } from '@/lib/constants';
+import { useQuery } from '@tanstack/react-query';
+import { useFilters } from '@/hooks/useFilters';
+import { getProperties } from '@/lib/actions/get-properties';
+import { FaPlus } from 'react-icons/fa6';
+import TableSkeleton from '@/components/shared/table-skeleton';
+import TablePagination from '@/components/shared/table-pagination';
 
 const columns: ColumnDef<
   Pick<
@@ -133,15 +145,37 @@ const columns: ColumnDef<
     ),
   },
   {
-    header: 'Listed At',
     accessorKey: 'createdAt',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='gap-1 text-muted-foreground'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Listed At
+          <ArrowUpDown className='size-4' aria-hidden='true' />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
       <span>{format(row.original.createdAt, 'M/dd/yyyy')}</span>
     ),
   },
   {
-    header: 'Price',
     accessorKey: 'price',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='gap-1 text-muted-foreground'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Price
+          <ArrowUpDown className='size-4' aria-hidden='true' />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
       <div className='flex items-center gap-1'>
         <span className='dirham-symbol text-base text-foreground'>&#xea;</span>
@@ -245,46 +279,66 @@ const columns: ColumnDef<
   },
 ];
 
-type PropertiesTableProps = {
-  data: Pick<
-    Property,
-    | 'id'
-    | 'name'
-    | 'city'
-    | 'price'
-    | 'createdAt'
-    | 'status'
-    | 'images'
-    | 'propertyList'
-  >[];
-};
+const AdminPropertiesTable = () => {
+  const [{ search, listType, location, status }, setFilters] = useFilters();
+  const filters = {
+    search,
+    listType: listType as PropertyList,
+    location,
+    status: status as PropertyStatus,
+  };
+  const [sorting, setSorting] = useState<SortingState>([]);
 
-const PropertiesTable = ({ data }: PropertiesTableProps) => {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
+  const { data, isFetching, isError, error } = useQuery({
+    queryKey: ['admin-properties', filters],
+    queryFn: () => getProperties(filters),
+    staleTime: 1000 * 60, // 1 minute
   });
 
-  const pathname = usePathname();
+  // memoize table instance to prevent unnecessary re-renders
+  const properties = useMemo(() => data?.properties || [], [data]);
+
+  const table = useReactTable({
+    data: properties,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
+  });
+
+  const isAdminDashboard = usePathname() === '/admin/dashboard';
 
   return (
-    <Card className='w-full py-0'>
+    <Card
+      className={cn('w-full py-0', !isAdminDashboard && 'border-0 shadow-none')}
+    >
       <div>
         <div className='border-b'>
-          <div className='px-4 py-6'>
-            {pathname === '/admin/dashboard' && (
-              <h2 className='text-xl md:text-2xl font-semibold tracking-tight'>
-                Recent Properties
+          <div className='px-2 pb-6'>
+            <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
+              <h2 className='text-3xl font-semibold tracking-tight'>
+                {!isAdminDashboard ? 'All Properties' : 'Recent Properties'}
               </h2>
-            )}
-            {pathname === '/admin/dashboard/properties' && (
-              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6'>
+              <Button size={'sm'} asChild className=' w-full sm:w-auto'>
+                <Link href='/admin/properties/new'>
+                  <FaPlus className='size-2.5' />
+                  Add Property
+                </Link>
+              </Button>
+            </div>
+
+            {!isAdminDashboard && (
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 sm:mt-6'>
                 {/* Search filter */}
                 <InputGroup>
                   <InputGroupInput
                     placeholder='Search by name...'
                     className='bg-transparent'
+                    value={search}
+                    onChange={(e) => setFilters({ search: e.target.value })}
                   />
                   <InputGroupAddon align='inline-start'>
                     <SearchIcon className='text-muted-foreground' />
@@ -292,7 +346,11 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
                 </InputGroup>
 
                 {/* Type filter */}
-                <NativeSelect className='border-0 bg-transparent p-0 shadow-none focus:ring-0'>
+                <NativeSelect
+                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                  value={listType}
+                  onChange={(e) => setFilters({ listType: e.target.value })}
+                >
                   <NativeSelectOption value=''>All Types</NativeSelectOption>
                   {PROPERTY_TYPES.map((t) => (
                     <NativeSelectOption key={t.value} value={t.value}>
@@ -302,7 +360,11 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
                 </NativeSelect>
 
                 {/* Location Filter */}
-                <NativeSelect className='border-0 bg-transparent p-0 shadow-none focus:ring-0'>
+                <NativeSelect
+                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                  value={location}
+                  onChange={(e) => setFilters({ location: e.target.value })}
+                >
                   <NativeSelectOption value=''>
                     All Locations
                   </NativeSelectOption>
@@ -312,8 +374,13 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
                     </NativeSelectOption>
                   ))}
                 </NativeSelect>
+
                 {/* Status Filter */}
-                <NativeSelect className='border-0 bg-transparent p-0 shadow-none focus:ring-0'>
+                <NativeSelect
+                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                  value={status}
+                  onChange={(e) => setFilters({ status: e.target.value })}
+                >
                   <NativeSelectOption value=''>
                     Property Status
                   </NativeSelectOption>
@@ -351,7 +418,18 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
+              {isFetching ? (
+                <TableSkeleton columns={9} />
+              ) : isError ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className='h-24 text-center'
+                  >
+                    {error.message}
+                  </TableCell>
+                </TableRow>
+              ) : table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
@@ -384,15 +462,19 @@ const PropertiesTable = ({ data }: PropertiesTableProps) => {
             </TableBody>
           </Table>
         </div>
-        {pathname === '/admin/dashboard/properties' && (
-          <div className='py-4 px-6 flex items-end justify-end'>hs</div>
+        {/* Pagination */}
+        {!isAdminDashboard && data && data.totalPages > 1 && (
+          <TablePagination
+            totalPages={data.totalPages}
+            results={data.properties.length}
+          />
         )}
       </div>
     </Card>
   );
 };
 
-export default PropertiesTable;
+export default AdminPropertiesTable;
 
 const RowActions = ({
   propertyId,

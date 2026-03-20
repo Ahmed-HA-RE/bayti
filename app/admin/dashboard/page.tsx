@@ -3,10 +3,10 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import prisma from '@/lib/prisma';
 import PropertiesPerCityChart from '@/components/admin/properties-per-city-chart';
 import UsersGrowthChart from '@/components/admin/users-growth-chart';
-import PropertiesTable from '@/components/admin/properties-table';
+import PropertiesTable from '@/components/admin/properties/admin-properties-table';
 
 const AdminHomePage = async () => {
-  const [propertiesPerCity, newMonthlyUsers, newWeeklyUsers, recentProperties] =
+  const [propertiesPerCity, newMonthlyUsers, newWeeklyUsers] =
     await Promise.all([
       prisma.property.groupBy({
         by: ['city'],
@@ -40,23 +40,6 @@ const AdminHomePage = async () => {
           role: 'USER',
         },
       }),
-
-      prisma.property.findMany({
-        orderBy: {
-          createdAt: 'desc',
-        },
-        select: {
-          id: true,
-          name: true,
-          images: true,
-          city: true,
-          price: true,
-          createdAt: true,
-          status: true,
-          propertyList: true,
-        },
-        take: 5,
-      }),
     ]);
 
   return (
@@ -81,7 +64,7 @@ const AdminHomePage = async () => {
       </div>
 
       {/* Properties Table - Full Width Bottom Section */}
-      <PropertiesTable data={recentProperties} />
+      <PropertiesTable />
     </div>
   );
 };
