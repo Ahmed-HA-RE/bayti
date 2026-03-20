@@ -3,7 +3,7 @@ import { phoneNumber } from './contact-agent';
 import { CITIES, SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
 import { AgentStatus } from '@/lib/generated/prisma';
 
-function z_enumFromArray(array: string[], errorMessage?: string) {
+export function z_enumFromArray(array: string[], errorMessage?: string) {
   return z.enum([array[0], ...array.slice(1)], errorMessage);
 }
 

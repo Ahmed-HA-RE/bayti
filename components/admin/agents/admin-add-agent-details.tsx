@@ -1,23 +1,14 @@
-import { Separator } from '@/components/ui/separator';
 import AgentForm from './agent-form/agent-form';
+import AdminFormLayout from '@/components/shared/admin-form-layout';
 
 const AdminAddAgentDetails = () => {
   return (
-    <div className=' mx-auto space-y-8 '>
-      {/* Page Title */}
-      <div>
-        <h1 className='text-2xl font-bold text-foreground'>Add New Agent</h1>
-        <p className='text-sm text-muted-foreground mt-1'>
-          Fill in the details below to add a new real estate agent on the
-          platform.
-        </p>
-      </div>
-
-      <Separator />
-
-      {/* Agent Details Form */}
+    <AdminFormLayout
+      title='Add New Agent'
+      subtitle='Fill in the details below to add a new real estate agent on the platform.'
+    >
       <AgentForm type='add' />
-    </div>
+    </AdminFormLayout>
   );
 };
 

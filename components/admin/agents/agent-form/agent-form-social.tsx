@@ -36,7 +36,7 @@ const AgentFormSocial = ({ form }: AgentFormSocialProps) => {
     .filter((platform) => platform !== '');
 
   return (
-    <Card>
+    <Card className='xl:col-span-2'>
       <CardHeader className='border-b pb-4'>
         <div className='flex items-center gap-2'>
           <span className='bg-primary/10 text-primary flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold'>

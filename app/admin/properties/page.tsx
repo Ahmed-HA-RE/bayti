@@ -1,5 +1,6 @@
 import AdminPropertiesTable from '@/components/admin/properties/admin-properties-table';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Properties',
@@ -8,7 +9,11 @@ export const metadata: Metadata = {
 };
 
 const AdminPropertiesPage = () => {
-  return <AdminPropertiesTable />;
+  return (
+    <Suspense>
+      <AdminPropertiesTable />
+    </Suspense>
+  );
 };
 
 export default AdminPropertiesPage;

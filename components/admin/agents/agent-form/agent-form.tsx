@@ -91,19 +91,20 @@ const AgentForm = ({
         </Alert>
       )}
 
-      {/* Personal Details */}
-      <AgentFormPersonalDetails
-        form={form}
-        existingImage={existingImage}
-        setExistingImage={setExistingImage}
-      />
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-6'>
+        {/* Personal Details */}
+        <AgentFormPersonalDetails
+          form={form}
+          existingImage={existingImage}
+          setExistingImage={setExistingImage}
+        />
 
-      {/* Professional Details */}
-      <AgentFormProfessionalDetails form={form} />
+        {/* Professional Details */}
+        <AgentFormProfessionalDetails form={form} />
 
-      {/* Social Links */}
-      <AgentFormSocial form={form} />
-
+        {/* Social Links */}
+        <AgentFormSocial form={form} />
+      </div>
       {/* Actions */}
       <div className='flex items-center justify-end gap-3 pb-4'>
         <Button asChild type='button' variant='outline'>
