@@ -83,10 +83,6 @@ const MobileNavigation = ({
           href: '/team',
         },
         {
-          title: 'Agents',
-          href: '/agents',
-        },
-        {
           title: 'Talk to an Agent',
           href: '/contact-us',
         },
@@ -99,6 +95,10 @@ const MobileNavigation = ({
           href: '/privacy-policy',
         },
       ],
+    },
+    {
+      title: 'Agents',
+      href: '/agents',
     },
     {
       title: 'Blog',

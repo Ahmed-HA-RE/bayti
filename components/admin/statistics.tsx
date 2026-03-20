@@ -1,6 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { TbHomeStats } from 'react-icons/tb';
-import { Users2Icon, CalendarClockIcon, ClipboardListIcon } from 'lucide-react';
+import {
+  Users2Icon,
+  CalendarClockIcon,
+  ClipboardListIcon,
+  UserCheck,
+} from 'lucide-react';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
@@ -25,6 +30,7 @@ const Statistics = async () => {
     totalBookings,
     totalUpcomingBookings,
     totalSoldProperties,
+    totalAgents,
   ] = await Promise.all([
     prisma.property.count(),
     prisma.user.count(),
@@ -41,6 +47,7 @@ const Statistics = async () => {
         status: 'SOLD',
       },
     }),
+    prisma.agent.count(),
   ]);
 
   const stats = [
@@ -74,10 +81,16 @@ const Statistics = async () => {
       icon: <BiSolidPurchaseTag className='size-5 text-red-700' />,
       iconBg: 'bg-red-50',
     },
+    {
+      title: 'Total Agents',
+      value: totalAgents,
+      icon: <UserCheck className='size-5 text-yellow-700' />,
+      iconBg: 'bg-yellow-50',
+    },
   ];
 
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4'>
+    <div className='grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4'>
       {stats.map((stat) => (
         <Card key={stat.title} className={cardStyles}>
           <CardHeader className='flex flex-row items-center justify-between space-y-0'>

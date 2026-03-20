@@ -10,60 +10,62 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-const DesktopNavigation = () => {
-  const pathname = usePathname();
-
-  const navigationData = [
-    {
-      title: 'Home',
-      href: '/',
-    },
-    {
-      title: 'Properties',
-      href: '/properties',
-    },
-    {
-      title: 'Company',
-      items: [
-        {
-          title: 'About Us',
-          href: '/about-us',
-        },
-        {
-          title: 'Team',
-          href: '/team',
-        },
-        {
-          title: 'Agents',
-          href: '/agents',
-        },
-        {
-          title: 'Talk to an Agent',
-          href: '/contact-us',
-        },
-        {
-          title: 'Terms & Conditions',
-          href: '/terms-and-conditions',
-        },
-        {
-          title: 'Privacy Policy',
-          href: '/privacy-policy',
-        },
-      ],
-      image: {
-        img: '/images/nav-drowpdown.jpg',
-        href: '#',
+const navigationData = [
+  {
+    title: 'Home',
+    href: '/',
+  },
+  {
+    title: 'Properties',
+    href: '/properties',
+  },
+  {
+    title: 'Company',
+    items: [
+      {
+        title: 'About Us',
+        href: '/about-us',
       },
+      {
+        title: 'Team',
+        href: '/team',
+      },
+      {
+        title: 'Talk to an Agent',
+        href: '/contact-us',
+      },
+      {
+        title: 'Terms & Conditions',
+        href: '/terms-and-conditions',
+      },
+      {
+        title: 'Privacy Policy',
+        href: '/privacy-policy',
+      },
+    ],
+    image: {
+      img: '/images/nav-drowpdown.jpg',
+      href: '#',
     },
-    {
-      title: 'Blog',
-      href: '/blog',
-    },
-  ];
-
+  },
+  {
+    title: 'Agents',
+    href: '/agents',
+  },
+  {
+    title: 'Blog',
+    href: '/blog',
+  },
+];
+const DesktopNavigation = ({
+  pathname,
+  scrolled,
+}: {
+  pathname: string;
+  scrolled: boolean;
+}) => {
   return (
     <NavigationMenu>
       <NavigationMenuList className='gap-4'>
@@ -75,7 +77,10 @@ const DesktopNavigation = () => {
                   asChild
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    pathname === navItem.href && 'text-accent',
+                    'text-black',
+                    pathname === navItem.href && 'text-accent font-bold',
+                    pathname === '/' && 'text-white',
+                    scrolled && pathname === '/' && 'text-black',
                   )}
                 >
                   <Link href={navItem.href}>{navItem.title}</Link>
@@ -87,7 +92,12 @@ const DesktopNavigation = () => {
           return (
             <NavigationMenuItem key={navItem.title}>
               <NavigationMenuTrigger
-                className={cn(navigationMenuTriggerStyle())}
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  'text-black',
+                  pathname === '/' && 'text-white',
+                  scrolled && pathname === '/' && 'text-black',
+                )}
               >
                 {navItem.title}
               </NavigationMenuTrigger>
@@ -99,7 +109,7 @@ const DesktopNavigation = () => {
                         asChild
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          pathname === item.href && 'text-accent',
+                          pathname === item.href && 'text-accent font-bold',
                         )}
                       >
                         <Link href={item.href}>{item.title}</Link>
