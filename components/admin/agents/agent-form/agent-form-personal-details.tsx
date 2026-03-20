@@ -40,7 +40,7 @@ const AgentFormPersonalDetails = ({
       </CardHeader>
       <CardContent className='pt-6'>
         <FieldGroup>
-          <div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
+          <div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
             <Controller
               name='name'
               control={form.control}

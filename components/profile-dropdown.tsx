@@ -53,7 +53,7 @@ const ProfileDropdown = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='cursor-pointer hidden md:block' asChild>
+      <DropdownMenuTrigger className='cursor-pointer ' asChild>
         <Avatar>
           <Suspense fallback={<Skeleton className='w-10 rounded-full' />}>
             <Image

@@ -55,7 +55,7 @@ const PropertiesPerCityChart = ({ data }: PropertiesPerCityChartProps) => {
         </div>
       </CardHeader>
       <CardContent className='flex flex-col gap-10'>
-        <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
+        <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-4'>
           <div className='flex items-center gap-6'>
             <div className='flex flex-col'>
               <span className='text-2xl font-semibold'>
@@ -74,7 +74,7 @@ const PropertiesPerCityChart = ({ data }: PropertiesPerCityChartProps) => {
               </span>
             </div>
           </div>
-          <span className='flex items-center gap-2'>
+          <span className='items-center gap-2 hidden lg:flex'>
             <GoDotFill className='animate-pulse text-accent size-4' />
             <span className='text-sm text-muted-foreground'>
               Number of properties in each city

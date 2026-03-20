@@ -1,31 +1,46 @@
-import { Card, CardContent } from '@/components/ui/card';
-import AdminHeader from '@/components/admin/admin-header';
-import { Metadata } from 'next';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import type { CSSProperties } from 'react';
 import AdminFooter from '@/components/admin/admin-footer';
+import AdminHeader from '@/components/admin/admin-header';
+import AdminSidebar from '@/components/admin/admin-sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import prisma from '@/lib/prisma';
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Admin Dashboard',
-    template: '%s - Admin Dashboard',
-  },
-  description:
-    'Manage properties, users, agents, and bookings from the Bayti Admin Dashboard. Monitor listings, update property information, and oversee platform activity in one centralized management panel.',
-};
+const AdminDashboardLayout = async ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const admins = await prisma.user.findMany({
+    where: {
+      role: 'ADMIN',
+    },
+    take: 10,
+    orderBy: { createdAt: 'desc' },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    },
+  });
 
-const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='flex min-h-dvh flex-col'>
-      <AdminHeader />
-      <main className='container flex-1 py-6'>
-        <TooltipProvider>
-          <Card className='rounded-lg'>
-            <CardContent>{children}</CardContent>
-          </Card>
-        </TooltipProvider>
-      </main>
-      <AdminFooter />
-    </div>
+    <SidebarProvider
+      style={
+        {
+          '--sidebar': 'var(--card)',
+          '--sidebar-width': '17rem',
+          '--sidebar-width-icon': '3.5rem',
+          '--sidebar-width-mobile': '2rem',
+        } as CSSProperties
+      }
+    >
+      <AdminSidebar admins={admins} />
+      <div className='flex flex-1 flex-col overflow-hidden'>
+        <AdminHeader />
+        <main className='flex-grow p-4 md:p-6'>{children}</main>
+        <AdminFooter />
+      </div>
+    </SidebarProvider>
   );
 };
 

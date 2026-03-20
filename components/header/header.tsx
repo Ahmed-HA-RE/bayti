@@ -44,7 +44,9 @@ const Header = async () => {
 
           {/* Profile Dropdown */}
           {session ? (
-            <ProfileDropdown session={session} />
+            <div className='md:block hidden'>
+              <ProfileDropdown session={session} />
+            </div>
           ) : (
             <LinkButton
               variant='default'

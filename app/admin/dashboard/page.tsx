@@ -65,14 +65,14 @@ const AdminHomePage = async () => {
       <Statistics />
 
       {/* Main Dashboard Grid - Asymmetric Layout */}
-      <div className='grid grid-cols-1 lg:grid-cols-12 gap-6'>
+      <div className='grid grid-cols-1 xl:grid-cols-12 gap-6'>
         {/* Primary Chart - Takes 8 columns on large screens */}
-        <div className='lg:col-span-8'>
+        <div className='xl:col-span-8'>
           <PropertiesPerCityChart data={propertiesPerCity} />
         </div>
 
         {/* Secondary Chart - Takes 4 columns (sidebar style) */}
-        <div className='lg:col-span-4'>
+        <div className='xl:col-span-4'>
           <UsersGrowthChart
             newMonthlyUsers={newMonthlyUsers}
             newWeeklyUsers={newWeeklyUsers}
