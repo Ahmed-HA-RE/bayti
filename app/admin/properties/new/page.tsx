@@ -7,8 +7,8 @@ export const metadata: Metadata = {
     'Add a new property with details like name, images, and other key information.',
 };
 
-const AddPropertyPage = () => {
+const AdminAddPropertyPage = () => {
   return <AdminAddPropertyDetails />;
 };
 
-export default AddPropertyPage;
+export default AdminAddPropertyPage;

@@ -176,23 +176,21 @@ const BookVisitDialogForm = ({
                   Preferred Viewing Date
                 </FieldLabel>
                 <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger
-                    render={
-                      <Button
-                        variant='ghost'
-                        className='w-full justify-between font-normal border'
-                        id='date'
-                      >
-                        <span className='flex items-center text-muted-foreground'>
-                          <CalendarIcon className='mr-2' />
-                          {field.value
-                            ? field.value.toLocaleDateString()
-                            : 'Pick a date'}
-                        </span>
-                        <ChevronDownIcon />
-                      </Button>
-                    }
-                  />
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant='ghost'
+                      className='w-full justify-between font-normal border'
+                      id='date'
+                    >
+                      <span className='flex items-center text-muted-foreground'>
+                        <CalendarIcon className='mr-2' />
+                        {field.value
+                          ? field.value.toLocaleDateString()
+                          : 'Pick a date'}
+                      </span>
+                      <ChevronDownIcon />
+                    </Button>
+                  </PopoverTrigger>
                   <PopoverContent
                     side='top'
                     className='w-auto p-0'

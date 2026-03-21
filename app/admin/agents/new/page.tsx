@@ -7,8 +7,8 @@ export const metadata: Metadata = {
     'Add a new real estate agent to the platform by entering their profile details, contact information, and credentials.',
 };
 
-const AddAgentPage = () => {
+const AdminAddAgentPage = () => {
   return <AddAgentDetails />;
 };
 
-export default AddAgentPage;
+export default AdminAddAgentPage;
