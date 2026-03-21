@@ -20,6 +20,9 @@ export const propertySchema = z.object({
     .string({ error: 'Property description is required' })
     .min(20, 'Property description must be at least 20 characters long')
     .max(1000, 'Property description must be less than 1000 characters long'),
+  agentId: z
+    .string({ error: 'Assign Agent for this property' })
+    .min(1, 'Agent is required'),
   address: z
     .string({ error: 'Property address is required' })
     .min(10, 'Property address must be at least 10 characters long')

@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { PropertyFormData } from '@/schema/property';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { FaRegStar, FaStar } from 'react-icons/fa6';
+import AssignAgentField from './assign-agent-field';
 
 const PropertyFormDetails = ({
   form,
@@ -39,25 +40,31 @@ const PropertyFormDetails = ({
       </CardHeader>
       <CardContent className='px-2'>
         <FieldGroup className='gap-6'>
-          {/* Property Name */}
-          <Controller
-            name='name'
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={field.name}>
-                  Property Name <span className='text-destructive'>*</span>
-                </FieldLabel>
-                <Input
-                  id={field.name}
-                  {...field}
-                  placeholder='eg. The Oakwood Residence'
-                  aria-invalid={fieldState.invalid}
-                />
-                {fieldState.error && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
+          <FieldGroup className='grid lg:grid-cols-2 gap-4'>
+            {/* Property Name */}
+            <Controller
+              name='name'
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Property Name <span className='text-destructive'>*</span>
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    {...field}
+                    placeholder='eg. The Oakwood Residence'
+                    aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.error && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            {/* Assign Agent */}
+            <AssignAgentField form={form} />
+          </FieldGroup>
           <FieldGroup className='grid lg:grid-cols-2 gap-4'>
             {/* Property List */}
             <Controller
