@@ -14,6 +14,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { addProperty } from '@/lib/actions/admin/properties/add-property';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 const PropertyForm = ({
   type,
@@ -25,6 +28,9 @@ const PropertyForm = ({
   const [removedImages, setRemovedImages] = useState<
     PrismaJson.PropertyImages[] | []
   >([]);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
     defaultValues:
@@ -52,8 +58,19 @@ const PropertyForm = ({
 
   const isPending = form.formState.isSubmitting;
 
-  const onSubmit = (data: PropertyFormData) => {
-    console.log(data);
+  const onSubmit = async (data: PropertyFormData) => {
+    const res = await addProperty(data);
+
+    if (res.success) {
+      toast.success(res.message);
+      queryClient.invalidateQueries({
+        queryKey: ['properties', '/admin/properties'],
+      });
+      router.push('/admin/properties');
+    } else {
+      toast.error(res.message);
+      return;
+    }
   };
 
   const handleRemoveImage = (imageKey: string) => {

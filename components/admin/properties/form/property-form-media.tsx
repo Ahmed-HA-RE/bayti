@@ -46,7 +46,13 @@ const PropertyFormMedia = ({
             {field.value.length > 0 ? (
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2'>
                 {field.value.map((image, index) => (
-                  <div key={index} className='relative aspect-[3/2]'>
+                  <div
+                    key={index}
+                    className={cn(
+                      'relative aspect-[3/2]',
+                      field.value.length === 1 && 'col-span-2',
+                    )}
+                  >
                     <Image
                       key={index}
                       src={image.url}

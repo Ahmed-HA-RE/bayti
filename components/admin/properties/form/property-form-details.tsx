@@ -73,7 +73,7 @@ const PropertyFormDetails = ({
                 City <span className='text-destructive'>*</span>
               </FieldLabel>
               <Input
-                value={field.value}
+                value={field.value?.toUpperCase()}
                 disabled
                 placeholder='City will be filled automatically'
               />

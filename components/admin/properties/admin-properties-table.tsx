@@ -129,13 +129,13 @@ const columns: ColumnDef<
           <Suspense
             fallback={<AvatarFallback className='text-xs'>AH</AvatarFallback>}
           >
-            {/* <Image
-              src={row.original.images[0]}
+            <Image
+              src={row.original.images[0].url}
               alt={row.original.name}
               width={34}
               height={34}
               className='object-cover rounded-full'
-            /> */}
+            />
           </Suspense>
         </Avatar>
         <span className='text-foreground text-ellipsis overflow-hidden'>
@@ -150,7 +150,7 @@ const columns: ColumnDef<
       return (
         <Button
           variant='ghost'
-          className='gap-1 text-muted-foreground'
+          className='gap-1 text-muted-foreground py-0 px-0'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Listed At
@@ -168,7 +168,7 @@ const columns: ColumnDef<
       return (
         <Button
           variant='ghost'
-          className='gap-1 text-muted-foreground'
+          className='gap-1 text-muted-foreground py-0 px-0'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Price
