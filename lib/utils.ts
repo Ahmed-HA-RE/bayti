@@ -28,3 +28,20 @@ export const formatCityName = (city: string) => {
     .map((word) => capitalizeFirstLetter(word))
     .join(' ');
 };
+
+export const formatUploadThingError = (
+  error: string,
+  type: 'single' | 'multiple',
+) => {
+  if (error.includes('FileSizeMismatch')) {
+    return type === 'single'
+      ? 'File size mismatch. Please try again.'
+      : 'One or more files have a size mismatch. Please try again.';
+  } else if (error.includes('FileCountMismatch')) {
+    return type === 'single'
+      ? 'File count mismatch. Please try again.'
+      : 'One or more files have a count mismatch. Please try again.';
+  } else {
+    return 'An unknown error occurred. Please try again.';
+  }
+};

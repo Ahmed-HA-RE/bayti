@@ -42,8 +42,13 @@ export const propertySchema = z.object({
   bedrooms: z.coerce.number<number>().min(1, 'Bedrooms must be at least 1'),
   bathrooms: z.coerce.number<number>().min(1, 'Bathrooms must be at least 1'),
   images: z
-    .array(z.url({ error: 'Invalid image URL format' }))
-    .min(4, 'At least four images are required'),
+    .array(
+      z.object({
+        url: z.url({ error: 'Invalid image URL' }),
+        key: z.string({ error: 'Invalid image key' }),
+      }),
+    )
+    .min(1, 'At least one image is required'),
   isFeatured: z.boolean().optional(),
   propertyList: z_enumFromArray(
     PROPERTY_LIST_TYPES.map((type) => type.value),

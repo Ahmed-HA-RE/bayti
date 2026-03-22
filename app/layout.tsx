@@ -4,6 +4,9 @@ import './globals.css';
 import { APP_NAME } from '@/lib/constants';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/components/providers';
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
+import { myFileRouter } from '@/app/api/uploadthing/core';
+import { extractRouterConfig } from 'uploadthing/server';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,6 +35,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${inter.className} bg-white text-foreground`}>
+        <NextSSRPlugin routerConfig={extractRouterConfig(myFileRouter)} />
+
         <Providers>{children}</Providers>
         <Toaster
           toastOptions={{

@@ -13,6 +13,10 @@ datasource db {
   provider = "postgresql"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 enum PropertyStatus {
   AVAILABLE
   SOLD
@@ -112,18 +116,20 @@ model Verification {
 
 // Properties
 model Property {
-  id           String         @id @default(uuid())
-  name         String
-  description  String
-  address      String
-  longitude    Float
-  latitude     Float
-  city         String
-  price        Int
-  area         Int
-  bedrooms     Int
-  bathrooms    Int
-  images       String[]
+  id          String @id @default(uuid())
+  name        String
+  description String
+  address     String
+  longitude   Float
+  latitude    Float
+  city        String
+  price       Int
+  area        Int
+  bedrooms    Int
+  bathrooms   Int
+
+  /// [PropertyImages]
+  images       Json[]
   isFeatured   Boolean        @default(false)
   propertyList PropertyList
   propertyType String
