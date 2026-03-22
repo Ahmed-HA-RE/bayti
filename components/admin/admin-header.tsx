@@ -19,7 +19,7 @@ const AdminHeader = async () => {
     hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
   return (
-    <header className='border-b px-4 h-16 flex items-center justify-between bg-muted/40'>
+    <header className='border-b px-4 h-16 flex items-center justify-between bg-white'>
       <div className='flex items-center gap-4'>
         <SidebarTrigger className='md:hidden [&_svg]:!size-6' />
 

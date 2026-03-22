@@ -14,6 +14,7 @@ import { AgentFormData } from '@/schema/agent';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { RiFileUserFill } from 'react-icons/ri';
 
 type AgentFormPersonalDetailsProps = {
   form: UseFormReturn<AgentFormData>;
@@ -27,7 +28,10 @@ const AgentFormPersonalDetails = ({
   setExistingImage,
 }: AgentFormPersonalDetailsProps) => {
   return (
-    <CardFormStepsLayout step={1} title='Personal Details'>
+    <CardFormStepsLayout
+      icon={<RiFileUserFill className='size-5' />}
+      title='Personal Details'
+    >
       <FieldGroup>
         <div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
           <Controller

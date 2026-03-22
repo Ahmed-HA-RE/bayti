@@ -15,6 +15,7 @@ import {
 import { CITIES } from '@/lib/constants';
 import { AgentFormData } from '@/schema/agent';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { ImUserTie } from 'react-icons/im';
 
 const AgentFormProfessionalDetails = ({
   form,
@@ -22,7 +23,10 @@ const AgentFormProfessionalDetails = ({
   form: UseFormReturn<AgentFormData>;
 }) => {
   return (
-    <CardFormStepsLayout step={2} title='Professional Details'>
+    <CardFormStepsLayout
+      icon={<ImUserTie className='size-5' />}
+      title='Professional Details'
+    >
       <FieldGroup>
         <div className='grid grid-cols-1 gap-5 lg:grid-cols-2'>
           <Controller

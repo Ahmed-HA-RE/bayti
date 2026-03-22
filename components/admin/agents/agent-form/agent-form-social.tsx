@@ -19,6 +19,7 @@ import { SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
 import { AgentFormData } from '@/schema/agent';
 import { LinkIcon, PlusIcon, Trash2Icon } from 'lucide-react';
 import { Controller, useFieldArray, UseFormReturn } from 'react-hook-form';
+import { IoMdShare } from 'react-icons/io';
 
 type AgentFormSocialProps = {
   form: UseFormReturn<AgentFormData>;
@@ -39,8 +40,8 @@ const AgentFormSocial = ({ form }: AgentFormSocialProps) => {
     <Card className='xl:col-span-2'>
       <CardHeader className='border-b pb-4'>
         <div className='flex items-center gap-2'>
-          <span className='bg-primary/10 text-primary flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold'>
-            3
+          <span className='bg-primary/10 text-primary flex size-8.5 shrink-0 items-center justify-center rounded-full text-xs font-bold'>
+            <IoMdShare className='size-5' />
           </span>
           <div>
             <CardTitle className='text-base font-semibold'>

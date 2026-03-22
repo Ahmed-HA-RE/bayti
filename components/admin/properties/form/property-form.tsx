@@ -5,6 +5,8 @@ import { PropertyFormData, propertySchema } from '@/schema/property';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import PropertyFormDetails from './property-form-details';
+import PropertyFormSpecs from './property-form-price-and-area';
+import { FieldGroup } from '@/components/ui/field';
 
 const PropertyForm = ({
   type,
@@ -44,9 +46,10 @@ const PropertyForm = ({
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-4'>
+      <FieldGroup className='grid grid-cols-1 gap-4'>
         <PropertyFormDetails form={form} />
-      </div>
+        <PropertyFormSpecs form={form} />
+      </FieldGroup>
     </form>
   );
 };

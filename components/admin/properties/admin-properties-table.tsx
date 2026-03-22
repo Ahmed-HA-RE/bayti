@@ -280,6 +280,7 @@ const columns: ColumnDef<
 ];
 
 const AdminPropertiesTable = () => {
+  const isAdminDashboard = usePathname() === '/admin/dashboard';
   const [{ search, listType, location, status }, setFilters] = useFilters();
   const filters = {
     search,
@@ -309,167 +310,166 @@ const AdminPropertiesTable = () => {
     },
   });
 
-  const isAdminDashboard = usePathname() === '/admin/dashboard';
-
   return (
     <Card
-      className={cn('w-full py-0', !isAdminDashboard && 'border-0 shadow-none')}
+      className={cn('w-full p-4', !isAdminDashboard && 'border-0 shadow-none')}
     >
-      <div>
-        <div className='border-b'>
-          <div className='px-2 pb-6'>
-            <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
-              <h2 className='text-3xl font-semibold tracking-tight'>
-                {!isAdminDashboard ? 'All Properties' : 'Recent Properties'}
-              </h2>
-              <Button size={'sm'} asChild className=' w-full sm:w-auto'>
-                <Link href='/admin/properties/new'>
-                  <FaPlus className='size-2.5' />
-                  Add Property
-                </Link>
-              </Button>
-            </div>
-
-            {!isAdminDashboard && (
-              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 sm:mt-6'>
-                {/* Search filter */}
-                <InputGroup>
-                  <InputGroupInput
-                    placeholder='Search by name...'
-                    className='bg-transparent'
-                    value={search}
-                    onChange={(e) => setFilters({ search: e.target.value })}
-                  />
-                  <InputGroupAddon align='inline-start'>
-                    <SearchIcon className='text-muted-foreground' />
-                  </InputGroupAddon>
-                </InputGroup>
-
-                {/* Type filter */}
-                <NativeSelect
-                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
-                  value={listType}
-                  onChange={(e) => setFilters({ listType: e.target.value })}
-                >
-                  <NativeSelectOption value=''>All Types</NativeSelectOption>
-                  {PROPERTY_TYPES.map((t) => (
-                    <NativeSelectOption key={t.value} value={t.value}>
-                      {t.name}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
-
-                {/* Location Filter */}
-                <NativeSelect
-                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
-                  value={location}
-                  onChange={(e) => setFilters({ location: e.target.value })}
-                >
-                  <NativeSelectOption value=''>
-                    All Locations
-                  </NativeSelectOption>
-                  {CITIES.map((city) => (
-                    <NativeSelectOption key={city.value} value={city.value}>
-                      {city.name}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
-
-                {/* Status Filter */}
-                <NativeSelect
-                  className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
-                  value={status}
-                  onChange={(e) => setFilters({ status: e.target.value })}
-                >
-                  <NativeSelectOption value=''>
-                    Property Status
-                  </NativeSelectOption>
-                  {['AVAILABLE', 'RENTED', 'SOLD'].map((status) => (
-                    <NativeSelectOption key={status} value={status}>
-                      {capitalizeFirstLetter(status.toLowerCase())}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
-              </div>
-            )}
-          </div>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow
-                  key={headerGroup.id}
-                  className='h-14 border-t hover:bg-transparent'
-                >
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        style={{ width: `${header.getSize()}px` }}
-                        className='text-muted-foreground first:px-6 last:pr-6 last:text-center px-4'
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {isFetching ? (
-                <TableSkeleton columns={9} />
-              ) : isError ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className='h-24 text-center'
-                  >
-                    {error.message}
-                  </TableCell>
-                </TableRow>
-              ) : table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
-                    className='hover:bg-transparent'
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className='h-14 first:pl-8 last:w-29 last:px-4 px-4'
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className='h-24 text-center'
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
+      <div className=''>
+        <div className={cn('px-4 pb-4', !isAdminDashboard && 'px-2 pb-6')}>
+          <div className='flex flex-col sm:flex-row gap-4 items-center justify-between'>
+            <h2
+              className={cn(
+                'font-semibold tracking-tight',
+                isAdminDashboard ? 'text-xl' : 'text-2xl',
               )}
-            </TableBody>
-          </Table>
+            >
+              {!isAdminDashboard ? 'All Properties' : 'Recent Properties'}
+            </h2>
+            <Button size={'sm'} asChild className=' w-full sm:w-auto'>
+              <Link href='/admin/properties/new'>
+                <FaPlus className='size-3' />
+                Add Property
+              </Link>
+            </Button>
+          </div>
+
+          {!isAdminDashboard && (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 sm:mt-6'>
+              {/* Search filter */}
+              <InputGroup>
+                <InputGroupInput
+                  placeholder='Search by name...'
+                  className='bg-transparent'
+                  value={search}
+                  onChange={(e) => setFilters({ search: e.target.value })}
+                />
+                <InputGroupAddon align='inline-start'>
+                  <SearchIcon className='text-muted-foreground' />
+                </InputGroupAddon>
+              </InputGroup>
+
+              {/* Type filter */}
+              <NativeSelect
+                className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                value={listType}
+                onChange={(e) => setFilters({ listType: e.target.value })}
+              >
+                <NativeSelectOption value=''>All Types</NativeSelectOption>
+                {PROPERTY_TYPES.map((t) => (
+                  <NativeSelectOption key={t.value} value={t.value}>
+                    {t.name}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+
+              {/* Location Filter */}
+              <NativeSelect
+                className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                value={location}
+                onChange={(e) => setFilters({ location: e.target.value })}
+              >
+                <NativeSelectOption value=''>All Locations</NativeSelectOption>
+                {CITIES.map((city) => (
+                  <NativeSelectOption key={city.value} value={city.value}>
+                    {city.name}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+
+              {/* Status Filter */}
+              <NativeSelect
+                className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
+                value={status}
+                onChange={(e) => setFilters({ status: e.target.value })}
+              >
+                <NativeSelectOption value=''>
+                  Property Status
+                </NativeSelectOption>
+                {['AVAILABLE', 'RENTED', 'SOLD'].map((status) => (
+                  <NativeSelectOption key={status} value={status}>
+                    {capitalizeFirstLetter(status.toLowerCase())}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+            </div>
+          )}
         </div>
-        {/* Pagination */}
-        {!isAdminDashboard && data && data.totalPages > 1 && (
-          <TablePagination
-            totalPages={data.totalPages}
-            results={data.properties.length}
-          />
-        )}
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className='h-14 border-t hover:bg-transparent'
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead
+                      key={header.id}
+                      style={{ width: `${header.getSize()}px` }}
+                      className='text-muted-foreground first:px-6 last:pr-6 last:text-center px-4'
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {isFetching ? (
+              <TableSkeleton columns={9} />
+            ) : isError ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  {error.message}
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className='hover:bg-transparent'
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      className='h-14 first:pl-8 last:w-29 last:px-4 px-4'
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
+      {/* Pagination */}
+      {!isAdminDashboard && data && data.totalPages > 1 && (
+        <TablePagination
+          totalPages={data.totalPages}
+          results={data.properties.length}
+        />
+      )}
     </Card>
   );
 };
