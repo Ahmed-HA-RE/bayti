@@ -19,13 +19,14 @@ import {
 } from '@/components/ui/popover';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { PropertyFormData } from '@/schema/property';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { useQuery } from '@tanstack/react-query';
 import { getAgentsForSelect } from '@/lib/actions/admin/agent/get-agents-for-select';
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from 'use-debounce';
 import { Agent } from '@/lib/generated/prisma';
+import { cn } from '@/lib/utils';
 
 const AssignAgentField = ({
   form,
@@ -61,7 +62,10 @@ const AssignAgentField = ({
                 variant='outline'
                 role='combobox'
                 aria-expanded={open}
-                className='w-full justify-between px-0 pl-4 pr-2.5 h-12 py-1'
+                className={cn(
+                  'w-full justify-between px-0 pl-4 pr-2.5 h-12 py-1',
+                  fieldState.invalid && 'border-destructive',
+                )}
               >
                 {selectedAgent ? (
                   <span className='flex items-center gap-2'>
@@ -120,9 +124,9 @@ const AssignAgentField = ({
                       agents.map((agent) => (
                         <CommandItem
                           key={agent.id}
-                          value={agent.name}
+                          value={agent.id}
                           onSelect={() => {
-                            form.setValue('agentId', agent.id);
+                            field.onChange(agent.id);
                             setSelectedAgent(agent);
                             setOpen(false);
                           }}
@@ -161,6 +165,7 @@ const AssignAgentField = ({
               </Command>
             </PopoverContent>
           </Popover>
+          {fieldState.error && <FieldError errors={[fieldState.error]} />}
         </Field>
       )}
     />

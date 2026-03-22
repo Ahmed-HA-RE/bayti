@@ -99,7 +99,7 @@ const columns: ColumnDef<
             }
           >
             <Image
-              src={row.original.images[0]}
+              src={row.original.images[0].url}
               alt={row.original.name}
               width={48}
               height={48}
@@ -129,13 +129,13 @@ const columns: ColumnDef<
           <Suspense
             fallback={<AvatarFallback className='text-xs'>AH</AvatarFallback>}
           >
-            <Image
+            {/* <Image
               src={row.original.images[0]}
               alt={row.original.name}
               width={34}
               height={34}
               className='object-cover rounded-full'
-            />
+            /> */}
           </Suspense>
         </Avatar>
         <span className='text-foreground text-ellipsis overflow-hidden'>

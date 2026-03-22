@@ -23,7 +23,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
         <CardHeader className='px-0'>
           <div className='relative aspect-[3/2] w-full rounded-4xl overflow-hidden'>
             <Image
-              src={property.images[0]}
+              src={property.images[0].url}
               alt={property.name}
               fill
               className='object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out'

@@ -8,7 +8,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import {
   Popover,
   PopoverContent,
@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/popover';
 import { Spinner } from '@/components/ui/spinner';
 import { getLocations } from '@/lib/api/get-locations';
+import { cn } from '@/lib/utils';
 import { PropertyFormData } from '@/schema/property';
 import { Location } from '@/types/location';
 import { useQuery } from '@tanstack/react-query';
@@ -58,7 +59,10 @@ const PropertyLocationFields = ({
                 variant='outline'
                 role='combobox'
                 aria-expanded={open}
-                className='w-full justify-between pr-2 pl-3 text-muted-foreground'
+                className={cn(
+                  'w-full justify-between pr-2 pl-3 text-muted-foreground font-normal',
+                  fieldState.invalid && 'border-destructive',
+                )}
               >
                 {selectedLocation ? (
                   <span className='truncate'>
@@ -98,8 +102,10 @@ const PropertyLocationFields = ({
                           className='cursor-pointer hover:text-accent hover:bg-orange-50'
                           onSelect={() => {
                             setSelectedLocation(location);
-                            form.setValue('address', location.display_address);
-                            form.setValue('city', location.city);
+                            field.onChange(location.display_address);
+                            form.setValue('city', location.city.toLowerCase());
+                            form.setValue('longitude', location.longitude);
+                            form.setValue('latitude', location.latitude);
                             setOpen(false);
                           }}
                         >
@@ -112,6 +118,7 @@ const PropertyLocationFields = ({
               </Command>
             </PopoverContent>
           </Popover>
+          {fieldState.error && <FieldError errors={[fieldState.error]} />}
         </Field>
       )}
     />

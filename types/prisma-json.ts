@@ -4,7 +4,7 @@ export {};
 
 declare global {
   namespace PrismaJson {
-    type PropertyImages = {
+    export type PropertyImages = {
       url: string;
       key: string;
     };

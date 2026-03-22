@@ -225,12 +225,12 @@ export const PROPERTY_TYPES = [
 
 export const CITIES = [
   { name: 'Dubai', value: 'dubai' },
-  { name: 'Abu Dhabi', value: 'abu_dhabi' },
+  { name: 'Abu Dhabi', value: 'abu dhabi' },
   { name: 'Sharjah', value: 'sharjah' },
   { name: 'Ajman', value: 'ajman' },
-  { name: 'Ras Al Khaimah', value: 'ras_al_khaimah' },
+  { name: 'Ras Al Khaimah', value: 'ras al khaimah' },
   { name: 'Fujairah', value: 'fujairah' },
-  { name: 'Umm Al Quwain', value: 'umm_al_quwain' },
+  { name: 'Umm Al Quwain', value: 'umm al quwain' },
 ];
 
 export const PROPERTY_PRICE_RANGES = [

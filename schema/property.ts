@@ -7,6 +7,11 @@ import {
   PROPERTY_TYPES,
 } from '@/lib/constants';
 
+const propertyImageSchema = z.object({
+  url: z.url({ error: 'Invalid image URL' }),
+  key: z.string({ error: 'Invalid image key' }),
+});
+
 export const propertySchema = z.object({
   name: z
     .string({ error: 'Property name is required' })
@@ -31,7 +36,7 @@ export const propertySchema = z.object({
   longitude: z.coerce.number<number>().min(-180).max(180),
   city: z_enumFromArray(
     CITIES.map((city) => city.value),
-    'Select a valid city',
+    'City is required',
   ),
   price: z.coerce
     .number<number>()
@@ -39,16 +44,15 @@ export const propertySchema = z.object({
   area: z.coerce
     .number<number>()
     .positive({ error: 'Area must be a positive number' }),
-  bedrooms: z.coerce.number<number>().min(1, 'Bedrooms must be at least 1'),
-  bathrooms: z.coerce.number<number>().min(1, 'Bathrooms must be at least 1'),
-  images: z
-    .array(
-      z.object({
-        url: z.url({ error: 'Invalid image URL' }),
-        key: z.string({ error: 'Invalid image key' }),
-      }),
-    )
-    .min(1, 'At least one image is required'),
+  bedrooms: z.coerce
+    .number<number>()
+    .min(1, 'Bedrooms must be at least 1')
+    .max(20, 'Bedrooms must be less than 20'),
+  bathrooms: z.coerce
+    .number<number>()
+    .min(1, 'Bathrooms must be at least 1')
+    .max(20, 'Bathrooms must be less than 20'),
+  images: z.array(propertyImageSchema).min(1, 'At least one image is required'),
   isFeatured: z.boolean().optional(),
   propertyList: z_enumFromArray(
     PROPERTY_LIST_TYPES.map((type) => type.value),

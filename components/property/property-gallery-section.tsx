@@ -5,9 +5,10 @@ import { MotionPreset } from '@/components/shared/motion-preset';
 import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
 import 'photoswipe/style.css';
+import { Property } from '@/lib/generated/prisma';
 
 type PropertyGallerySectionProps = {
-  images: string[];
+  images: Property['images'];
   alt: string;
 };
 
@@ -35,10 +36,10 @@ const PropertyGallerySection = ({
                 transition={{ duration: 0.8 }}
                 delay={0.6 + index * 0.15}
               >
-                <Item original={image} width='1200' height='800'>
+                <Item original={image.url} width='1200' height='800'>
                   {({ ref, open }) => (
                     <Image
-                      src={image}
+                      src={image.url}
                       alt={galleryImage.alt}
                       fill
                       sizes='auto'

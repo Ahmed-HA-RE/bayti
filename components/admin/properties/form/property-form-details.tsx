@@ -94,6 +94,7 @@ const PropertyFormDetails = ({
               </FieldLabel>
               <NativeSelect
                 id={field.name}
+                aria-invalid={fieldState.invalid}
                 value={field.value}
                 onChange={field.onChange}
               >
@@ -121,6 +122,7 @@ const PropertyFormDetails = ({
               </FieldLabel>
               <NativeSelect
                 id={field.name}
+                aria-invalid={fieldState.invalid}
                 value={field.value}
                 onChange={field.onChange}
               >

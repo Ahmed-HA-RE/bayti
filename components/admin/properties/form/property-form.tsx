@@ -12,6 +12,8 @@ import PropertyFormMedia from './property-form-media';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const PropertyForm = ({
   type,
@@ -20,6 +22,9 @@ const PropertyForm = ({
   type: 'add' | 'edit';
   property?: Property;
 }) => {
+  const [removedImages, setRemovedImages] = useState<
+    PrismaJson.PropertyImages[] | []
+  >([]);
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
     defaultValues:
@@ -34,15 +39,15 @@ const PropertyForm = ({
             city: '',
             price: 0,
             area: 0,
+            images: [],
             bedrooms: 0,
             bathrooms: 0,
-            images: [{ url: '', key: '' }],
             isFeatured: false,
             propertyList: '',
             propertyType: '',
             amenities: [],
           },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const isPending = form.formState.isSubmitting;
@@ -51,13 +56,27 @@ const PropertyForm = ({
     console.log(data);
   };
 
+  const handleRemoveImage = (imageKey: string) => {
+    const currentImages = form.getValues('images');
+    const updatedImages = currentImages.filter((img) => img.key !== imageKey);
+    form.setValue('images', updatedImages);
+
+    toast.success('Image removed successfully');
+    const removedImages = currentImages.filter((img) => img.key === imageKey);
+    setRemovedImages((prev) => [...prev, ...removedImages]);
+  };
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup className='grid grid-cols-1 gap-4'>
         <PropertyFormDetails form={form} />
         <PropertyFormSpecs form={form} />
         <PropertyFormFeatures form={form} />
-        <PropertyFormMedia form={form} />
+        <PropertyFormMedia
+          form={form}
+          isEdit={type === 'edit'}
+          onRemoveImage={handleRemoveImage}
+        />
         <div className='flex items-end justify-end gap-4 mt-4'>
           <Button asChild variant={'secondary'}>
             <Link href='/admin/properties'>Cancel</Link>
@@ -65,15 +84,14 @@ const PropertyForm = ({
           <Button type='submit' className='self-end' disabled={isPending}>
             {isPending ? (
               <>
-                <Spinner className='size-4 mr-2' />{' '}
+                <Spinner className='size-4' />{' '}
                 {type === 'add' ? 'Adding...' : 'Updating...'}
               </>
             ) : type === 'add' ? (
-              'Add'
+              'Add Property'
             ) : (
-              'Update'
+              'Update Property'
             )}{' '}
-            Property
           </Button>
         </div>
       </FieldGroup>
