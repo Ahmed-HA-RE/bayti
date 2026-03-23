@@ -1,12 +1,18 @@
 'use server';
 
+import { RemovedImage } from '@/components/admin/properties/form/property-form';
 import { auth } from '@/lib/auth';
 import { PropertyList } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
 import { PropertyFormData, propertySchema } from '@/schema/property';
 import { headers } from 'next/headers';
+import { UTApi } from 'uploadthing/server';
 
-export const addProperty = async (data: PropertyFormData) => {
+export const editProperty = async (
+  data: PropertyFormData,
+  removedImages: RemovedImage[],
+  id: string,
+) => {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -17,38 +23,47 @@ export const addProperty = async (data: PropertyFormData) => {
 
     const validatedData = propertySchema.safeParse(data);
 
-    if (!validatedData.success)
-      throw new Error(
-        'One or more fields are invalid. Please check your input.',
-      );
+    if (!validatedData.success) throw new Error('Invalid property data');
+
+    // Check if the property exists
+    const property = await prisma.property.findUnique({
+      where: { id },
+    });
+
+    if (!property) throw new Error('Property not found');
+
+    if (removedImages.length > 0) {
+      const keys = removedImages.map((img) => img.key);
+      const utapi = new UTApi();
+      await utapi.deleteFiles(keys);
+      await prisma.propertyImage.deleteMany({
+        where: {
+          key: { in: keys },
+        },
+      });
+    }
 
     const {
       name,
       address,
-      agentId,
-      amenities,
-      area,
-      bathrooms,
-      bedrooms,
       city,
       description,
-      propertyImages,
       latitude,
       longitude,
       price,
+      area,
+      bedrooms,
+      bathrooms,
+      isFeatured,
       propertyList,
       propertyType,
-      isFeatured,
+      amenities,
+      propertyImages,
+      agentId,
     } = validatedData.data;
 
-    // Fetch the assigned agent to ensure they exist and have the correct role
-    const assignedAgent = await prisma.agent.findUnique({
-      where: { id: agentId },
-    });
-
-    if (!assignedAgent) throw new Error('Agent not found');
-
-    await prisma.property.create({
+    await prisma.property.update({
+      where: { id },
       data: {
         name,
         address,
@@ -66,19 +81,23 @@ export const addProperty = async (data: PropertyFormData) => {
         amenities,
         agentId,
         propertyImages: {
-          createMany: {
-            data: propertyImages.map((img) => ({
+          upsert: propertyImages.map((img) => ({
+            where: { key: img.key },
+            update: {
+              url: img.url,
+            },
+            create: {
               url: img.url,
               key: img.key,
-            })),
-          },
+            },
+          })),
         },
       },
     });
 
     return {
       success: true,
-      message: 'Property added successfully.',
+      message: 'Property updated successfully',
     };
   } catch (error) {
     return {

@@ -52,7 +52,9 @@ export const propertySchema = z.object({
     .number<number>()
     .min(1, 'Bathrooms must be at least 1')
     .max(20, 'Bathrooms must be less than 20'),
-  images: z.array(propertyImageSchema).min(1, 'At least one image is required'),
+  propertyImages: z
+    .array(propertyImageSchema)
+    .min(1, 'At least one image is required'),
   isFeatured: z.boolean().optional(),
   propertyList: z_enumFromArray(
     PROPERTY_LIST_TYPES.map((type) => type.value),

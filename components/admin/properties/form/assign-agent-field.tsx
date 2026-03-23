@@ -36,15 +36,24 @@ const AssignAgentField = ({
   const [open, setOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<
     Pick<Agent, 'id' | 'name' | 'image'> | undefined
-  >(undefined);
+  >();
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const { data: agents, isFetching } = useQuery({
+  const {
+    data: agents,
+    isFetching,
+    isLoading,
+  } = useQuery({
     queryKey: ['agents', debouncedSearch],
     queryFn: () => getAgentsForSelect(debouncedSearch),
     refetchOnWindowFocus: false,
   });
+
+  const agentId = form.watch('agentId');
+  const defaultAgent = agents?.find((agent) => agent.id === agentId);
+
+  const agent = selectedAgent || defaultAgent;
 
   return (
     <Controller
@@ -67,29 +76,33 @@ const AssignAgentField = ({
                   fieldState.invalid && 'border-destructive',
                 )}
               >
-                {selectedAgent ? (
+                {isLoading ? (
+                  <p className='text-muted-foreground'>Loading...</p>
+                ) : agent ? (
                   <span className='flex items-center gap-2'>
                     <Avatar className='size-6'>
                       <Suspense
                         fallback={
                           <AvatarFallback>
-                            {selectedAgent.name.slice(0, 2).toUpperCase()}
+                            {agent.name.slice(0, 2).toUpperCase()}
                           </AvatarFallback>
                         }
                       >
                         <Image
-                          src={selectedAgent.image}
-                          alt={selectedAgent.name}
+                          src={agent.image}
+                          alt={agent.name}
                           width={24}
                           height={24}
                           className='rounded-full'
                         />
                       </Suspense>
                     </Avatar>
-                    <span className='font-medium'>{selectedAgent.name}</span>
+                    <span className='font-medium'>{agent.name}</span>
                   </span>
                 ) : (
-                  <span className='text-muted-foreground'>Select agent</span>
+                  <span className='text-muted-foreground'>
+                    Assign an Agent...
+                  </span>
                 )}
                 <ChevronsUpDownIcon
                   className='text-muted-foreground/80 shrink-0'

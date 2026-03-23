@@ -1,6 +1,6 @@
 'use client';
 
-import { Property } from '@/lib/generated/prisma';
+import { Property, PropertyImage } from '@/lib/generated/prisma';
 import { PropertyFormData, propertySchema } from '@/schema/property';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -17,17 +17,21 @@ import toast from 'react-hot-toast';
 import { addProperty } from '@/lib/actions/admin/properties/add-property';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
+import { editProperty } from '@/lib/actions/admin/properties/edit-property';
+
+export type RemovedImage = {
+  url: string;
+  key: string;
+};
 
 const PropertyForm = ({
   type,
   property,
 }: {
   type: 'add' | 'edit';
-  property?: Property;
+  property?: Property & { propertyImages: PropertyImage[] };
 }) => {
-  const [removedImages, setRemovedImages] = useState<
-    PrismaJson.PropertyImages[] | []
-  >([]);
+  const [removedImages, setRemovedImages] = useState<RemovedImage[]>([]);
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -45,7 +49,7 @@ const PropertyForm = ({
             city: '',
             price: 0,
             area: 0,
-            images: [],
+            propertyImages: [],
             bedrooms: 0,
             bathrooms: 0,
             isFeatured: false,
@@ -59,28 +63,36 @@ const PropertyForm = ({
   const isPending = form.formState.isSubmitting;
 
   const onSubmit = async (data: PropertyFormData) => {
-    const res = await addProperty(data);
+    const res =
+      type === 'edit' && property
+        ? await editProperty(data, removedImages, property.id)
+        : await addProperty(data);
 
-    if (res.success) {
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    } else {
       toast.success(res.message);
       queryClient.invalidateQueries({
         queryKey: ['properties', '/admin/properties'],
       });
       router.push('/admin/properties');
-    } else {
-      toast.error(res.message);
-      return;
     }
   };
 
   const handleRemoveImage = (imageKey: string) => {
-    const currentImages = form.getValues('images');
-    const updatedImages = currentImages.filter((img) => img.key !== imageKey);
-    form.setValue('images', updatedImages);
+    const removedImage = form
+      .getValues('propertyImages')
+      .find((img) => img.key === imageKey);
 
-    toast.success('Image removed successfully');
-    const removedImages = currentImages.filter((img) => img.key === imageKey);
-    setRemovedImages((prev) => [...prev, ...removedImages]);
+    if (removedImage) {
+      setRemovedImages((prev) => [...prev, removedImage]);
+      const updatedImages = form
+        .getValues('propertyImages')
+        .filter((img) => img.key !== imageKey);
+      form.setValue('propertyImages', updatedImages);
+      toast.success('Image removed successfully');
+    }
   };
 
   return (
