@@ -43,6 +43,7 @@ const PropertyLocationFields = ({
     enabled: debouncedSearch.length > 0,
     refetchOnMount: false,
   });
+  const locationAddress = form.watch('address');
 
   return (
     <Controller
@@ -64,9 +65,9 @@ const PropertyLocationFields = ({
                   fieldState.invalid && 'border-destructive',
                 )}
               >
-                {selectedLocation ? (
+                {selectedLocation || locationAddress ? (
                   <span className='truncate'>
-                    {selectedLocation.display_address}.
+                    {selectedLocation?.display_address || locationAddress}
                   </span>
                 ) : (
                   'Search Location...'

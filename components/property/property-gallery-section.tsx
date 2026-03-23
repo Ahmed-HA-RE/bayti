@@ -5,10 +5,10 @@ import { MotionPreset } from '@/components/shared/motion-preset';
 import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
 import 'photoswipe/style.css';
-import { Property } from '@/lib/generated/prisma';
+import { PropertyImage } from '@/lib/generated/prisma';
 
 type PropertyGallerySectionProps = {
-  images: Property['images'];
+  images: Pick<PropertyImage, 'url'>[];
   alt: string;
 };
 
@@ -21,14 +21,17 @@ const PropertyGallerySection = ({
     <section className='section-top-spacing'>
       <div className='container'>
         {/* Gallery Grid */}
-        <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
+        <div className='grid grid-cols-3 lg:grid-cols-4 gap-4'>
           <Gallery>
             {galleryImage.images.map((image, index) => (
               <MotionPreset
                 key={index}
                 className={cn(
                   'overflow-hidden relative rounded-2xl aspect-[3/2] w-full cursor-pointer',
-                  index === 0 && 'col-span-2 row-span-2 aspect-[3/2] lg:h-full',
+                  index === 0 &&
+                    'col-span-3 lg:col-span-2 lg:row-span-2 lg:h-full',
+                  index === galleryImage.images.length - 1 &&
+                    'lg:col-span-2 lg:max-h-[246px]',
                 )}
                 fade
                 blur

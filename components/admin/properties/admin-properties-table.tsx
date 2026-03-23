@@ -40,7 +40,9 @@ import {
 } from '@/lib/utils';
 import { Card } from '../../ui/card';
 import {
+  Agent,
   Property,
+  PropertyImage,
   PropertyList,
   PropertyStatus,
 } from '@/lib/generated/prisma/client';
@@ -66,17 +68,10 @@ import TableSkeleton from '@/components/shared/table-skeleton';
 import TablePagination from '@/components/shared/table-pagination';
 
 const columns: ColumnDef<
-  Pick<
-    Property,
-    | 'id'
-    | 'name'
-    | 'city'
-    | 'price'
-    | 'createdAt'
-    | 'status'
-    | 'images'
-    | 'propertyList'
-  >
+  Property & {
+    propertyImages: PropertyImage[];
+    agent: Pick<Agent, 'id' | 'name' | 'image'>;
+  }
 >[] = [
   {
     header: 'No.',
@@ -99,10 +94,10 @@ const columns: ColumnDef<
             }
           >
             <Image
-              src={row.original.images[0].url}
+              src={row.original.propertyImages[0]?.url}
               alt={row.original.name}
-              width={48}
-              height={48}
+              width={200}
+              height={200}
               className='rounded-sm object-cover'
             />
           </Suspense>
@@ -127,11 +122,19 @@ const columns: ColumnDef<
       <div className='flex items-center gap-2 max-w-[150px]'>
         <Avatar>
           <Suspense
-            fallback={<AvatarFallback className='text-xs'>AH</AvatarFallback>}
+            fallback={
+              <AvatarFallback className='text-xs'>
+                {row.original.agent.name
+                  .split(' ')
+                  .map((word) => word[0])
+                  .join('')
+                  .toUpperCase()}
+              </AvatarFallback>
+            }
           >
             <Image
-              src={row.original.images[0].url}
-              alt={row.original.name}
+              src={row.original.agent.image}
+              alt={row.original.agent.name}
               width={34}
               height={34}
               className='object-cover rounded-full'
@@ -139,7 +142,7 @@ const columns: ColumnDef<
           </Suspense>
         </Avatar>
         <span className='text-foreground text-ellipsis overflow-hidden'>
-          Ahmed Haitham
+          {row.original.agent.name}
         </span>
       </div>
     ),
@@ -290,7 +293,7 @@ const AdminPropertiesTable = () => {
   };
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const { data, isFetching, isError, error } = useQuery({
+  const { data, isFetching, isLoading, isError, error } = useQuery({
     queryKey: ['admin-properties', filters],
     queryFn: () => getProperties(filters),
     staleTime: 1000 * 60, // 1 minute
@@ -419,7 +422,7 @@ const AdminPropertiesTable = () => {
             ))}
           </TableHeader>
           <TableBody>
-            {isFetching ? (
+            {isFetching || isLoading ? (
               <TableSkeleton columns={9} />
             ) : isError ? (
               <TableRow>

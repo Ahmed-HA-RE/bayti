@@ -84,6 +84,16 @@ export const getProperties = async ({
       ...listTypeFilter,
       ...statusFilter,
     },
+    include: {
+      agent: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+      propertyImages: true,
+    },
     orderBy: {
       createdAt: 'desc',
     },

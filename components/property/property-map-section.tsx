@@ -39,7 +39,7 @@ const PropertyMapSection = ({
               className='w-full'
               theme='light'
               center={[longitude, latitude]}
-              zoom={14}
+              zoom={9}
               styles={{
                 light: styles.openstreetmap,
               }}

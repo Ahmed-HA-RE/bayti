@@ -1,8 +1,8 @@
-import { Property } from '@/lib/generated/prisma/client';
+import { Property, PropertyImage } from '@/lib/generated/prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '../ui/badge';
-import { capitalizeFirstLetter, formatCityName } from '@/lib/utils';
+import { capitalizeFirstLetter } from '@/lib/utils';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { LiaBedSolid } from 'react-icons/lia';
@@ -12,7 +12,11 @@ import { Separator } from '../ui/separator';
 import { FaKey } from 'react-icons/fa';
 import { RiPriceTag3Fill } from 'react-icons/ri';
 
-const PropertyCard = ({ property }: { property: Property }) => {
+const PropertyCard = ({
+  property,
+}: {
+  property: Property & { propertyImages: Pick<PropertyImage, 'url'>[] };
+}) => {
   const beds = property.bedrooms === 1 ? '1 Bed' : `${property.bedrooms} Beds`;
   const baths =
     property.bathrooms === 1 ? '1 Bath' : `${property.bathrooms} Baths`;
@@ -23,7 +27,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
         <CardHeader className='px-0'>
           <div className='relative aspect-[3/2] w-full rounded-4xl overflow-hidden'>
             <Image
-              src={property.images[0].url}
+              src={property.propertyImages[0].url}
               alt={property.name}
               fill
               className='object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out'
@@ -44,7 +48,7 @@ const PropertyCard = ({ property }: { property: Property }) => {
           <h3 className='text-2xl font-medium'>{property.name}</h3>
           <div className='flex items-center gap-2 text-base text-muted-foreground capitalize'>
             <FaMapMarkerAlt className='size-5 text-black ' />
-            {property.address}, {formatCityName(property.city)}
+            {property.address}
           </div>
           <Separator className='my-2 bg-gray-200' />
           <div className='flex items-center gap-6 text-base text-muted-foreground'>

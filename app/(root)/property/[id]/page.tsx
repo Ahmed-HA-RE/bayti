@@ -37,6 +37,13 @@ const PropertyPage = async ({
 
   const property = await prisma.property.findUnique({
     where: { id },
+    include: {
+      propertyImages: {
+        select: {
+          url: true,
+        },
+      },
+    },
   });
 
   if (!property) {
@@ -50,6 +57,14 @@ const PropertyPage = async ({
         gte: property.price,
       },
     },
+    include: {
+      propertyImages: {
+        select: {
+          url: true,
+        },
+        take: 1,
+      },
+    },
     take: 3,
     orderBy: { createdAt: 'desc' },
   });
@@ -57,7 +72,7 @@ const PropertyPage = async ({
   return (
     <>
       <PropertyGallerySection
-        galleryImage={{ images: property.images, alt: property.name }}
+        galleryImage={{ images: property.propertyImages, alt: property.name }}
       />
       <PropertyHeaderSection property={property} />
       <PropertyDetailsSection property={property} />

@@ -11,6 +11,14 @@ const LatestPropertiesSection = async () => {
       isFeatured: false,
       status: 'AVAILABLE',
     },
+    include: {
+      propertyImages: {
+        select: {
+          url: true,
+        },
+        take: 1,
+      },
+    },
     orderBy: {
       createdAt: 'desc',
     },

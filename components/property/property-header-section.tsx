@@ -1,7 +1,7 @@
 import { Property } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
 import { Separator } from '../ui/separator';
-import { formatCityName, formatPrice } from '@/lib/utils';
+import { formatPrice } from '@/lib/utils';
 import { PiMapPinFill } from 'react-icons/pi';
 
 const PropertyHeaderSection = ({ property }: { property: Property }) => {
@@ -50,9 +50,7 @@ const PropertyHeaderSection = ({ property }: { property: Property }) => {
 
           <div className='flex items-center gap-2'>
             <PiMapPinFill className='size-6 text-accent-foreground' />
-            <span className='text-muted-foreground'>
-              {property.address}, {formatCityName(property.city)}, UAE
-            </span>
+            <span className='text-muted-foreground'>{property.address}</span>
           </div>
           <div className='flex items-center gap-1.5'>
             <span className='dirham-symbol text-2xl text-foreground'>

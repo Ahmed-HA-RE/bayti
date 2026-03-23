@@ -1,4 +1,4 @@
-import { Property } from '@/lib/generated/prisma/client';
+import { Property, PropertyImage } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
 import PropertyCard from '../shared/property-card';
 import { cn } from '@/lib/utils';
@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 const RelatedPropertiesSection = ({
   properties,
 }: {
-  properties: Property[];
+  properties: (Property & { propertyImages: Pick<PropertyImage, 'url'>[] })[];
 }) => {
   return (
     <section className='section-spacing'>

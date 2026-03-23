@@ -14,14 +14,15 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LuArrowLeftFromLine, LuClipboardList } from 'react-icons/lu';
+import { LuArrowLeftFromLine } from 'react-icons/lu';
 import { ImStatsDots } from 'react-icons/im';
 import { MdHomeWork, MdRealEstateAgent } from 'react-icons/md';
-import { FaUsers } from 'react-icons/fa';
+import { FaClipboardList, FaUsers } from 'react-icons/fa';
 import { IoSettings } from 'react-icons/io5';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Suspense } from 'react';
+import { GiOpenBook } from 'react-icons/gi';
 
 const AdminSidebar = ({
   admins,
@@ -53,9 +54,15 @@ const AdminSidebar = ({
       href: '/admin/agents',
     },
     {
-      icon: <LuClipboardList className='size-4' />,
+      icon: <FaClipboardList className='size-4' />,
       label: 'Bookings',
       href: '/admin/bookings',
+    },
+
+    {
+      icon: <GiOpenBook className='size-4' />,
+      label: 'Blogs',
+      href: '/admin/blogs',
     },
     {
       icon: <IoSettings className='size-4' />,
