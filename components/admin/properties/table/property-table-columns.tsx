@@ -210,7 +210,7 @@ export const columns: ColumnDef<
                 className='rounded-full'
                 asChild
               >
-                <Link href={`/admin/properties/${row.original.id}/view`}>
+                <Link href={`/admin/property/${row.original.id}/view`}>
                   <IoEyeOutline className='size-5' />
                 </Link>
               </Button>

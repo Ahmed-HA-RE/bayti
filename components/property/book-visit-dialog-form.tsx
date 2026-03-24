@@ -179,7 +179,7 @@ const BookVisitDialogForm = ({
                   <PopoverTrigger asChild>
                     <Button
                       variant='ghost'
-                      className='w-full justify-between font-normal border'
+                      className='w-full justify-between font-normal border px-3.5'
                       id='date'
                     >
                       <span className='flex items-center text-muted-foreground'>

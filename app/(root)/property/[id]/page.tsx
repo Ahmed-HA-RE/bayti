@@ -1,7 +1,8 @@
-import PropertyDetailsSection from '@/components/property/property-details-section';
-import PropertyGallerySection from '@/components/property/property-gallery-section';
+import PropertyDetails from '@/components/property/property-details';
+import PropertyDetailsSection from '@/components/property/property-details';
+import PropertyGallery from '@/components/property/property-gallery';
 import PropertyHeaderSection from '@/components/property/property-header-section';
-import PropertyMapSection from '@/components/property/property-map-section';
+import PropertyMap from '@/components/property/property-map';
 import RelatedPropertiesSection from '@/components/property/related-properties';
 import prisma from '@/lib/prisma';
 import type { Metadata } from 'next';
@@ -73,14 +74,18 @@ const PropertyPage = async ({
   return (
     <>
       <PropertyHeaderSection property={property} />
-      <PropertyGallerySection
-        galleryImage={{ images: property.propertyImages, alt: property.name }}
-      />
-      <PropertyDetailsSection property={property} />
-      <PropertyMapSection
-        longitude={property.longitude}
-        latitude={property.latitude}
-      />
+      <section className='container py-14'>
+        <PropertyGallery images={property.propertyImages} alt={property.name} />
+      </section>
+      <section className='container'>
+        <PropertyDetails property={property} />
+      </section>
+      <section className='container pt-14'>
+        <PropertyMap
+          longitude={property.longitude}
+          latitude={property.latitude}
+        />
+      </section>
       {relatedProperties.length > 0 && (
         <RelatedPropertiesSection properties={relatedProperties} />
       )}

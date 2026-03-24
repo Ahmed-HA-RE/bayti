@@ -7,6 +7,7 @@ import { nextCookies } from 'better-auth/next-js';
 import { customSession } from 'better-auth/plugins';
 import ResetPasswordEmail from '@/emails/reset-password';
 import { captcha } from 'better-auth/plugins';
+import { dash } from '@better-auth/infra';
 
 const domain = process.env.DOMAIN;
 
@@ -74,5 +75,6 @@ export const auth = betterAuth({
       provider: 'google-recaptcha',
       secretKey: process.env.GOOGLE_RECAPTCHA as string,
     }),
+    dash(),
   ],
 });
