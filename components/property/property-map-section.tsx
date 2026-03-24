@@ -22,7 +22,7 @@ const PropertyMapSection = ({
   latitude: number;
 }) => {
   return (
-    <section className='section-spacing'>
+    <section>
       <div className='container'>
         <MotionPreset
           component='h3'

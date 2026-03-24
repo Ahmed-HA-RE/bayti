@@ -43,6 +43,7 @@ const PropertyPage = async ({
           url: true,
         },
       },
+      agent: true,
     },
   });
 
@@ -71,10 +72,10 @@ const PropertyPage = async ({
 
   return (
     <>
+      <PropertyHeaderSection property={property} />
       <PropertyGallerySection
         galleryImage={{ images: property.propertyImages, alt: property.name }}
       />
-      <PropertyHeaderSection property={property} />
       <PropertyDetailsSection property={property} />
       <PropertyMapSection
         longitude={property.longitude}

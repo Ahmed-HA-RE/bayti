@@ -8,6 +8,7 @@ const FeaturedProperties = async () => {
   const featuredProperties = await prisma.property.findMany({
     where: {
       isFeatured: true,
+      status: 'AVAILABLE',
     },
     select: {
       id: true,

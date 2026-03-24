@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const TrustedBySection = () => {
   return (
-    <section className='section-spacing'>
+    <section className='py-8 md:py-10 lg:py-12'>
       <div>
         <MotionPreset
           component='div'

@@ -18,20 +18,18 @@ const PropertyGallerySection = ({
   galleryImage: PropertyGallerySectionProps;
 }) => {
   return (
-    <section className='section-top-spacing'>
+    <section className='py-14'>
       <div className='container'>
         {/* Gallery Grid */}
-        <div className='grid grid-cols-3 lg:grid-cols-4 gap-4'>
+        <div className='grid grid-cols-3 gap-4'>
           <Gallery>
             {galleryImage.images.map((image, index) => (
               <MotionPreset
                 key={index}
                 className={cn(
-                  'overflow-hidden relative rounded-2xl aspect-[3/2] w-full cursor-pointer',
+                  'overflow-hidden relative rounded-lg aspect-[3/2] max-h-[250px] w-full cursor-pointer',
                   index === 0 &&
-                    'col-span-3 lg:col-span-2 lg:row-span-2 lg:h-full',
-                  index === galleryImage.images.length - 1 &&
-                    'lg:col-span-2 lg:max-h-[246px]',
+                    'col-span-3 aspect-[3/2] max-h-[400px] md:max-h-[500px] xl:max-h-[600px]',
                 )}
                 fade
                 blur
@@ -49,6 +47,7 @@ const PropertyGallerySection = ({
                       onClick={open}
                       ref={ref}
                       className='object-cover transition-transform duration-300 hover:scale-105'
+                      loading='eager'
                     />
                   )}
                 </Item>

@@ -7,20 +7,9 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
 import prisma from '@/lib/prisma';
 
 const Statistics = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session || session.user.role !== 'ADMIN') {
-    return redirect('/login');
-  }
-
   const cardStyles =
     'rounded-lg py-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1';
 
@@ -90,7 +79,7 @@ const Statistics = async () => {
   ];
 
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4'>
+    <div className='grid grid-cols-2 lg:grid-cols-3 gap-4'>
       {stats.map((stat) => (
         <Card key={stat.title} className={cardStyles}>
           <CardHeader className='flex flex-row items-center justify-between space-y-0'>

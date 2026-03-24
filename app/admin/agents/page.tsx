@@ -1,4 +1,4 @@
-import AdminAgentsDataTable from '@/components/admin/agents/admin-agents-table';
+import AdminAgentsDataTable from '@/components/admin/agents/table/admin-agents-table';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 

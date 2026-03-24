@@ -59,7 +59,7 @@ const ProfileDropdown = ({
             <Image
               width={150}
               height={150}
-              src={session?.user.image ?? ''}
+              src={session?.user.image as string}
               alt='profile picture'
               className='rounded-full'
             />

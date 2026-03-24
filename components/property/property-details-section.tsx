@@ -1,5 +1,5 @@
 import { AMENITIES } from '@/lib/constants';
-import { Property } from '@/lib/generated/prisma/client';
+import { Agent, Property } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
 import LinkButton from '../shared/link-button';
 import { ArrowRightIcon } from 'lucide-react';
@@ -17,7 +17,11 @@ import { headers } from 'next/headers';
 import prisma from '@/lib/prisma';
 import ViewingRequestDialog from './book-visit-dialog';
 
-const PropertyDetailsSection = async ({ property }: { property: Property }) => {
+const PropertyDetailsSection = async ({
+  property,
+}: {
+  property: Property & { agent: Agent };
+}) => {
   const amentiesList = AMENITIES.filter((amenity) =>
     property.amenities.includes(amenity.name),
   );
@@ -37,7 +41,7 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
   });
 
   return (
-    <section className='section-spacing'>
+    <section className='pb-14'>
       <div className='container'>
         <div className='flex flex-col md:flex-row gap-10 lg:gap-16'>
           {/* Left Side */}
@@ -93,15 +97,15 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
             delay={0.5}
             className='md:flex-1/9'
           >
-            {/* Add fake agent data till real data is available */}
+            {/* Agent */}
             <Card className='py-6'>
               <CardHeader>
                 <div className='flex items-center gap-4'>
                   <Avatar className='size-16'>
                     <Suspense>
                       <Image
-                        alt='User'
-                        src='https://picsum.photos/id/1/64/64'
+                        src={property.agent.image}
+                        alt={property.agent.name}
                         width={64}
                         height={64}
                         className='object-cover rounded-full'
@@ -109,9 +113,9 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                     </Suspense>
                   </Avatar>
                   <div className='flex flex-col gap-0.5'>
-                    <h3 className='text-lg'>Bessie Copper</h3>
+                    <h3 className='text-lg'>{property.agent.name}</h3>
                     <span className='text-sm text-muted-foreground'>
-                      Dubai, UAE
+                      {property.agent.city}, UAE
                     </span>
                   </div>
                 </div>
@@ -123,30 +127,32 @@ const PropertyDetailsSection = async ({ property }: { property: Property }) => {
                   <div className='flex items-center gap-2.5'>
                     <FiMail className='size-5' />
                     <a
-                      href='mailto:bessie.copper@example.com'
+                      href={`mailto:${property.agent.email}`}
                       target='_blank'
                       rel='noopener noreferrer'
                       className='hover:underline text-base'
                     >
-                      bessie.copper@example.com
+                      {property.agent.email}
                     </a>
                   </div>
                   {/* Phone */}
                   <div className='flex items-center gap-2.5'>
                     <BsTelephone className='size-5' />
                     <a
-                      href='tel:+1234567890'
+                      href={`tel:${property.agent.phoneNumber}`}
                       target='_blank'
                       rel='noopener noreferrer'
                       className='hover:underline text-base'
                     >
-                      +1 234 567 890
+                      {property.agent.phoneNumber}
                     </a>
                   </div>
                   {/* Location */}
                   <div className='flex items-center gap-2.5'>
                     <LuMapPin className='size-5' />
-                    <span className='text-base'>Dubai, UAE</span>
+                    <span className='text-base'>
+                      {property.agent.city}, UAE
+                    </span>
                   </div>
                 </div>
                 {/* Contact Form */}

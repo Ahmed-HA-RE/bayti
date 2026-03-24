@@ -133,7 +133,7 @@
     @apply py-12 sm:py-16 lg:py-20;
   }
   .section-top-spacing {
-    @apply pt-34 md:pt-44;
+    @apply pt-27 md:pt-34;
   }
 
   .section-title {

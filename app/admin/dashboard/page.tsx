@@ -3,7 +3,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import prisma from '@/lib/prisma';
 import PropertiesPerCityChart from '@/components/admin/properties-per-city-chart';
 import UsersGrowthChart from '@/components/admin/users-growth-chart';
-import PropertiesTable from '@/components/admin/properties/admin-properties-table';
+import PropertiesTable from '@/components/admin/properties/table/admin-properties-table';
 
 const AdminHomePage = async () => {
   const [propertiesPerCity, newMonthlyUsers, newWeeklyUsers] =

@@ -1,4 +1,4 @@
-import AdminPropertiesTable from '@/components/admin/properties/admin-properties-table';
+import AdminPropertiesTable from '@/components/admin/properties/table/admin-properties-table';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
