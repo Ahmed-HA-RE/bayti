@@ -24,26 +24,41 @@ import { Suspense } from 'react';
 import { UploadButton } from '@/lib/uploadthing';
 import toast from 'react-hot-toast';
 import { formatUploadThingError } from '@/lib/utils';
+import { editUser } from '@/lib/actions/admin/users/edit-user';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AdminEditUserForm = ({
   user,
 }: {
   user: User & { accounts: { providerId: string }[] };
 }) => {
+  const router = useRouter();
+  const querClient = useQueryClient();
+
   const form = useForm<AdminUserFormData>({
     resolver: zodResolver(adminUserSchema),
     defaultValues: {
       name: user.name ?? '',
       email: user.email ?? '',
-      phoneNumber: user.phoneNumber ?? null,
+      phoneNumber: user.phoneNumber || undefined,
       role: user.role as Role,
       image: user.image ?? '',
     },
     mode: 'onChange',
   });
 
-  const onSubmit = (data: AdminUserFormData) => {
-    console.log(data);
+  const onSubmit = async (data: AdminUserFormData) => {
+    const res = await editUser(data, user.id);
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success(res.message);
+    querClient.invalidateQueries({ queryKey: ['admin-users'] });
+    router.push('/admin/users');
   };
 
   const isGoogleUser = user.accounts.some((acc) => acc.providerId === 'google');
@@ -209,7 +224,10 @@ const AdminEditUserForm = ({
           </Button>
           <Button type='submit' disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? (
-              <Spinner className='size-6' data-icon='inline-start' />
+              <>
+                <Spinner className='size-4' data-icon='inline-start' />
+                Saving...
+              </>
             ) : (
               'Save Changes'
             )}

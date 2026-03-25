@@ -1,5 +1,5 @@
 import { AMENITIES } from '@/lib/constants';
-import { Agent, Property } from '@/lib/generated/prisma/client';
+import { Agent, Prisma, Property } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
 import LinkButton from '../shared/link-button';
 import { ArrowRightIcon } from 'lucide-react';
@@ -33,7 +33,7 @@ const PropertyDetails = async ({
   const requestViewingStatus = await prisma.booking.findFirst({
     where: {
       propertyId: property.id,
-      userId: session?.user.id,
+      userId: session?.user.id || Prisma.skip,
     },
     select: {
       status: true,
