@@ -4,10 +4,11 @@ import prisma from './prisma';
 import resend from './resend';
 import VerifyEmail from '@/emails/verify';
 import { nextCookies } from 'better-auth/next-js';
-import { customSession } from 'better-auth/plugins';
+import { admin, customSession } from 'better-auth/plugins';
 import ResetPasswordEmail from '@/emails/reset-password';
 import { captcha } from 'better-auth/plugins';
 import { dash } from '@better-auth/infra';
+import { APP_NAME } from './constants';
 
 const domain = process.env.DOMAIN;
 
@@ -15,6 +16,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  appName: APP_NAME,
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 6,
@@ -29,6 +31,14 @@ export const auth = betterAuth({
         react: ResetPasswordEmail({ url }),
       });
     },
+    customSyntheticUser: ({ coreFields, additionalFields, id }) => ({
+      banned: false,
+      banexpires: null,
+      banReason: null,
+      ...coreFields,
+      ...additionalFields,
+      id,
+    }),
   },
 
   emailVerification: {
@@ -76,5 +86,12 @@ export const auth = betterAuth({
       secretKey: process.env.GOOGLE_RECAPTCHA as string,
     }),
     dash(),
+    admin(),
   ],
+
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ['x-vercel-forwarded-for', 'x-forwarded-for'],
+    },
+  },
 });

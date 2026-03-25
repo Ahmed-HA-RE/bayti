@@ -49,6 +49,7 @@ enum AgentStatus {
 }
 
 // Users
+
 model User {
   id            String    @id
   name          String
@@ -57,6 +58,9 @@ model User {
   image         String    @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
   role          Role      @default(USER)
   phoneNumber   String?
+  banned        Boolean?  @default(false)
+  banReason     String?
+  banExpires    DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
@@ -77,6 +81,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@unique([token])
   @@index([userId])
@@ -116,6 +122,7 @@ model Verification {
 }
 
 // Properties
+
 model Property {
   id             String          @id @default(uuid())
   name           String
@@ -152,6 +159,7 @@ model PropertyImage {
 }
 
 // Bookings
+
 model Booking {
   id              String   @id @default(uuid())
   propertyId      String
@@ -170,6 +178,7 @@ model Booking {
 }
 
 // Agents 
+
 model Agent {
   id               String      @id @default(uuid())
   name             String
