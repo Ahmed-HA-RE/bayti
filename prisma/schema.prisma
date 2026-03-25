@@ -49,13 +49,13 @@ enum AgentStatus {
 }
 
 // Users
-
 model User {
   id            String    @id
   name          String
   email         String
   emailVerified Boolean   @default(false)
   image         String    @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
+  imageKey      String?   @unique
   role          Role      @default(USER)
   phoneNumber   String?
   banned        Boolean?  @default(false)

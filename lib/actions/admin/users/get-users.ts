@@ -50,6 +50,7 @@ export const getUsers = async ({
     where: {
       ...searchFilter,
       ...statusFilter,
+      NOT: { role: 'ADMIN' },
     },
     include: {
       _count: {

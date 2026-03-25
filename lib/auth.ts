@@ -9,6 +9,8 @@ import ResetPasswordEmail from '@/emails/reset-password';
 import { captcha } from 'better-auth/plugins';
 import { dash } from '@better-auth/infra';
 import { APP_NAME } from './constants';
+import { createAuthMiddleware } from 'better-auth/api';
+import { Role } from './generated/prisma';
 
 const domain = process.env.DOMAIN;
 
@@ -16,6 +18,17 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+
+  hooks: {
+    after: createAuthMiddleware(async (ctx) => {
+      const isBanned = ctx.query?.error;
+
+      if (isBanned) {
+        return ctx.redirect('/banned');
+      }
+    }),
+  },
+
   appName: APP_NAME,
   emailAndPassword: {
     enabled: true,
@@ -86,7 +99,10 @@ export const auth = betterAuth({
       secretKey: process.env.GOOGLE_RECAPTCHA as string,
     }),
     dash(),
-    admin(),
+    admin({
+      defaultRole: Role.USER,
+      adminRoles: [Role.ADMIN],
+    }),
   ],
 
   advanced: {

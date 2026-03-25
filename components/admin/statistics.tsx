@@ -22,7 +22,7 @@ const Statistics = async () => {
     totalAgents,
   ] = await Promise.all([
     prisma.property.count(),
-    prisma.user.count(),
+    prisma.user.count({ where: { role: 'USER' } }),
     prisma.booking.count(),
     prisma.booking.count({
       where: {
