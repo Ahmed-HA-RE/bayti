@@ -19,7 +19,7 @@ export const optionalPhoneNumber = z
     return true; // Valid phone number
   }, 'Please enter a valid phone number');
 
-export const adminUserSchema = z.object({
+export const userSchema = z.object({
   name: signUpSchema.shape.name,
   email: signUpSchema.shape.email,
   phoneNumber: optionalPhoneNumber,
@@ -30,4 +30,4 @@ export const adminUserSchema = z.object({
   imageKey: z.string().optional(),
 });
 
-export type AdminUserFormData = z.infer<typeof adminUserSchema>;
+export type UserFormData = z.infer<typeof userSchema>;
