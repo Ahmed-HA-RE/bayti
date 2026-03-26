@@ -73,9 +73,8 @@ const PropertyForm = ({
       return;
     } else {
       toast.success(res.message);
-      queryClient.invalidateQueries({
-        queryKey: ['properties', 'admin-properties'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['admin-properties'] });
+      queryClient.invalidateQueries({ queryKey: ['properties'] });
       router.push('/admin/properties');
     }
   };

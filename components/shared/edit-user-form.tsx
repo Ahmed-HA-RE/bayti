@@ -14,7 +14,7 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { Role, User } from '@/lib/generated/prisma';
-import { AdminUserFormData, adminUserSchema } from '@/schema/admin-user';
+import { UserFormData, userSchema } from '@/schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ import { editUser } from '@/lib/actions/admin/users/edit-user';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 
-const AdminEditUserForm = ({
+const EditUserForm = ({
   user,
 }: {
   user: User & { accounts: { providerId: string }[] };
@@ -36,8 +36,8 @@ const AdminEditUserForm = ({
   const router = useRouter();
   const querClient = useQueryClient();
 
-  const form = useForm<AdminUserFormData>({
-    resolver: zodResolver(adminUserSchema),
+  const form = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       name: user.name ?? '',
       email: user.email ?? '',
@@ -48,7 +48,7 @@ const AdminEditUserForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: AdminUserFormData) => {
+  const onSubmit = async (data: UserFormData) => {
     const res = await editUser(data, user.id);
 
     if (!res.success) {
@@ -238,4 +238,4 @@ const AdminEditUserForm = ({
   );
 };
 
-export default AdminEditUserForm;
+export default EditUserForm;

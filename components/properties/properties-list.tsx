@@ -3,11 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import { PropertyList } from '@/lib/generated/prisma';
 import PropertyCard from '../shared/property-card';
-import { MotionPreset } from '../shared/motion-preset';
 import { Alert, AlertTitle } from '../ui/alert';
 import { CircleAlertIcon } from 'lucide-react';
 import SkeletonPropertyCard from '../skeleton-property-card';
-import Pagination from './pagination';
+import Pagination from '../shared/pagination';
 import { getProperties } from '@/lib/actions/get-properties';
 
 type PropertiesListProps = {
@@ -37,7 +36,7 @@ const PropertiesList = ({
   return (
     <section className='pb-8 sm:pb-14 lg:pb-20'>
       <div className='container'>
-        {data && data?.properties?.length === 0 ? (
+        {data && data.properties.length === 0 ? (
           <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200'>
             <CircleAlertIcon className='size-5' />
             <AlertTitle className='text-base'>No properties found.</AlertTitle>
@@ -48,16 +47,10 @@ const PropertiesList = ({
               ? Array.from({ length: 8 }).map((_, index) => (
                   <SkeletonPropertyCard key={index} />
                 ))
-              : data?.properties.map((property, index) => (
-                  <MotionPreset
-                    fade
-                    slide={{ direction: 'up' }}
-                    blur
-                    delay={index * 0.1}
-                    key={property.id}
-                  >
-                    <PropertyCard property={property} />
-                  </MotionPreset>
+              : data?.properties.map((property) => (
+                  <div className='h-[350px] md:h-[500px]' key={property.id}>
+                    <PropertyCard property={property} key={property.id} />
+                  </div>
                 ))}
           </div>
         )}

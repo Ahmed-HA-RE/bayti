@@ -22,7 +22,7 @@ const LatestPropertiesSection = async () => {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 3,
+    take: 2,
   });
 
   return latestProperties.length === 0 ? null : (
@@ -36,8 +36,11 @@ const LatestPropertiesSection = async () => {
         >
           <SectionEyebrow title='explore' />
           <h2 className='section-title'>Our Latest Properties</h2>
+          <p className='section-subtitle'>
+            Discover the newest additions to our property listings.
+          </p>
         </MotionPreset>
-        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           {latestProperties.map((property, index) => (
             <MotionPreset
               fade
@@ -45,6 +48,7 @@ const LatestPropertiesSection = async () => {
               slide={{ direction: 'up' }}
               delay={index * 0.2 + 0.2}
               key={property.id}
+              className='h-[350px] md:h-[500px]'
             >
               <PropertyCard property={property} />
             </MotionPreset>

@@ -87,6 +87,7 @@ const AdminSidebar = ({
                 alt='Logo'
                 width={100}
                 height={30}
+                style={{ width: 'auto', height: 'auto' }}
                 priority
               />
             </Link>
