@@ -79,7 +79,7 @@ const Statistics = async () => {
   ];
 
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-3 gap-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
       {stats.map((stat) => (
         <Card key={stat.title} className={cardStyles}>
           <CardHeader className='flex flex-row items-center justify-between space-y-0'>

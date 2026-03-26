@@ -48,7 +48,10 @@ const PropertiesList = ({
                   <SkeletonPropertyCard key={index} />
                 ))
               : data?.properties.map((property) => (
-                  <div className='h-[350px] md:h-[500px]' key={property.id}>
+                  <div
+                    className='h-[350px] md:h-[500px] overflow-hidden'
+                    key={property.id}
+                  >
                     <PropertyCard property={property} key={property.id} />
                   </div>
                 ))}

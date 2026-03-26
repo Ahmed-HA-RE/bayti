@@ -25,6 +25,11 @@ export const bookVisit = async (
 
     if (!session) throw new Error('Unauthorized to perform this action');
 
+    // Disable admin from booking a visit
+    if (session.user.role === 'ADMIN') {
+      throw new Error('Admins are not allowed to book visits.');
+    }
+
     const validatedData = bookVisitDialogSchema.safeParse(data);
 
     if (!validatedData.success) throw new Error('Invalid form data');

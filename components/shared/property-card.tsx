@@ -39,7 +39,7 @@ const PropertyCard = ({ property, isAgentListing }: PropertyCardProps) => {
     property.bathrooms === 1 ? '1 Bath' : `${property.bathrooms} Baths`;
 
   return (
-    <Link href={href} className='group size-full overflow-hidden'>
+    <Link href={href} className='group size-full'>
       <Card
         className='border-0 h-full rounded-none group-hover:scale-[1.03] transition-transform duration-500 relative'
         style={styles}
