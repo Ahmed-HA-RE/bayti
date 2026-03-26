@@ -63,7 +63,6 @@ export const editUser = async (data: UserFormData, id: string) => {
 
     return { success: true, message: 'User updated successfully' };
   } catch (error) {
-    console.log(error);
     return { success: false, message: (error as Error).message };
   }
 };

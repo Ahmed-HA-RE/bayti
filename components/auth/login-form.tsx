@@ -100,6 +100,7 @@ const LoginForm = () => {
                 <Button
                   variant='ghost'
                   size='icon'
+                  type='button'
                   onClick={() => setIsVisible((prevState) => !prevState)}
                   className={`${fieldState.error ? 'text-destructive' : 'text-foreground'} absolute top-2 right-0 rounded-l-none border-0 `}
                 >

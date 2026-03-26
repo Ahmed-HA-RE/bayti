@@ -137,6 +137,7 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
                   size='icon'
                   onClick={() => setIsVisible((prevState) => !prevState)}
                   className={`${fieldState.error ? 'text-destructive' : 'text-foreground'} absolute top-2 right-0 rounded-l-none border-0 `}
+                  type='button'
                 >
                   {isVisible ? <EyeOffIcon /> : <EyeIcon />}
                   <span className='sr-only'>
@@ -169,6 +170,7 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
                   size='icon'
                   onClick={() => setIsConfirmVisible((prevState) => !prevState)}
                   className={`${fieldState.error ? 'text-destructive' : 'text-foreground'} absolute top-2 right-0 rounded-l-none border-0 `}
+                  type='button'
                 >
                   {isConfirmVisible ? <EyeOffIcon /> : <EyeIcon />}
                   <span className='sr-only'>

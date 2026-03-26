@@ -85,7 +85,7 @@ function Calendar({
           defaultClassNames.dropdown,
         ),
         caption_label: cn(
-          'font-medium select-none',
+          'font-medium select-none text-foreground',
           captionLayout === 'label'
             ? 'text-sm'
             : 'flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
