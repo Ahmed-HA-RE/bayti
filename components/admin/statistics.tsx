@@ -1,13 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { TbHomeStats } from 'react-icons/tb';
-import {
-  Users2Icon,
-  CalendarClockIcon,
-  ClipboardListIcon,
-  UserCheck,
-} from 'lucide-react';
+import { Users2Icon, ClipboardListIcon, UserCheck } from 'lucide-react';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 import prisma from '@/lib/prisma';
+import { FaUserTie } from 'react-icons/fa';
 
 const Statistics = async () => {
   const cardStyles =
@@ -17,26 +13,22 @@ const Statistics = async () => {
     totalProperties,
     totalUsers,
     totalBookings,
-    totalUpcomingBookings,
     totalSoldProperties,
     totalAgents,
+    totalActiveAgents,
   ] = await Promise.all([
     prisma.property.count(),
     prisma.user.count({ where: { role: 'USER' } }),
     prisma.booking.count(),
-    prisma.booking.count({
-      where: {
-        date: {
-          gt: new Date(),
-        },
-      },
-    }),
     prisma.property.count({
       where: {
         status: 'SOLD',
       },
     }),
     prisma.agent.count(),
+    prisma.agent.count({
+      where: { status: 'ACTIVE' },
+    }),
   ]);
 
   const stats = [
@@ -59,12 +51,6 @@ const Statistics = async () => {
       iconBg: 'bg-blue-50',
     },
     {
-      title: 'Upcoming Bookings',
-      value: totalUpcomingBookings,
-      icon: <CalendarClockIcon className='size-5 text-purple-700' />,
-      iconBg: 'bg-purple-50',
-    },
-    {
       title: 'Sold Properties',
       value: totalSoldProperties,
       icon: <BiSolidPurchaseTag className='size-5 text-red-700' />,
@@ -73,6 +59,12 @@ const Statistics = async () => {
     {
       title: 'Total Agents',
       value: totalAgents,
+      icon: <FaUserTie className='size-5 text-yellow-700' />,
+      iconBg: 'bg-yellow-50',
+    },
+    {
+      title: 'Active Agents',
+      value: totalActiveAgents,
       icon: <UserCheck className='size-5 text-yellow-700' />,
       iconBg: 'bg-yellow-50',
     },
