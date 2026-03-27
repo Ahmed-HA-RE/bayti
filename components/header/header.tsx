@@ -55,7 +55,11 @@ const Header = ({
 
           {/* Mobile Menu Navigation */}
           <div className='md:hidden'>
-            <MobileNavigation session={session} />
+            <MobileNavigation
+              session={session}
+              scrolled={scrolled}
+              pathname={pathname}
+            />
           </div>
 
           {/* Profile Dropdown */}

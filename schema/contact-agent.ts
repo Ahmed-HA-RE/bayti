@@ -16,8 +16,7 @@ export const phoneNumber = z
 export const contactAgentSchema = z.object({
   name: z
     .string({ error: 'Invalid name' })
-    .min(2, 'Name must be at least 2 characters')
-    .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
+    .min(2, 'Name must be at least 2 characters'),
   email: z.email({ error: 'Email is required' }),
   phoneNumber: phoneNumber,
 });
