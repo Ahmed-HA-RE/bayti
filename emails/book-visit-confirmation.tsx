@@ -14,7 +14,7 @@ import {
   Section,
 } from '@react-email/components';
 import { APP_NAME } from '@/lib/constants';
-import { Booking, Property } from '@/lib/generated/prisma/client';
+import { Agent, Booking, Property } from '@/lib/generated/prisma/client';
 import { format } from 'date-fns/format';
 
 config();
@@ -30,7 +30,11 @@ const serverUrl =
     : process.env.NEXT_PUBLIC_DEV_URL;
 
 type BookVisitConfirmationEmailProps = {
-  booking: Booking & { property: Property };
+  booking: Booking & {
+    property: Pick<Property, 'name' | 'address'> & {
+      agent: Pick<Agent, 'name' | 'email' | 'phoneNumber'>;
+    };
+  };
 };
 
 const BookVisitConfirmationEmail = ({
@@ -78,18 +82,18 @@ const BookVisitConfirmationEmail = ({
                   Reservation Time: {format(booking.startTime, 'hh:mm a')} -{' '}
                   {format(booking.endTime, 'hh:mm a')}
                 </li>
-                <li>
-                  Property Location: {booking.property.address},{' '}
-                  {booking.property.city}
-                </li>
+                <li>Property Location: {booking.property.address}</li>
               </ul>
 
-              {/* Add fake data till i implement agent crud operation */}
               <Text className='text-xl font-semibold '>Agent Details:</Text>
               <ul className=' text-gray-600 pl-6 mb-8'>
-                <li>Agent Name: Bessie Copper</li>
-                <li className='my-4'>Agent Email: bessie.copper@example.com</li>
-                <li>Agent Phone Number: (123) 456-7890</li>
+                <li>Agent Name: {booking.property.agent.name}</li>
+                <li className='my-4'>
+                  Agent Email: {booking.property.agent.email}
+                </li>
+                <li>
+                  Agent Phone Number: {booking.property.agent.phoneNumber}
+                </li>
               </ul>
 
               <Text className='text-gray-600'>
@@ -132,7 +136,11 @@ BookVisitConfirmationEmail.PreviewProps = {
     property: {
       name: 'Luxurious Villa in Beverly Hills',
       address: 'Beverly Hills',
-      city: 'Los Angeles',
+      agent: {
+        name: 'Bessie Copper',
+        email: 'example@example.com',
+        phoneNumber: '(123) 456-7890',
+      },
     },
   },
 };

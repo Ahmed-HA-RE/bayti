@@ -22,6 +22,8 @@ export const SERVER_URL =
 
 export const APP_NAME = 'Bayti';
 
+export const DOMAIN = process.env.DOMAIN;
+
 export const STATISTICS = [
   { value: '350+', label: 'Premium Properties' },
   { value: '1200+', label: 'Happy Clients' },
