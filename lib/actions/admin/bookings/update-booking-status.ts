@@ -45,26 +45,27 @@ export const updateBookingStatus = async (
       updatedBooking.status === 'CONFIRMED' ||
       updatedBooking.status === 'REJECTED'
     ) {
-      const { error } = await resend.emails.send({
-        from: `Bayti Support <support@${DOMAIN}>`,
-        to: updatedBooking.userEmail,
-        replyTo: process.env.EMAIL,
-        subject: 'Update on Your Visit Request',
-        react: BookStatusUpdateEmail({
-          booking: {
-            userName: updatedBooking.userName,
-            date: updatedBooking.date,
-            status: updatedBooking.status,
-            cancelReason: updatedBooking.cancelReason,
-            property: {
-              name: updatedBooking.property.name,
+      resend.emails
+        .send({
+          from: `Bayti Support <support@${DOMAIN}>`,
+          to: updatedBooking.userEmail,
+          replyTo: process.env.EMAIL,
+          subject: 'Update on Your Visit Request',
+          react: BookStatusUpdateEmail({
+            booking: {
+              userName: updatedBooking.userName,
+              date: updatedBooking.date,
+              status: updatedBooking.status,
+              cancelReason: updatedBooking.cancelReason,
+              property: {
+                name: updatedBooking.property.name,
+              },
             },
-          },
-        }),
-      });
-
-      if (error)
-        throw new Error('Something went wrong. Please try again later.');
+          }),
+        })
+        .catch((error) => {
+          console.error('Error sending email:', error);
+        });
     }
 
     return { success: true, message: 'Booking status updated' };

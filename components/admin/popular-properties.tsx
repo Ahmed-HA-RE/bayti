@@ -80,6 +80,12 @@ const PopularPropertiesCard = ({ populaProperties }: Props) => {
           <div className='flex items-center justify-center h-full'>
             <Spinner className='size-7' />
           </div>
+        ) : populaProperties.length === 0 ? (
+          <div className='flex items-center justify-center h-full py-3.5'>
+            <span className='text-muted-foreground'>
+              No popular properties found.
+            </span>
+          </div>
         ) : (
           populaProperties.map((property, index) => (
             <div

@@ -17,18 +17,18 @@ import { FaCalendarAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Alert, AlertTitle } from '@/components/ui/alert';
-import ViewingRequestDialogForm from './book-visit-dialog-form';
+import BookVisitDialogForm from './book-visit-dialog-form';
 
 type BookVisitDialogProps = {
   property: Property;
   session: typeof auth.$Infer.Session | null;
-  reservationStatus?: Status;
+  booking?: Status;
 };
 
 const BookVisitDialog = ({
   property,
   session,
-  reservationStatus,
+  booking,
 }: BookVisitDialogProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -45,7 +45,7 @@ const BookVisitDialog = ({
   }
 
   const isAllowedToRequestViewing =
-    reservationStatus !== 'PENDING' && reservationStatus !== 'CONFIRMED';
+    booking !== 'PENDING' && booking !== 'CONFIRMED';
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -54,12 +54,12 @@ const BookVisitDialog = ({
         <FaCalendarAlt className='size-4' />
       </DialogTrigger>
       <DialogContent className='gap-6 px-6 sm:max-w-2xl'>
-        <DialogHeader className=''>
-          <DialogTitle className='text-3xl font-normal leading-tight mb-0.5'>
+        <DialogHeader>
+          <DialogTitle className='text-xl md:text-2xl font-normal leading-tight mb-0.5'>
             Schedule a visit for{' '}
             <span className='font-semibold'>{property.name}</span>
           </DialogTitle>
-          <DialogDescription className='text-base'>
+          <DialogDescription className='text-sm md:text-base'>
             Choose your preferred date and time to arrange a property visit.
           </DialogDescription>
         </DialogHeader>
@@ -67,22 +67,22 @@ const BookVisitDialog = ({
           <Alert variant='success'>
             <FaCalendarAlt className='size-5' />
             <AlertTitle>
-              You have a {reservationStatus.toLowerCase()} reservation for this
-              property. Please check your{' '}
+              You have a {booking?.toLowerCase()} reservation for this property.
+              Please check your{' '}
               <Link href='/account/reservations'>reservations</Link> in your
               account settings for details.
             </AlertTitle>
           </Alert>
         ) : (
           <div className='space-y-6 pt-2'>
-            <ViewingRequestDialogForm
+            <BookVisitDialogForm
               session={session}
               property={property}
               setOpenDialog={setOpenDialog}
             />
             <Link
               href='/booking-info'
-              className='text-sm font-medium block text-center text-muted-foreground'
+              className='text-xs md:text-sm font-medium block text-center text-muted-foreground'
             >
               Not sure?{' '}
               <span className='text-[#ff6b00] underline-offset-2 hover:underline'>

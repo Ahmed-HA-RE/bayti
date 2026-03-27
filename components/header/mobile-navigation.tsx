@@ -23,7 +23,6 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { usePathname } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import LogoutButton from '../shared/logout-button';
 
@@ -38,9 +37,12 @@ type NavigationMenu = {
 
 const MobileNavigation = ({
   session,
+  scrolled,
+  pathname,
 }: {
-  screenSize?: number;
   session: typeof auth.$Infer.Session | null;
+  scrolled: boolean;
+  pathname: string;
 }) => {
   const adminNavigationData: NavigationMenu[] =
     session && session.user.role === 'ADMIN'
@@ -108,7 +110,6 @@ const MobileNavigation = ({
     ...userNavigationData,
   ];
 
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const handleLinkClick = () => {
@@ -131,7 +132,13 @@ const MobileNavigation = ({
           size='icon'
           className='inline-flex md:hidden border-0 aria-expanded:bg-transparent'
         >
-          <RiMenu3Fill className='size-6' />
+          <RiMenu3Fill
+            className={cn(
+              'size-6',
+              scrolled && 'text-black',
+              pathname === '/' && !scrolled ? 'text-white' : 'text-black',
+            )}
+          />
           <span className='sr-only'>Menu</span>
         </Button>
       </SheetTrigger>

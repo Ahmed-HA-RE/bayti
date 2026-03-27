@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '../auth';
 import { headers } from 'next/headers';
 import prisma from '../prisma';
-import { set } from 'date-fns';
+import { isSameDay, set } from 'date-fns';
 import resend from '../resend';
 import BookVisitConfirmationEmail from '@/emails/book-visit-confirmation';
 
@@ -36,23 +36,13 @@ export const bookVisit = async (
 
     const { name, email, phoneNumber, date, timeRange } = validatedData.data;
 
-    // Check if client has already requested a book visit for the same property of the same day
-    const bookVisitRequest = await prisma.booking.findFirst({
-      where: {
-        propertyId,
-        userId: session.user.id,
-        status: { in: ['PENDING', 'CONFIRMED'] },
-      },
-    });
-
-    if (bookVisitRequest) {
-      throw new Error(
-        'You already have an active book visit request for this property.',
-      );
+    const today = new Date();
+    // Check if the selected date is same day
+    if (isSameDay(today, new Date(date))) {
+      throw new Error('Same-day visit requests are not allowed.');
     }
 
-    const start = timeRange.split(' - ')[0];
-    const end = timeRange.split(' - ')[1];
+    const [start, end] = timeRange.split('-');
 
     const startTime = set(new Date(date), {
       hours: Number(start.split(':')[0]),
@@ -68,48 +58,85 @@ export const bookVisit = async (
       milliseconds: 0,
     });
 
-    // Check if the requested time slot overlaps with any existing reservations for the same property
-    const alreadyReserved = await prisma.booking.findFirst({
+    // Check if the requested time is in the future
+    if (startTime.getTime() < Date.now())
+      throw new Error('The selected time has already passed.');
+
+    // Check if client has already requested a book visit for the same property of the same day and if the requested time slot overlaps with any existing reservations for the same property
+    const bookVisitRequest = await prisma.booking.findFirst({
       where: {
         propertyId,
         status: { in: ['PENDING', 'CONFIRMED'] },
+        date: new Date(date),
         startTime,
         endTime,
       },
     });
 
-    if (alreadyReserved)
-      throw new Error(
-        'The selected time slot is not available anymore. Please choose a different time.',
-      );
+    if (bookVisitRequest) {
+      if (bookVisitRequest.userId === session.user.id) {
+        throw new Error(
+          'You have already requested a visit for this property on the same day.',
+        );
+      } else {
+        throw new Error(
+          'The selected time slot is not available. Please choose a different time.',
+        );
+      }
+    }
 
     // Else create a new viewing request
-    const newBooking = await prisma.booking.create({
-      data: {
-        propertyId,
-        userId: session.user.id,
-        userName: name,
-        userEmail: email,
-        userPhoneNumber: phoneNumber,
-        date,
-        startTime,
-        endTime,
-      },
-      include: { property: true },
+    const newBooking = await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { id: session.user.id },
+        data: {
+          phoneNumber,
+        },
+      });
+
+      return await tx.booking.create({
+        data: {
+          propertyId,
+          userId: session.user.id,
+          userName: name,
+          userEmail: email,
+          userPhoneNumber: phoneNumber,
+          date,
+          startTime,
+          endTime,
+        },
+        include: {
+          property: {
+            select: {
+              name: true,
+              address: true,
+              agent: {
+                select: {
+                  name: true,
+                  email: true,
+                  phoneNumber: true,
+                },
+              },
+            },
+          },
+        },
+      });
     });
 
     // Send confirmation email to the user
-    const { error } = await resend.emails.send({
-      from: `Bayti Support <support@${domain}>`,
-      to: email,
-      replyTo: process.env.EMAIL,
-      subject: 'We received your visit request!',
-      react: BookVisitConfirmationEmail({
-        booking: newBooking,
-      }),
-    });
-
-    if (error) throw new Error('Something went wrong. Please try again later.');
+    void resend.emails
+      .send({
+        from: `Bayti Support <support@${domain}>`,
+        to: email,
+        replyTo: process.env.EMAIL,
+        subject: 'We received your visit request!',
+        react: BookVisitConfirmationEmail({
+          booking: newBooking,
+        }),
+      })
+      .catch((error) => {
+        console.error('Failed to send confirmation email:', error);
+      });
 
     revalidatePath(`/property/${propertyId}`);
 

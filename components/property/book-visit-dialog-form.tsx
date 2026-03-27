@@ -200,7 +200,11 @@ const BookVisitDialogForm = ({
                       mode='single'
                       selected={field.value}
                       required
-                      disabled={[{ before: new Date() }, { dayOfWeek: [0, 6] }]}
+                      disabled={[
+                        { from: new Date() },
+                        { before: new Date() },
+                        { dayOfWeek: [0, 6] },
+                      ]}
                       onSelect={(date) => {
                         setOpen(false);
                         field.onChange(date);

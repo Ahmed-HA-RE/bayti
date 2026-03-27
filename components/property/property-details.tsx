@@ -15,7 +15,7 @@ import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import prisma from '@/lib/prisma';
-import ViewingRequestDialog from './book-visit-dialog';
+import BookVisitDialog from './book-visit-dialog';
 
 const PropertyDetails = async ({
   property,
@@ -30,7 +30,7 @@ const PropertyDetails = async ({
     headers: await headers(),
   });
 
-  const requestViewingStatus = await prisma.booking.findFirst({
+  const booking = await prisma.booking.findFirst({
     where: {
       propertyId: property.id,
       userId: session?.user.id || Prisma.skip,
@@ -69,10 +69,10 @@ const PropertyDetails = async ({
             </div>
           </div>
           <div className='flex items-center gap-4'>
-            <ViewingRequestDialog
+            <BookVisitDialog
               property={property}
               session={session}
-              reservationStatus={requestViewingStatus?.status}
+              booking={booking?.status}
             />
             <LinkButton
               variant='secondary'
