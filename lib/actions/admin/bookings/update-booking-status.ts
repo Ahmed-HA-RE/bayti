@@ -28,6 +28,15 @@ export const updateBookingStatus = async (
 
     if (!booking) throw new Error('No booking found');
 
+    // Check if status is the same as current status
+    if (booking.status === status) {
+      throw new Error('Booking is already in this status');
+    }
+
+    if (booking.status !== 'PENDING' && status === 'REJECTED') {
+      throw new Error('Only pending bookings can be rejected');
+    }
+
     const updatedBooking = await prisma.booking.update({
       where: { id: bookingId },
       data: { status, cancelReason: cancelReason === '' ? null : cancelReason },

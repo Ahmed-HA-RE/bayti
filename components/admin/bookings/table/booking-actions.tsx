@@ -63,7 +63,7 @@ const BookingTableActions = ({
 
   return (
     <div className='flex items-center gap-0.5'>
-      {status !== 'REJECTED' && (
+      {status !== 'REJECTED' && status === 'PENDING' && (
         <RejectBookingDialog
           handleUpdateStatus={() => handleUpdateStatus('REJECTED')}
           cancelledReason={cancelledReason}
