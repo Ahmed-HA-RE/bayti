@@ -192,3 +192,17 @@ model Agent {
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 }
+
+// Blogs
+model Blog {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  tag           String
+  content       String
+  coverImageUrl String
+  coverImageKey String
+  readTime      Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
