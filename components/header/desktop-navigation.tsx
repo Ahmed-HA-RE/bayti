@@ -11,54 +11,8 @@ import {
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 import Link from 'next/link';
+import { navigationData } from '@/lib/constants';
 
-const navigationData = [
-  {
-    title: 'Home',
-    href: '/',
-  },
-  {
-    title: 'Properties',
-    href: '/properties',
-  },
-  {
-    title: 'Company',
-    items: [
-      {
-        title: 'About Us',
-        href: '/about-us',
-      },
-      {
-        title: 'Team',
-        href: '/team',
-      },
-      {
-        title: 'Talk to an Agent',
-        href: '/contact-us',
-      },
-      {
-        title: 'Terms & Conditions',
-        href: '/terms-and-conditions',
-      },
-      {
-        title: 'Privacy Policy',
-        href: '/privacy-policy',
-      },
-    ],
-    image: {
-      img: '/images/nav-drowpdown.jpg',
-      href: '#',
-    },
-  },
-  {
-    title: 'Agents',
-    href: '/agents',
-  },
-  {
-    title: 'Blog',
-    href: '/blog',
-  },
-];
 const DesktopNavigation = ({
   pathname,
   scrolled,

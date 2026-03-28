@@ -42,7 +42,7 @@ const PropertiesList = ({
             <AlertTitle className='text-base'>No properties found.</AlertTitle>
           </Alert>
         ) : (
-          <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6'>
+          <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4'>
             {isFetching || isLoading
               ? Array.from({ length: 8 }).map((_, index) => (
                   <SkeletonPropertyCard key={index} />

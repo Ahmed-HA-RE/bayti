@@ -24,6 +24,103 @@ export const APP_NAME = 'Bayti';
 
 export const DOMAIN = process.env.DOMAIN;
 
+export const navigationData = [
+  {
+    title: 'Home',
+    href: '/',
+  },
+  {
+    title: 'Properties',
+    href: '/properties',
+  },
+  {
+    title: 'Company',
+    items: [
+      {
+        title: 'About Us',
+        href: '/about-us',
+      },
+      {
+        title: 'Team',
+        href: '/team',
+      },
+      {
+        title: 'Talk to an Agent',
+        href: '/contact-us',
+      },
+      {
+        title: 'Terms & Conditions',
+        href: '/terms-and-conditions',
+      },
+      {
+        title: 'Privacy Policy',
+        href: '/privacy-policy',
+      },
+    ],
+  },
+  {
+    title: 'Agents',
+    href: '/agents',
+  },
+  {
+    title: 'Blog',
+    href: '/blog',
+  },
+];
+export const footerNavigationData = [
+  {
+    title: 'Resources',
+    items: [
+      {
+        title: 'Home',
+        href: '/',
+      },
+      {
+        title: 'Properties',
+        href: '/properties',
+      },
+      {
+        title: 'Blog',
+        href: '/blog',
+      },
+      {
+        title: 'Agents',
+        href: '/agents',
+      },
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      {
+        title: 'About Us',
+        href: '/about-us',
+      },
+      {
+        title: 'Talk to an Agent',
+        href: '/contact-us',
+      },
+      {
+        title: 'Team',
+        href: '/team',
+      },
+    ],
+  },
+  {
+    title: 'Legal',
+    items: [
+      {
+        title: 'Terms & Conditions',
+        href: '/terms-and-conditions',
+      },
+      {
+        title: 'Privacy Policy',
+        href: '/privacy-policy',
+      },
+    ],
+  },
+];
+
 export const STATISTICS = [
   { value: '350+', label: 'Premium Properties' },
   { value: '1200+', label: 'Happy Clients' },

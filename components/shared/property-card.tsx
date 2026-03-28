@@ -72,8 +72,12 @@ const PropertyCard = ({ property, isAgentListing }: PropertyCardProps) => {
                 <span className='text-[9px] uppercase tracking-widest text-white/50 leading-none mb-1'>
                   Price
                 </span>
-                <span className='text-sm font-bold whitespace-nowrap'>
-                  {formatPrice(property.price)}
+                <span className='flex items-center gap-1'>
+                  <span className='dirham-symbol'>&#xea;</span>
+                  <span className='text-sm font-bold whitespace-nowrap'>
+                    {formatPrice(property.price)}{' '}
+                    {property.propertyList === 'RENT' ? '/mo' : ''}
+                  </span>
                 </span>
               </div>
             </div>

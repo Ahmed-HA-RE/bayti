@@ -25,6 +25,7 @@ import Link from 'next/link';
 import React from 'react';
 import { auth } from '@/lib/auth';
 import LogoutButton from '../shared/logout-button';
+import { navigationData } from '@/lib/constants';
 
 type NavigationMenu = {
   title: string;
@@ -65,47 +66,7 @@ const MobileNavigation = ({
       : [];
 
   const baseNavigationData: NavigationMenu[] = [
-    {
-      title: 'Home',
-      href: '/',
-    },
-    {
-      title: 'Properties',
-      href: '/properties',
-    },
-    {
-      title: 'Company',
-      items: [
-        {
-          title: 'About Us',
-          href: '/about-us',
-        },
-        {
-          title: 'Team',
-          href: '/team',
-        },
-        {
-          title: 'Talk to an Agent',
-          href: '/contact-us',
-        },
-        {
-          title: 'Terms & Conditions',
-          href: '/terms-and-conditions',
-        },
-        {
-          title: 'Privacy Policy',
-          href: '/privacy-policy',
-        },
-      ],
-    },
-    {
-      title: 'Agents',
-      href: '/agents',
-    },
-    {
-      title: 'Blog',
-      href: '/blog',
-    },
+    ...navigationData,
     ...adminNavigationData,
     ...userNavigationData,
   ];

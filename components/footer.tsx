@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { APP_NAME } from '@/lib/constants';
+import { APP_NAME, footerNavigationData } from '@/lib/constants';
 import {
   FaFacebookF,
   FaInstagram,
@@ -8,55 +8,9 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 
-const navigationData = [
-  {
-    title: 'Resources',
-    items: [
-      {
-        title: 'Home',
-        href: '/',
-      },
-      {
-        title: 'Properties',
-        href: '/properties',
-      },
-      {
-        title: 'Blog',
-        href: '/blog',
-      },
-    ],
-  },
-  {
-    title: 'Company',
-    items: [
-      {
-        title: 'About Us',
-        href: '/about-us',
-      },
-      {
-        title: 'Contact Us',
-        href: '/contact-us',
-      },
-    ],
-  },
-  {
-    title: 'Legal',
-    items: [
-      {
-        title: 'Terms & Conditions',
-        href: '/terms-and-conditions',
-      },
-      {
-        title: 'Privacy Policy',
-        href: '/privacy-policy',
-      },
-    ],
-  },
-];
-
 const Footer = () => {
   return (
-    <footer className='bg-foreground pt-10 sm:pt-14 lg:pt-18 pb-8'>
+    <footer className='bg-foreground pt-18 lg:pt-20 pb-8'>
       <div className='container'>
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-5'>
           <div className='flex flex-col items-start gap-4 lg:col-span-2'>
@@ -68,13 +22,13 @@ const Footer = () => {
                 height={30}
               />
             </Link>
-            <p className='text-muted-foreground md:max-w-xs lg:max-w-sm'>
+            <p className='text-[#949494] md:max-w-xs lg:max-w-sm'>
               Browse properties, plan your visits, and secure the home that fits
               your lifestyle, all from a single platform.
             </p>
           </div>
 
-          {navigationData.map((navItem) => (
+          {footerNavigationData.map((navItem) => (
             <div key={navItem.title} className='flex flex-col gap-5'>
               <div className='text-lg text-white font-semibold'>
                 {navItem.title}
@@ -84,7 +38,7 @@ const Footer = () => {
                   <li key={item.title}>
                     <Link
                       href={item.href}
-                      className='text-muted-foreground hover:text-[#ff6b00] transition-all duration-300 link-animated'
+                      className='text-[#949494] hover:text-[#ff6b00] transition-all duration-300 link-animated'
                     >
                       <span className='relative'>{item.title}</span>
                     </Link>

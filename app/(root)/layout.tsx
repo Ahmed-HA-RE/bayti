@@ -1,6 +1,5 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header/header';
-import CtaSection from '@/components/home/cta-section';
 import FAQ from '@/components/shared/faq-section';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
@@ -18,7 +17,15 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       {/* FAQ */}
       <FAQ />
       {/* Cta */}
-      <CtaSection />
+      <div
+        style={{
+          backgroundImage: 'url("/images/cta.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          width: '100%',
+          height: '600px',
+        }}
+      />
       {/* Footer */}
       <Footer />
     </div>
