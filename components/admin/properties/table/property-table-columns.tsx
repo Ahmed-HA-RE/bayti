@@ -1,6 +1,6 @@
 'use client';
 
-import { Agent, Property, PropertyImage } from '@/lib/generated/prisma';
+import { Agent, Property } from '@/lib/generated/prisma';
 import { ColumnDef } from '@tanstack/react-table';
 import PropertyTableActions from './property-table-actions';
 import {
@@ -21,7 +21,9 @@ import Image from 'next/image';
 
 export const columns: ColumnDef<
   Property & {
-    propertyImages: PropertyImage[];
+    propertyImages: {
+      url: string;
+    }[];
     agent: Pick<Agent, 'id' | 'name' | 'image'>;
   }
 >[] = [

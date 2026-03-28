@@ -41,10 +41,10 @@ import { columns } from './property-table-columns';
 
 const AdminPropertiesTable = () => {
   const isAdminDashboard = usePathname() === '/admin/dashboard';
-  const [{ search, listType, location, status }, setFilters] = useFilters();
+  const [{ search, type, location, status }, setFilters] = useFilters();
   const filters = {
     search,
-    listType: listType as PropertyList,
+    type,
     location,
     status: status as PropertyStatus,
   };
@@ -98,7 +98,7 @@ const AdminPropertiesTable = () => {
               {/* Search filter */}
               <InputGroup>
                 <InputGroupInput
-                  placeholder='Search by name...'
+                  placeholder='Search by name, address, or city...'
                   className='bg-transparent'
                   value={search}
                   onChange={(e) => setFilters({ search: e.target.value })}
@@ -111,8 +111,8 @@ const AdminPropertiesTable = () => {
               {/* Type filter */}
               <NativeSelect
                 className='border-0 bg-transparent p-0 shadow-none focus:ring-0'
-                value={listType}
-                onChange={(e) => setFilters({ listType: e.target.value })}
+                value={type}
+                onChange={(e) => setFilters({ type: e.target.value })}
               >
                 <NativeSelectOption value=''>All Types</NativeSelectOption>
                 {PROPERTY_TYPES.map((t) => (
