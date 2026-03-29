@@ -10,15 +10,15 @@ const AdminFormLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className='space-y-8'>
+    <>
       <div>
         <h1 className='text-2xl font-bold mb-1.5'>{title}</h1>
         <p className='text-muted-foreground text-sm'>{subtitle}</p>
       </div>
-      <Separator />
+      <Separator className='my-6' />
 
       {children}
-    </div>
+    </>
   );
 };
 

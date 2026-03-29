@@ -1,4 +1,5 @@
 import z from 'zod';
+import { z_enumFromArray } from './agent';
 
 export const blogSchema = z.object({
   title: z.string({ error: 'Title is required' }).min(1, 'Title is required'),
@@ -13,3 +14,14 @@ export const blogSchema = z.object({
 });
 
 export type BlogFormData = z.infer<typeof blogSchema>;
+
+export const blogContentSchema = z.object({
+  content: z
+    .string({ error: 'Content is required' })
+    .min(150, 'Add a descriptive content with at least 150 characters'),
+  status: z_enumFromArray(['DRAFT', 'PUBLISHED'], 'Invalid status').default(
+    'DRAFT',
+  ),
+});
+
+export type BlogContentFormData = z.input<typeof blogContentSchema>;
