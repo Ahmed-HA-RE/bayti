@@ -16,12 +16,17 @@ import { Controller, useForm } from 'react-hook-form';
 import BlogFormMedia from './blog-form-media';
 import toast from 'react-hot-toast';
 import slugify from 'slugify';
+import { addBlog } from '@/lib/actions/admin/blogs/add-blog';
+import { useRouter } from 'next/navigation';
+import { updateBlog } from '@/lib/actions/admin/blogs/update-blog';
 
-const BlogForm = ({ blog, type }: { blog?: Blog; type?: 'add' | 'edit' }) => {
+const BlogForm = ({ blog, type }: { blog?: Blog; type?: 'add' | 'update' }) => {
+  const router = useRouter();
+
   const form = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
     defaultValues:
-      type === 'edit' && blog
+      type === 'update' && blog
         ? blog
         : {
             title: '',
@@ -33,8 +38,24 @@ const BlogForm = ({ blog, type }: { blog?: Blog; type?: 'add' | 'edit' }) => {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: BlogFormData) => {
-    console.log(data);
+  const onSubmit = async (data: BlogFormData) => {
+    if (type === 'update' && blog) {
+      const res = await updateBlog(data, blog.id);
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res.message);
+      router.push('/admin/blogs');
+    } else {
+      const res = await addBlog(data);
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res.message);
+      router.push(`/admin/blogs/${res.blog?.slug}/content`);
+    }
   };
 
   const isPending = form.formState.isSubmitting;
@@ -123,7 +144,7 @@ const BlogForm = ({ blog, type }: { blog?: Blog; type?: 'add' | 'edit' }) => {
         {/* Cover Media */}
         <BlogFormMedia form={form} />
         <Button type='submit' className='self-start mt-4' disabled={isPending}>
-          {type === 'edit'
+          {type === 'update'
             ? isPending
               ? 'Updating...'
               : 'Update Blog'

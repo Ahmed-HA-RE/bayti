@@ -30,7 +30,7 @@ export const generateMetadata = async ({
   }
 
   return {
-    title: `Edit Blog Content – {blog.title}`,
+    title: `Edit Blog Content - {blog.title}`,
     description: `Add content to ${blog.title} blog`,
   };
 };
@@ -76,15 +76,15 @@ const BlogContentPage = async ({ params }: Props) => {
             {blog.title}
           </h1>
           <p className='text-sm text-muted-foreground mt-0.5'>
-            Add or edit the content for this blog post
+            Add or edit the content for this blog
           </p>
         </div>
       </div>
-      {!blog.content && blog.status === 'DRAFT' && (
+      {blog.status === 'DRAFT' && (
         <Alert variant='warning'>
           <IoMdAlert className='size-4' />
           <AlertTitle>
-            This post is currently a draft and will not be visible to users
+            This blog is currently a draft and will not be visible to users
             until it is published.
           </AlertTitle>
         </Alert>
