@@ -3,10 +3,13 @@
 import RichTextEditor from '@/components/rich-text-editor';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup } from '@/components/ui/field';
+import { Spinner } from '@/components/ui/spinner';
+import { addBlogContent } from '@/lib/actions/admin/blogs/add-blog-content';
 import { Blog } from '@/lib/generated/prisma';
 import { BlogContentFormData, blogContentSchema } from '@/schema/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const BlogContentForm = ({
   blog,
@@ -23,7 +26,12 @@ const BlogContentForm = ({
   });
 
   const onSubmit = async (data: BlogContentFormData) => {
-    console.log(data);
+    const res = await addBlogContent(data, blog.id);
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+    toast.success(res.message);
   };
 
   const isPending = form.formState.isSubmitting;
@@ -45,6 +53,7 @@ const BlogContentForm = ({
         />
         <div className='flex items-center gap-4'>
           <Button
+            type='button'
             className='bg-yellow-200 text-yellow-800 hover:bg-yellow-300'
             disabled={isPending || !canPublish}
             onClick={() =>
@@ -54,7 +63,13 @@ const BlogContentForm = ({
             {isDraft ? 'Publish' : 'Unpublish'}
           </Button>
           <Button disabled={isPending} type='submit' className='self-start'>
-            {isPending ? 'Saving...' : 'Save Content'}
+            {isPending ? (
+              <>
+                <Spinner className='size-4' /> Saving...
+              </>
+            ) : (
+              'Save Content'
+            )}
           </Button>
         </div>
       </FieldGroup>

@@ -1,3 +1,4 @@
+import BlogsList from '@/components/admin/blogs/blogs-list';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ const BlogsPage = () => {
           </Link>
         </Button>
       </div>
+      <BlogsList />
     </div>
   );
 };
