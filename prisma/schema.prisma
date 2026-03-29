@@ -47,6 +47,11 @@ enum AgentStatus {
   INACTIVE
 }
 
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
 // Users
 model User {
   id            String    @id
@@ -195,14 +200,15 @@ model Agent {
 
 // Blogs
 model Blog {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   title         String
-  slug          String   @unique
+  slug          String     @unique
   tag           String
-  content       String
+  content       String?    @db.Text
+  status        BlogStatus @default(DRAFT)
   coverImageUrl String
   coverImageKey String
   readTime      Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }
