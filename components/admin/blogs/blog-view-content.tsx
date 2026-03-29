@@ -1,5 +1,5 @@
 'use client';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 
 const BlogViewContent = ({ content }: { content: string }) => {
   const sanitizedContent = DOMPurify.sanitize(content);

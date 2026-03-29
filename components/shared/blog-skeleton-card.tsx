@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const BlogSkeletonCard = () => {
-  return Array.from({ length: 10 }).map((_, index) => (
+const BlogSkeletonCard = ({ length }: { length: number }) => {
+  return Array.from({ length }).map((_, index) => (
     <Card className='rounded-lg pb-0 gap-0' key={index}>
       <CardHeader className='flex flex-col gap-4'>
         <div className='flex items-center justify-between'>

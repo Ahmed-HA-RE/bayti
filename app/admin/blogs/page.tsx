@@ -1,4 +1,4 @@
-import BlogSkeletonCard from '@/components/admin/blogs/blog-skeleton-card';
+import BlogSkeletonCard from '@/components/shared/blog-skeleton-card';
 import BlogsList from '@/components/admin/blogs/blogs-list';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
@@ -27,7 +27,7 @@ const BlogsPage = () => {
       <Suspense
         fallback={
           <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6'>
-            <BlogSkeletonCard />
+            <BlogSkeletonCard length={10} />
           </div>
         }
       >

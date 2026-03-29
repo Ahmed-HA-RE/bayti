@@ -153,7 +153,7 @@ const PropertyFormDetails = ({
               {...field}
               placeholder='eg. A beautiful residence with modern amenities'
               aria-invalid={fieldState.invalid}
-              className='bg-transparent'
+              className='bg-transparent text-sm'
             />
             {fieldState.error && <FieldError errors={[fieldState.error]} />}
           </Field>

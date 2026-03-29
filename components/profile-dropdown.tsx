@@ -47,7 +47,7 @@ const ProfileDropdown = ({
 
   const handleLogout = async () => {
     await authClient.signOut();
-    router.refresh();
+    router.push('/login');
     toast.success('Logged out successfully');
   };
 

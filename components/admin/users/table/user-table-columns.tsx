@@ -91,7 +91,7 @@ export const columns: ColumnDef<User & { _count: { bookings: number } }>[] = [
   },
 
   {
-    accessorKey: 'bookings',
+    accessorKey: '_count.bookings',
     header: ({ column }) => {
       return (
         <Button

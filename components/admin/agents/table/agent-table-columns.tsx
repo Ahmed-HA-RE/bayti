@@ -97,7 +97,7 @@ export const columns: ColumnDef<Agent & { _count: { properties: number } }>[] =
     },
 
     {
-      accessorKey: 'properties',
+      accessorKey: '_count.properties',
       header: ({ column }) => {
         return (
           <Button

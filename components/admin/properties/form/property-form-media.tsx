@@ -43,35 +43,37 @@ const PropertyFormMedia = ({
               Property Images <span className='text-destructive'>*</span>
             </FieldLabel>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2'>
-              {field.value.map((image, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    'relative aspect-[3/2]',
-                    field.value.length === 1 && 'col-span-2',
-                  )}
-                >
-                  <Image
+            {field.value.length > 0 && (
+              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2'>
+                {field.value.map((image, index) => (
+                  <div
                     key={index}
-                    src={image.url}
-                    alt={`Property Image ${index + 1}`}
-                    fill
-                    sizes='auto'
-                    className='rounded-lg object-cover'
-                  />
-                  {isEdit && (
-                    <Button
-                      type='button'
-                      onClick={() => onRemoveImage(image.key)}
-                      className='absolute top-2 right-2 p-1 rounded-full bg-white hover:bg-white'
-                    >
-                      <IoMdClose className='text-red-500' />
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
+                    className={cn(
+                      'relative aspect-[3/2]',
+                      field.value.length === 1 && 'col-span-2',
+                    )}
+                  >
+                    <Image
+                      key={index}
+                      src={image.url}
+                      alt={`Property Image ${index + 1}`}
+                      fill
+                      sizes='auto'
+                      className='rounded-lg object-cover'
+                    />
+                    {isEdit && (
+                      <Button
+                        type='button'
+                        onClick={() => onRemoveImage(image.key)}
+                        className='absolute top-2 right-2 p-1 rounded-full bg-white hover:bg-white'
+                      >
+                        <IoMdClose className='text-red-500' />
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
 
             <UploadDropzone
               endpoint={'propertyImages'}
