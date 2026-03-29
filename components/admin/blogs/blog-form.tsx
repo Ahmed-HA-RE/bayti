@@ -54,7 +54,7 @@ const BlogForm = ({ blog, type }: { blog?: Blog; type?: 'add' | 'update' }) => {
         return;
       }
       toast.success(res.message);
-      router.push(`/admin/blogs/${res.blog?.slug}/content`);
+      router.push(`/admin/blog/${res.blog?.slug}/content`);
     }
   };
 

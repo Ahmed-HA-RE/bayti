@@ -1,7 +1,9 @@
+import BlogSkeletonCard from '@/components/admin/blogs/blog-skeleton-card';
 import BlogsList from '@/components/admin/blogs/blogs-list';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 export const metadata: Metadata = {
@@ -22,7 +24,15 @@ const BlogsPage = () => {
           </Link>
         </Button>
       </div>
-      <BlogsList />
+      <Suspense
+        fallback={
+          <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6'>
+            <BlogSkeletonCard />
+          </div>
+        }
+      >
+        <BlogsList />
+      </Suspense>
     </div>
   );
 };
