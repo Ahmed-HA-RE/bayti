@@ -48,7 +48,7 @@ const LatestPropertiesSection = async () => {
               slide={{ direction: 'up' }}
               delay={index * 0.2 + 0.2}
               key={property.id}
-              className='h-[350px] md:h-[500px]'
+              className='h-[350px] md:h-[500px] overflow-hidden'
             >
               <PropertyCard property={property} />
             </MotionPreset>

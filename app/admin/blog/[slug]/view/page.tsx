@@ -135,11 +135,7 @@ const BlogViewPage = async ({ params }: Props) => {
       </div>
 
       {/* Content */}
-      {blog.content && (
-        <div className='prose max-w-none prose-ul:marker:text-foreground prose-ol:marker:text-foreground mt-6'>
-          <BlogViewContent content={blog.content} />
-        </div>
-      )}
+      {blog.content && <BlogViewContent content={blog.content} />}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import LatestPropertiesSection from '@/components/home/latest-properties-section
 import TestimonialsSection from '@/components/home/testimonials-section';
 import TrustedBySection from '@/components/home/trusted-by-section';
 import BlogSkeletonCard from '@/components/shared/blog-skeleton-card';
+import FAQ from '@/components/shared/faq-section';
 import { Suspense } from 'react';
 
 const HomePage = () => {
@@ -22,6 +23,7 @@ const HomePage = () => {
       <Suspense fallback={<BlogSkeletonCard length={3} />}>
         <LatestBlogsSection />
       </Suspense>
+      <FAQ />
     </>
   );
 };

@@ -1,9 +1,9 @@
 @import 'tailwindcss';
-@plugin "@tailwindcss/typography";
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import 'uploadthing/tw/v4';
 @source "../node_modules/@uploadthing/react/dist";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,7 +131,7 @@
     @apply w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8;
   }
   .section-spacing {
-    @apply py-12 sm:py-16 lg:py-20;
+    @apply py-14 sm:py-16 lg:py-24;
   }
   .section-top-spacing {
     @apply pt-27 md:pt-34;

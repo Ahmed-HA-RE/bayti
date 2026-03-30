@@ -41,7 +41,7 @@ const LatestBlogsSection = async () => {
               blur
               fade
               slide={{ direction: 'left' }}
-              delay={index + 0.2}
+              delay={index * 0.1}
               key={blog.id}
             >
               <BlogCard key={blog.id} blog={blog} />
