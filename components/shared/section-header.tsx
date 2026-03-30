@@ -2,18 +2,20 @@ import { MotionPreset } from './motion-preset';
 import SectionEyebrow from './section-eyebrow';
 
 const SectionHeader = ({
+  eyebrowTitle,
   title,
   subtitle,
 }: {
+  eyebrowTitle: string;
   title: string;
   subtitle: string;
 }) => {
   return (
     <section className='section-top-spacing'>
       <div className='container'>
-        <div className='flex flex-col items-center justify-center gap-4'>
+        <div className='flex flex-col items-center justify-center gap-2.5'>
           <MotionPreset fade slide={{ direction: 'right' }} delay={0.1} blur>
-            <SectionEyebrow title='Explore Our Properties' />
+            <SectionEyebrow title={eyebrowTitle} />
           </MotionPreset>
           <MotionPreset
             fade
@@ -22,7 +24,7 @@ const SectionHeader = ({
             blur
             className='space-y-4 lg:space-y-6'
           >
-            <h1 className='text-4xl md:text-4xl lg:text-6xl max-w-3xl mx-auto text-center'>
+            <h1 className='text-4xl lg:text-6xl max-w-4xl mx-auto text-center leading-tight'>
               {title}
             </h1>
             <p className='text-muted-foreground max-w-2xl lg:max-w-3xl mx-auto text-center text-sm md:text-base'>

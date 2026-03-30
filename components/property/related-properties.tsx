@@ -9,7 +9,7 @@ const RelatedPropertiesSection = ({
   properties: (Property & { propertyImages: Pick<PropertyImage, 'url'>[] })[];
 }) => {
   return (
-    <section className='section-spacing'>
+    <section className='pb-14'>
       <div className='container'>
         <h2 className='text-2xl md:text-3xl mb-6'>Related Properties</h2>
 

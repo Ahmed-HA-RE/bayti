@@ -19,7 +19,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       className='overflow-hidden group'
       href={isAdmin ? `/admin/blog/${blog.slug}/view` : `/blog/${blog.slug}`}
     >
-      <Card className='rounded-lg pb-0 md:pt-8 gap-0 transition-shadow duration-300 hover:shadow-lg overflow-hidden'>
+      <Card className='rounded-lg pb-0 md:pt-8 gap-0 transition duration-300 overflow-hidden'>
         <CardHeader className='flex flex-col gap-2.5 md:px-6.5'>
           <div className='flex items-center justify-between'>
             <span className='text-muted-foreground text-sm font-normal'>

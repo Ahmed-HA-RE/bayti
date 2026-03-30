@@ -1,4 +1,4 @@
-import BlogViewContent from '@/components/admin/blogs/blog-view-content';
+import BlogViewContent from '@/components/shared/blog-view-content';
 import BlogDetailsSection from '@/components/blog/blog-details-section';
 import BlogHeaderSection from '@/components/blog/blog-header-section';
 import OtherBlogsSection from '@/components/blog/other-blogs.section';
@@ -49,7 +49,7 @@ const BlogPage = async ({ params }: Props) => {
   const { slug } = await params;
 
   const blog = await prisma.blog.findUnique({
-    where: { slug },
+    where: { slug, status: 'PUBLISHED' },
   });
 
   if (!blog) {
@@ -57,7 +57,7 @@ const BlogPage = async ({ params }: Props) => {
   }
 
   const otherBlogs = await prisma.blog.findMany({
-    where: { slug: { not: slug } },
+    where: { slug: { not: slug }, status: 'PUBLISHED' },
     orderBy: { createdAt: 'desc' },
     take: 3,
   });

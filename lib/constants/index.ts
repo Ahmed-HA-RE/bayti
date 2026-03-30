@@ -64,7 +64,7 @@ export const navigationData = [
   },
   {
     title: 'Blog',
-    href: '/blog',
+    href: '/blogs',
   },
 ];
 export const footerNavigationData = [
@@ -81,7 +81,7 @@ export const footerNavigationData = [
       },
       {
         title: 'Blog',
-        href: '/blog',
+        href: '/blogs',
       },
       {
         title: 'Agents',

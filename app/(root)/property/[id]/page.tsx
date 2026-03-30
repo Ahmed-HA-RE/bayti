@@ -80,7 +80,7 @@ const PropertyPage = async ({
       <section className='container'>
         <PropertyDetails property={property} />
       </section>
-      <section className='container pt-14'>
+      <section className='container py-14'>
         <PropertyMap
           longitude={property.longitude}
           latitude={property.latitude}

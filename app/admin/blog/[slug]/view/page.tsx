@@ -12,7 +12,7 @@ import { FaRegCalendar, FaRegEdit } from 'react-icons/fa';
 import { format } from 'date-fns';
 import { FaRegCircleDot } from 'react-icons/fa6';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import BlogViewContent from '@/components/admin/blogs/blog-view-content';
+import BlogViewContent from '@/components/shared/blog-view-content';
 
 type Props = {
   params: Promise<{ slug: string }>;

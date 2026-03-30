@@ -25,6 +25,7 @@ const PropertiesPage = async ({
   return (
     <>
       <SectionHeader
+        eyebrowTitle='Explore Our Properties'
         title='Discover Our Modern Properties for Sale & Rent'
         subtitle={`Every ${APP_NAME} property is thoughtfully designed for comfort, style and modern living. Explore our curated selection of premium homes — each crafted to meet the highest standards of quality and elegance.`}
       />
