@@ -31,7 +31,10 @@ export const proxy = async (request: NextRequest) => {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (!session && request.nextUrl.pathname.startsWith('/account')) {
+  if (
+    (!session || session.user.role !== 'USER') &&
+    request.nextUrl.pathname.startsWith('/account')
+  ) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 };

@@ -36,17 +36,17 @@ const AccountLayout = async ({ children }: { children: React.ReactNode }) => {
       >
         <AccountSidebar session={session} />
         <div className='flex flex-1 flex-col'>
-          <header className='bg-white border-b sticky top-0 z-50 flex h-16 md:h-18 items-center justify-between gap-6 px-4 sm:px-6'>
-            <SidebarTrigger className='[&_svg]:!size-5 block md:hidden' />
-            {/* title */}
-            <h1 className='text-xl md:text-2xl font-bold hidden md:block'>
-              My Account
-            </h1>
-            <AccountBreadCrumb />
+          <header className='bg-white border-b sticky top-0 z-50 '>
+            <div className='container flex items-center justify-between gap-6 h-16 md:h-18'>
+              <SidebarTrigger className='[&_svg]:!size-5 block md:hidden' />
+              {/* title */}
+              <h1 className='text-xl md:text-2xl font-bold hidden md:block'>
+                My Account
+              </h1>
+              <AccountBreadCrumb />
+            </div>
           </header>
-          <main className='size-full flex-1 px-4 py-6 sm:px-6 bg-white'>
-            {children}
-          </main>
+          <main className='size-full flex-1 py-6 bg-white'>{children}</main>
         </div>
       </SidebarProvider>
     </div>
