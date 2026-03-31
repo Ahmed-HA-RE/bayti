@@ -1,5 +1,6 @@
-import { Suspense, useEffect, useState } from 'react';
+'use client';
 
+import { Suspense, useEffect, useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -37,15 +38,8 @@ const ProfileDropdown = ({
       : USER_NAVIGATION;
 
   const isMobile = useMedia('(min-width: 768px)', false);
-
   const [open, setOpen] = useState(false);
-
   const router = useRouter();
-  const handleLogout = async () => {
-    await authClient.signOut();
-    toast.success('Logged out successfully');
-    router.push('/login');
-  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -55,6 +49,12 @@ const ProfileDropdown = ({
       setOpen(false);
     }
   }, [isMobile]);
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    toast.success('Logged out successfully');
+    router.push('/login');
+  };
 
   return (
     <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
