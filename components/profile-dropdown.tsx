@@ -1,29 +1,29 @@
-'use client';
+import { Suspense, useEffect, useState } from 'react';
 
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOutIcon, User } from 'lucide-react';
+import { Button } from './ui/button';
 import Image from 'next/image';
-import { Suspense } from 'react';
-import { Skeleton } from './ui/skeleton';
 import { auth } from '@/lib/auth';
+import { LuUser, LuLogOut } from 'react-icons/lu';
+import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/authClient';
-import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { useMedia } from 'react-use';
+import { USER_NAVIGATION } from '@/lib/constants';
 
 const ProfileDropdown = ({
   session,
 }: {
-  session: typeof auth.$Infer.Session | null;
+  session: typeof auth.$Infer.Session;
 }) => {
   const navigationList =
     session?.user.role === 'ADMIN'
@@ -31,64 +31,101 @@ const ProfileDropdown = ({
           {
             label: 'Dashboard',
             href: '/admin/dashboard',
-            icon: <User />,
+            icon: LuUser,
           },
         ]
-      : [
-          {
-            label: 'Account',
-            href: '/account',
-            icon: <User />,
-          },
-        ];
+      : USER_NAVIGATION;
+
+  const isMobile = useMedia('(min-width: 768px)', false);
+
+  const [open, setOpen] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
-
   const handleLogout = async () => {
     await authClient.signOut();
-    router.push('/login');
     toast.success('Logged out successfully');
+    router.push('/login');
   };
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (!isMobile) {
+      // ignore eslint-disable-next-line react-hooks/exhaustive-deps
+      setOpen(false);
+    }
+  }, [isMobile]);
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className='cursor-pointer ' asChild>
-        <Avatar>
-          <Suspense fallback={<Skeleton className='w-10 rounded-full' />}>
-            <Image
-              width={150}
-              height={150}
-              src={session?.user.image as string}
-              alt='profile picture'
-              className='rounded-full'
-            />
-          </Suspense>
-        </Avatar>
+    <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant='ghost' className='rounded-full focus-visible:ring-0'>
+          <Avatar>
+            <Suspense
+              fallback={
+                <AvatarFallback>{session?.user?.name?.[0]}</AvatarFallback>
+              }
+            >
+              <Image
+                src={session?.user?.image}
+                alt={session?.user?.name || 'User Profile'}
+                width={32}
+                height={32}
+                className='object-cover rounded-full'
+              />
+            </Suspense>
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align='end'
-        className='w-42 bg-card text-card-foreground py-2'
-      >
-        <DropdownMenuGroup className='space-y-1'>
-          {navigationList.map((item, index) => (
-            <DropdownMenuItem asChild key={index}>
-              <Link
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-2',
-                  pathname === item.href && 'bg-orange-50 text-accent',
-                )}
-              >
-                {item.icon}
-                {item.label}
-              </Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuGroup>
+      <DropdownMenuContent className='w-auto' align='end'>
+        <DropdownMenuLabel className='flex items-center gap-2 p-2 font-normal'>
+          <Avatar className='size-10.5'>
+            <Suspense
+              fallback={
+                <AvatarFallback>{session?.user?.name?.[0]}</AvatarFallback>
+              }
+            >
+              <Image
+                src={session?.user?.image}
+                alt={session?.user?.name || 'User Profile'}
+                width={42}
+                height={42}
+                className='object-cover rounded-full'
+              />
+            </Suspense>
+          </Avatar>
+          <div className='flex flex-1 flex-col items-start'>
+            <span className='text-foreground text-sm font-semibold'>
+              {session.user.name}
+            </span>
+            <span className='text-muted-foreground text-sm'>
+              {session.user.email}
+            </span>
+          </div>
+        </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout} variant='destructive'>
-          <LogOutIcon />
+
+        <DropdownMenuGroup>
+          {navigationList.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <DropdownMenuItem key={index} className='p-2 '>
+                <Icon className='size-4.5' />
+                {item.label}
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={handleLogout}
+          variant='destructive'
+          className='p-2'
+        >
+          <LuLogOut className='size-4.5' />
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

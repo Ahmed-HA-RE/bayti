@@ -76,7 +76,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "focus:bg-orange-50 focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:text-destructive not-data-[variant=destructive]:focus:**:text-accent-foreground data-[variant=success]:text-green-700 data-[variant=success]:focus:bg-green-50 dark:data-[variant=success]:focus:bg-green-200 data-[variant=success]:focus:text-green-700 data-[variant=success]:*:[svg]:text-green-700 not-data-[variant=success]:focus:**:text-accent-foreground gap-1.5 rounded-md px-1.5 py-1 text-sm data-inset:pl-7 [&_svg:not([class*='size-'])]:size-4 group/dropdown-menu-item relative flex items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 cursor-pointer",
+        'flex items-center gap-1.5 cursor-pointer outline-0 rounded-md px-1.5 py-1 text-sm data-[variant=destructive]:text-destructive data-[variant=destructive]:hover:bg-destructive/10 transition-all duration-300 data-[variant=success]:text-green-600 data-[variant=success]:hover:bg-green/10 data-[variant=default]:hover:text-accent data-[variant=default]:hover:bg-accent/10 ',
         className,
       )}
       {...props}

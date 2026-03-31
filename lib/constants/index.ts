@@ -1,19 +1,26 @@
 import { FaSwimmingPool } from 'react-icons/fa';
 import { GiHomeGarage } from 'react-icons/gi';
 import { PiSecurityCameraFill } from 'react-icons/pi';
-import { LuFence } from 'react-icons/lu';
+import { LuFence, LuUser } from 'react-icons/lu';
 import { TbTableRow } from 'react-icons/tb';
 import { LuProjector } from 'react-icons/lu';
 import { RiSmartphoneFill } from 'react-icons/ri';
 import { BiCloset } from 'react-icons/bi';
 
 import { BsDoorOpenFill, BsCloudSun } from 'react-icons/bs';
-import { MdOutlineOutdoorGrill, MdMeetingRoom } from 'react-icons/md';
+import {
+  MdOutlineOutdoorGrill,
+  MdMeetingRoom,
+  MdOutlineCalendarToday,
+} from 'react-icons/md';
 import { LiaHotTubSolid } from 'react-icons/lia';
 import { PiThermometerHotFill } from 'react-icons/pi';
 import { PiDesk } from 'react-icons/pi';
 import { CgGym } from 'react-icons/cg';
 import { GiElevator } from 'react-icons/gi';
+import { TiHeartOutline } from 'react-icons/ti';
+import { AiOutlineSetting } from 'react-icons/ai';
+import { UserNavigationItem } from '@/types/user-navigation';
 
 export const SERVER_URL =
   process.env.NODE_ENV === 'production'
@@ -118,6 +125,29 @@ export const footerNavigationData = [
         href: '/privacy-policy',
       },
     ],
+  },
+];
+
+export const USER_NAVIGATION: UserNavigationItem[] = [
+  {
+    label: 'My Account',
+    href: '/account',
+    icon: LuUser,
+  },
+  {
+    label: 'My Bookings',
+    href: '/account/bookings',
+    icon: MdOutlineCalendarToday,
+  },
+  {
+    label: 'Favorites',
+    href: '/account/favorites',
+    icon: TiHeartOutline,
+  },
+  {
+    label: 'Settings',
+    href: '/account/settings',
+    icon: AiOutlineSetting,
   },
 ];
 

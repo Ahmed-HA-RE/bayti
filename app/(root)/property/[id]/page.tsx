@@ -1,5 +1,4 @@
 import PropertyDetails from '@/components/property/property-details';
-import PropertyDetailsSection from '@/components/property/property-details';
 import PropertyGallery from '@/components/property/property-gallery';
 import PropertyHeaderSection from '@/components/property/property-header-section';
 import PropertyMap from '@/components/property/property-map';
@@ -20,12 +19,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     select: {
       name: true,
       description: true,
+      propertyType: true,
+      propertyImages: {
+        select: {
+          url: true,
+        },
+        take: 1,
+      },
     },
   });
 
+  if (!property) {
+    return {
+      title: 'Property Not Found',
+      description: 'The property you are looking for does not exist.',
+    };
+  }
   return {
     title: property?.name,
     description: property?.description,
+    openGraph: {
+      title: property?.name,
+      description: property?.description,
+      tags: property.propertyType,
+      images: [
+        {
+          url: property?.propertyImages[0].url,
+        },
+      ],
+    },
   };
 }
 

@@ -30,6 +30,10 @@ export const proxy = async (request: NextRequest) => {
   ) {
     return NextResponse.redirect(new URL('/', request.url));
   }
+
+  if (!session && request.nextUrl.pathname.startsWith('/account')) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
 };
 
 export const config = {
@@ -39,5 +43,6 @@ export const config = {
     '/forgot-password',
     '/reset-password',
     '/admin:path*',
+    '/account:path*',
   ],
 };

@@ -73,7 +73,7 @@ const Header = ({
             <LinkButton
               variant='default'
               size='default'
-              className='hidden md:flex rounded-full px-4 py-2'
+              className='hidden md:flex px-4 py-2'
               href='/login'
             >
               Login

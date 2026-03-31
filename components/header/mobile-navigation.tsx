@@ -81,6 +81,7 @@ const MobileNavigation = ({
 
   useEffect(() => {
     if (!isMobile) {
+      // ignore eslint-disable-next-line react-hooks/exhaustive-deps
       setOpen(false);
     }
   }, [isMobile]);

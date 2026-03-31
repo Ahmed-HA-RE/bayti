@@ -9,8 +9,8 @@ const LogoutButton = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const handleLogout = async () => {
     setOpen(false);
     await authClient.signOut();
-    router.refresh();
     toast.success('Logged out successfully');
+    router.push('/login');
   };
 
   return (
