@@ -13,22 +13,19 @@ import { LuMapPin } from 'react-icons/lu';
 import AgentContactForm from './agent-contact-form';
 import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import prisma from '@/lib/prisma';
 import BookVisitDialog from './book-visit-dialog';
 
 const PropertyDetails = async ({
   property,
+  session,
 }: {
   property: Property & { agent: Agent };
+  session: typeof auth.$Infer.Session | null;
 }) => {
   const amentiesList = AMENITIES.filter((amenity) =>
     property.amenities.includes(amenity.name),
   );
-
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
 
   const booking = await prisma.booking.findFirst({
     where: {

@@ -7,16 +7,51 @@ import { cn, formatPrice } from '@/lib/utils';
 import { PiMapPinFill } from 'react-icons/pi';
 import { Button } from '../ui/button';
 import { FaHeart } from 'react-icons/fa6';
-import { useState } from 'react';
+import { auth } from '@/lib/auth';
+import { usePathname, useRouter } from 'next/navigation';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import { useState, useTransition } from 'react';
+import { toggleFavoriteProperty } from '@/lib/actions/toggle-favorite-property';
+import toast from 'react-hot-toast';
 
-const PropertyHeaderSection = ({ property }: { property: Property }) => {
-  const isFavorite = property.isFavorite;
+const PropertyHeaderSection = ({
+  property,
+  session,
+  initialIsFavorite,
+}: {
+  property: Property;
+  session: typeof auth.$Infer.Session | null;
+  initialIsFavorite: boolean;
+}) => {
+  const isNotLoggedIn = !session;
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const [isPending, startTransition] = useTransition();
+
+  const handleNavigate = () => {
+    const redirectUrl = `/login?redirectUrl=${pathname}`;
+    router.push(redirectUrl);
+  };
+
+  const handleToggleFavorite = () => {
+    startTransition(async () => {
+      const res = await toggleFavoriteProperty(property.id);
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+
+      setIsFavorite(res.isFavorite);
+      toast.success(res.message);
+    });
+  };
 
   return (
     <section className='section-top-spacing'>
       <div className='container'>
         <div className='grid grid-cols-1 gap-4'>
-          <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4'>
+          <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
             <MotionPreset
               component='h1'
               fade
@@ -27,24 +62,43 @@ const PropertyHeaderSection = ({ property }: { property: Property }) => {
             >
               {property.name}
             </MotionPreset>
-            <Button
-              className={cn(
-                'rounded-sm',
-                isFavorite &&
-                  'bg-[#FFE4E6] text-[#E11D48] hover:bg-[#FECDD3] hover:text-[#BE123C]',
-              )}
-              size='sm'
-            >
-              <FaHeart
-                className={cn(
-                  isFavorite
-                    ? 'text-[#E11D48] hover:text-[#BE123C]'
-                    : 'text-white',
-                  'size-4',
+            <MotionPreset fade blur slide={{ direction: 'up' }} delay={0.1}>
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      className={cn(
+                        'rounded-sm w-full',
+                        isFavorite &&
+                          'bg-[#FFE4E6] text-[#E11D48] hover:bg-[#FECDD3] hover:text-[#BE123C]',
+                      )}
+                      size='sm'
+                      onClick={
+                        isNotLoggedIn ? handleNavigate : handleToggleFavorite
+                      }
+                      disabled={isPending}
+                    >
+                      <FaHeart
+                        className={cn(
+                          isFavorite
+                            ? 'text-[#E11D48] hover:text-[#BE123C]'
+                            : 'text-white',
+                          'size-4',
+                        )}
+                      />
+                      {isFavorite
+                        ? 'Remove from Favorites'
+                        : 'Add to Favorites'}
+                    </Button>
+                  }
+                />
+                {isNotLoggedIn && (
+                  <TooltipContent side='top'>
+                    <p>Log in to add to favorites</p>
+                  </TooltipContent>
                 )}
-              />
-              {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </Button>
+              </Tooltip>
+            </MotionPreset>
           </div>
 
           <MotionPreset

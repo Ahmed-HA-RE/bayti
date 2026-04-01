@@ -54,22 +54,23 @@ enum BlogStatus {
 
 // Users
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String    @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
-  imageKey      String?   @unique
-  role          Role      @default(USER)
-  phoneNumber   String?
-  banned        Boolean?  @default(false)
-  banReason     String?
-  banExpires    DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  bookings      Booking[]
+  id                 String             @id
+  name               String
+  email              String
+  emailVerified      Boolean            @default(false)
+  image              String             @default("https://ppnu5kv8ri.ufs.sh/f/C8YtGYjaurIozgAR40BYTPzRI0aonrX1OGyScdC5s6gm27Au")
+  imageKey           String?            @unique
+  role               Role               @default(USER)
+  phoneNumber        String?
+  banned             Boolean?           @default(false)
+  banReason          String?
+  banExpires         DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  sessions           Session[]
+  accounts           Account[]
+  bookings           Booking[]
+  favoriteProperties FavoriteProperty[]
 
   @@unique([email])
   @@map("user")
@@ -127,29 +128,29 @@ model Verification {
 
 // Properties
 model Property {
-  id             String          @id @default(uuid())
-  name           String
-  description    String
-  address        String
-  longitude      Float
-  latitude       Float
-  city           String
-  price          Int
-  area           Int
-  bedrooms       Int
-  bathrooms      Int
-  propertyImages PropertyImage[]
-  isFeatured     Boolean         @default(false)
-  propertyList   PropertyList
-  propertyType   String
-  status         PropertyStatus  @default(AVAILABLE)
-  isFavorite     Boolean         @default(false)
-  amenities      String[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  bookings       Booking[]
-  agent          Agent           @relation(fields: [agentId], references: [id])
-  agentId        String
+  id                 String             @id @default(uuid())
+  name               String
+  description        String
+  address            String
+  longitude          Float
+  latitude           Float
+  city               String
+  price              Int
+  area               Int
+  bedrooms           Int
+  bathrooms          Int
+  propertyImages     PropertyImage[]
+  isFeatured         Boolean            @default(false)
+  propertyList       PropertyList
+  propertyType       String
+  status             PropertyStatus     @default(AVAILABLE)
+  amenities          String[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  bookings           Booking[]
+  agent              Agent              @relation(fields: [agentId], references: [id])
+  agentId            String
+  favoriteProperties FavoriteProperty[]
 }
 
 model PropertyImage {
@@ -212,4 +213,17 @@ model Blog {
   readTime      Int
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+}
+
+// Favorites
+model FavoriteProperty {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, propertyId], name: "favorite_user_property")
 }

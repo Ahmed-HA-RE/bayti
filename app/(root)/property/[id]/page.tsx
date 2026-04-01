@@ -3,8 +3,10 @@ import PropertyGallery from '@/components/property/property-gallery';
 import PropertyHeaderSection from '@/components/property/property-header-section';
 import PropertyMap from '@/components/property/property-map';
 import RelatedPropertiesSection from '@/components/property/related-properties';
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 type Props = {
@@ -57,6 +59,9 @@ const PropertyPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const property = await prisma.property.findUnique({
     where: { id },
@@ -67,12 +72,21 @@ const PropertyPage = async ({
         },
       },
       agent: true,
+      favoriteProperties: {
+        where: {
+          userId: session?.user.id,
+        },
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
   if (!property) {
     return redirect('/properties');
   }
+
   const relatedProperties = await prisma.property.findMany({
     where: {
       id: { not: id },
@@ -93,14 +107,20 @@ const PropertyPage = async ({
     orderBy: { createdAt: 'desc' },
   });
 
+  const isFavorite = property.favoriteProperties.length > 0;
+
   return (
     <>
-      <PropertyHeaderSection property={property} />
+      <PropertyHeaderSection
+        property={property}
+        session={session}
+        initialIsFavorite={isFavorite}
+      />
       <section className='container py-14'>
         <PropertyGallery images={property.propertyImages} alt={property.name} />
       </section>
       <section className='container'>
-        <PropertyDetails property={property} />
+        <PropertyDetails property={property} session={session} />
       </section>
       <section className='container py-14'>
         <PropertyMap
