@@ -6,7 +6,6 @@ import { LiaBedSolid } from 'react-icons/lia';
 import { LuBath, LuMapPin } from 'react-icons/lu';
 import { TbRulerMeasure } from 'react-icons/tb';
 import { CSSProperties } from 'react';
-
 type PropertyCardProps = {
   property: Pick<
     Property,

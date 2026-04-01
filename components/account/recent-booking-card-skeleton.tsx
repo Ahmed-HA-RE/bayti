@@ -13,7 +13,7 @@ const RecentBookingCardSkeleton = () => {
         <h2 className='text-xl font-medium'>Recent Bookings</h2>
       </CardHeader>
       <CardContent className='py-4'>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 4 }).map((_, index) => (
           <React.Fragment key={index}>
             <div className='flex justify-between items-center'>
               <div className='flex gap-3'>

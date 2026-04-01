@@ -23,7 +23,7 @@ const RecentBookingsCard = async ({
     orderBy: {
       createdAt: 'desc',
     },
-    take: 5,
+    take: 4,
     select: {
       id: true,
       date: true,

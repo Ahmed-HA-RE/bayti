@@ -1,3 +1,5 @@
+import FavoritePropertiesCard from '@/components/account/favorite-properties-card';
+import FavoritePropertiesSkeleton from '@/components/account/favorite-properties-skeleton';
 import GreetingCard from '@/components/account/greeting-card';
 import RecentBookingCardSkeleton from '@/components/account/recent-booking-card-skeleton';
 import RecentBookingsCard from '@/components/account/recent-bookings-card';
@@ -18,10 +20,13 @@ const AccountPage = async () => {
   return (
     <div className='container space-y-6'>
       <GreetingCard session={session} />
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-4'>
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 items-start'>
         {/* Recent Bookings */}
         <Suspense fallback={<RecentBookingCardSkeleton />}>
           <RecentBookingsCard session={session} />
+        </Suspense>
+        <Suspense fallback={<FavoritePropertiesSkeleton />}>
+          <FavoritePropertiesCard session={session} />
         </Suspense>
       </div>
     </div>

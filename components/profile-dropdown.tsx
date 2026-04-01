@@ -20,6 +20,7 @@ import { authClient } from '@/lib/authClient';
 import toast from 'react-hot-toast';
 import { useMedia } from 'react-use';
 import { USER_NAVIGATION } from '@/lib/constants';
+import Link from 'next/link';
 
 const ProfileDropdown = ({
   session,
@@ -59,7 +60,10 @@ const ProfileDropdown = ({
   return (
     <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' className='rounded-full focus-visible:ring-0'>
+        <Button
+          variant='ghost'
+          className='rounded-full focus-visible:ring-0 p-0'
+        >
           <Avatar>
             <Suspense
               fallback={
@@ -110,9 +114,11 @@ const ProfileDropdown = ({
           {navigationList.map((item, index) => {
             const Icon = item.icon;
             return (
-              <DropdownMenuItem key={index} className='p-2 '>
-                <Icon className='size-4.5' />
-                {item.label}
+              <DropdownMenuItem asChild key={index} className='p-2 '>
+                <Link href={item.href}>
+                  <Icon className='size-4.5' />
+                  {item.label}
+                </Link>
               </DropdownMenuItem>
             );
           })}

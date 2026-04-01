@@ -62,43 +62,45 @@ const PropertyHeaderSection = ({
             >
               {property.name}
             </MotionPreset>
-            <MotionPreset fade blur slide={{ direction: 'up' }} delay={0.1}>
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Button
-                      className={cn(
-                        'rounded-sm w-full',
-                        isFavorite &&
-                          'bg-[#FFE4E6] text-[#E11D48] hover:bg-[#FECDD3] hover:text-[#BE123C]',
-                      )}
-                      size='sm'
-                      onClick={
-                        isNotLoggedIn ? handleNavigate : handleToggleFavorite
-                      }
-                      disabled={isPending}
-                    >
-                      <FaHeart
+            {session?.user.role === 'USER' && (
+              <MotionPreset fade blur slide={{ direction: 'up' }} delay={0.1}>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
                         className={cn(
-                          isFavorite
-                            ? 'text-[#E11D48] hover:text-[#BE123C]'
-                            : 'text-white',
-                          'size-4',
+                          'rounded-sm w-full',
+                          isFavorite &&
+                            'bg-[#FFE4E6] text-[#E11D48] hover:bg-[#FECDD3] hover:text-[#BE123C]',
                         )}
-                      />
-                      {isFavorite
-                        ? 'Remove from Favorites'
-                        : 'Add to Favorites'}
-                    </Button>
-                  }
-                />
-                {isNotLoggedIn && (
-                  <TooltipContent side='top'>
-                    <p>Log in to add to favorites</p>
-                  </TooltipContent>
-                )}
-              </Tooltip>
-            </MotionPreset>
+                        size='sm'
+                        onClick={
+                          isNotLoggedIn ? handleNavigate : handleToggleFavorite
+                        }
+                        disabled={isPending}
+                      >
+                        <FaHeart
+                          className={cn(
+                            isFavorite
+                              ? 'text-[#E11D48] hover:text-[#BE123C]'
+                              : 'text-white',
+                            'size-4',
+                          )}
+                        />
+                        {isFavorite
+                          ? 'Remove from Favorites'
+                          : 'Add to Favorites'}
+                      </Button>
+                    }
+                  />
+                  {isNotLoggedIn && (
+                    <TooltipContent side='top'>
+                      <p>Log in to add to favorites</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </MotionPreset>
+            )}
           </div>
 
           <MotionPreset
