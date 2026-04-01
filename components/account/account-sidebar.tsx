@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils';
 import { auth } from '@/lib/auth';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Suspense } from 'react';
+import { FaPersonWalkingArrowLoopLeft } from 'react-icons/fa6';
 
 const AccountSidebar = ({
   session,
@@ -96,7 +97,6 @@ const AccountSidebar = ({
                           'border-orange-50 bg-[#e65c00] hover:bg-[#e65c00]',
                       )}
                       onClick={() => setOpenMobile(false)}
-                      tooltip={item.label}
                       render={
                         <Link href={item.href}>
                           <Icon className='!size-5' />
@@ -116,7 +116,18 @@ const AccountSidebar = ({
             <SidebarMenuItem>
               <SidebarMenuButton
                 className='hover:bg-[#e65c00] border-l-2 border-transparent hover:border-white py-5.5 px-4 rounded-none transition duration-300 cursor-pointer'
-                tooltip={'Logout'}
+                onClick={() => setOpenMobile(false)}
+                render={
+                  <Link href='/'>
+                    <FaPersonWalkingArrowLoopLeft className='!size-5 text-white' />
+                    <span className='text-base text-white'>Back to Home</span>
+                  </Link>
+                }
+              />
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                className='hover:bg-[#e65c00] border-l-2 border-transparent hover:border-white py-5.5 px-4 rounded-none transition duration-300 cursor-pointer'
                 onClick={handleLogout}
               >
                 <LuLogOut className='!size-5 text-white' />

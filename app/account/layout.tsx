@@ -46,7 +46,7 @@ const AccountLayout = async ({ children }: { children: React.ReactNode }) => {
               <AccountBreadCrumb />
             </div>
           </header>
-          <main className='size-full flex-1 py-6 bg-white'>{children}</main>
+          <main className='size-full flex-1 py-8 bg-white'>{children}</main>
         </div>
       </SidebarProvider>
     </div>

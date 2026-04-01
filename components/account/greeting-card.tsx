@@ -1,18 +1,12 @@
 import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { Card, CardContent } from '../ui/card';
 import { format } from 'date-fns';
 
-const GreetingCard = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session || session.user.role !== 'USER') {
-    return redirect('/login');
-  }
-
+const GreetingCard = async ({
+  session,
+}: {
+  session: typeof auth.$Infer.Session;
+}) => {
   const user = session.user;
 
   return (

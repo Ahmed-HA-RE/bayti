@@ -36,9 +36,14 @@ export const bookVisit = async (
 
     const { name, email, phoneNumber, date, timeRange } = validatedData.data;
 
-    const today = new Date();
+    // Convert to Comapny timezone (Dubai) so that vercel edge functions can also work with correct timezone
+    const today = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Dubai',
+    });
+    const sameDay = isSameDay(new Date(today), date);
+
     // Check if the selected date is same day
-    if (isSameDay(today, new Date(date))) {
+    if (sameDay) {
       throw new Error('Same-day visit requests are not allowed.');
     }
 
@@ -142,6 +147,7 @@ export const bookVisit = async (
 
     return { success: true, message: 'Your visit request has been submitted.' };
   } catch (error) {
+    console.error(error);
     return { success: false, message: (error as Error).message };
   }
 };
