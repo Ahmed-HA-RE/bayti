@@ -1,10 +1,13 @@
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { Card, CardContent, CardHeader } from '../ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { format } from 'date-fns';
 import React from 'react';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import { MdKeyboardArrowRight } from 'react-icons/md';
 
 const RecentBookingsCard = async ({
   session,
@@ -46,7 +49,7 @@ const RecentBookingsCard = async ({
       <CardHeader className='bg-gray-100 border-b rounded-none pt-4 px-6'>
         <h2 className='text-xl font-medium'>Recent Bookings</h2>
       </CardHeader>
-      <CardContent className=' py-4 '>
+      <CardContent className='py-4'>
         {recentBookings.length === 0 ? (
           <p className='text-base text-muted-foreground py-4 h-32 flex items-center justify-center'>
             You have no recent bookings.
@@ -79,6 +82,14 @@ const RecentBookingsCard = async ({
           ))
         )}
       </CardContent>
+      <CardFooter className='bg-gray-100 border-t rounded-none py-4 flex justify-center'>
+        <Button asChild className='group rounded-md py-2.5 px-5'>
+          <Link href='/account/bookings'>
+            View All Bookings
+            <MdKeyboardArrowRight className='group-hover:translate-x-1 transition duration-300 size-5' />
+          </Link>
+        </Button>
+      </CardFooter>
     </Card>
   );
 };
