@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { MotionPreset } from '@/components/shared/motion-preset';
 import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
-import 'photoswipe/style.css';
+import 'photoswipe/dist/photoswipe.css';
 import { PropertyImage } from '@/lib/generated/prisma';
 
 type PropertyGalleryProps = {

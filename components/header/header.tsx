@@ -5,11 +5,11 @@ import Image from 'next/image';
 import DesktopNavigation from './desktop-navigation';
 import MobileNavigation from './mobile-navigation';
 import ProfileDropdown from '../profile-dropdown';
-import LinkButton from '../shared/link-button';
 import { auth } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Button } from '../ui/button';
 
 const Header = ({
   session,
@@ -70,14 +70,14 @@ const Header = ({
               <ProfileDropdown session={session} />
             </div>
           ) : (
-            <LinkButton
+            <Button
+              asChild
               variant='default'
               size='default'
               className='hidden md:flex px-4 py-2'
-              href='/login'
             >
-              Login
-            </LinkButton>
+              <Link href='/login'>Login</Link>
+            </Button>
           )}
         </div>
       </div>
