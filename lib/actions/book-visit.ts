@@ -11,6 +11,7 @@ import prisma from '../prisma';
 import { isSameDay, set } from 'date-fns';
 import resend from '../resend';
 import BookVisitConfirmationEmail from '@/emails/book-visit-confirmation';
+import { toZonedTime } from 'date-fns-tz';
 
 const domain = process.env.DOMAIN;
 
@@ -36,15 +37,13 @@ export const bookVisit = async (
 
     const { name, email, phoneNumber, date, timeRange } = validatedData.data;
 
-    // Convert to Comapny timezone (Dubai) so that vercel edge functions can also work with correct timezone
-    const today = new Date().toLocaleString('en-US', {
-      timeZone: 'Asia/Dubai',
-    });
-    const sameDay = isSameDay(new Date(today), date);
+    // Convert the selected date to the Dubai timezone and compare it with the current date in the same timezone to prevent users from booking a visit for the same day. This is necessary because vercel functions dxb1 is out of range.
+    const today = toZonedTime(new Date(), 'Asia/Dubai');
+    const selectedDate = toZonedTime(date, 'Asia/Dubai');
 
     // Check if the selected date is same day
-    if (sameDay) {
-      throw new Error('Same-day visit requests are not allowed.');
+    if (isSameDay(today, selectedDate)) {
+      throw new Error('You cannot book a visit for the same day.');
     }
 
     const [start, end] = timeRange.split('-');
