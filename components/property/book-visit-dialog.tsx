@@ -12,7 +12,7 @@ import {
 import { auth } from '@/lib/auth';
 import { Property, Status } from '@/lib/generated/prisma/client';
 import { usePathname } from 'next/navigation';
-import LinkButton from '../shared/link-button';
+import LinkButton from '../shared/main-link-button';
 import { FaCalendarAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useState } from 'react';

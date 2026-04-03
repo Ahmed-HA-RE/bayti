@@ -1,10 +1,6 @@
 import { MotionPreset } from '../shared/motion-preset';
-import { LuArrowUpRight } from 'react-icons/lu';
-import LinkButton from '../shared/link-button';
-import { ArrowUpRight } from 'lucide-react';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import MainLinkButton from '../shared/link-button';
+import MainLinkButton from '../shared/main-link-button';
+import SecondaryLinkButton from '../shared/secondary-link-button';
 
 const HeroSection = () => {
   return (
@@ -51,7 +47,12 @@ const HeroSection = () => {
           <MainLinkButton
             text='Explore Properties'
             href='/properties'
-            size={'default'}
+            size={'lg'}
+          />
+          <SecondaryLinkButton
+            text='Learn More'
+            href='/learn-more'
+            size={'lg'}
           />
         </MotionPreset>
       </div>

@@ -1,8 +1,9 @@
-import LinkButton from '@/components/shared/link-button';
 import { MotionPreset } from '@/components/shared/motion-preset';
+import { Button } from '@/components/ui/button';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Reset Password Link Sent',
@@ -31,14 +32,12 @@ const ForgotPasswordSentPage = () => {
           We just sent an email to your inbox with a link to reset your
           password.
         </p>
-        <LinkButton
-          variant='ghost'
-          className='group hover:bg-muted'
-          href='/login'
-        >
-          <ArrowLeftIcon className='transition-transform duration-200 group-hover:-translate-x-0.5' />
-          Back to Login
-        </LinkButton>
+        <Button variant='ghost' className='group hover:bg-muted' asChild>
+          <Link href='/login'>
+            <ArrowLeftIcon className='transition-transform duration-200 group-hover:-translate-x-0.5' />
+            Back to Login
+          </Link>
+        </Button>
       </div>
     </MotionPreset>
   );

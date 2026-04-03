@@ -1,8 +1,6 @@
 import { AMENITIES } from '@/lib/constants';
 import { Agent, Prisma, Property } from '@/lib/generated/prisma/client';
 import { MotionPreset } from '../shared/motion-preset';
-import LinkButton from '../shared/link-button';
-import { ArrowRightIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Avatar } from '../ui/avatar';
 import { Suspense } from 'react';
@@ -15,6 +13,7 @@ import { FiMail } from 'react-icons/fi';
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import BookVisitDialog from './book-visit-dialog';
+import SecondaryLinkButton from '../shared/secondary-link-button';
 
 const PropertyDetails = async ({
   property,
@@ -71,14 +70,7 @@ const PropertyDetails = async ({
               session={session}
               booking={booking?.status}
             />
-            <LinkButton
-              variant='secondary'
-              href='/contact-us'
-              className='group self-start'
-            >
-              Ask for Details
-              <ArrowRightIcon className='transition-transform group-hover:translate-x-1' />
-            </LinkButton>
+            <SecondaryLinkButton href='/contact-us' text='Ask for Details' />
           </div>
         </div>
       </MotionPreset>

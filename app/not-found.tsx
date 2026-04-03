@@ -1,5 +1,6 @@
-import LinkButton from '@/components/shared/link-button';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const NotFound = () => {
   return (
@@ -12,9 +13,9 @@ const NotFound = () => {
         <p className='mb-5 text-base text-muted-foreground'>
           We couldn&apos;t find the page you are looking for{' '}
         </p>
-        <LinkButton className='rounded-lg text-base' href='/'>
-          Back to home page
-        </LinkButton>
+        <Button className='rounded-lg text-base' asChild>
+          <Link href='/'>Back to home page</Link>
+        </Button>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ import { User2Icon } from 'lucide-react';
 import { FiMail } from 'react-icons/fi';
 import { Alert, AlertTitle } from '../ui/alert';
 import { auth } from '@/lib/auth';
-import LinkButton from '../shared/link-button';
+import LinkButton from '../shared/main-link-button';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { contactAgent } from '@/lib/actions/contact-agent';

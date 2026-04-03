@@ -1,9 +1,8 @@
 import prisma from '@/lib/prisma';
 import { MotionPreset } from '../shared/motion-preset';
 import PropertyCard from '../shared/property-card';
-import { ArrowRightIcon } from 'lucide-react';
-import LinkButton from '../shared/link-button';
 import SectionEyebrow from '../shared/section-eyebrow';
+import SecondaryLinkButton from '../shared/secondary-link-button';
 
 const LatestPropertiesSection = async () => {
   const latestProperties = await prisma.property.findMany({
@@ -61,14 +60,11 @@ const LatestPropertiesSection = async () => {
           delay={0.5}
           className='flex sm:justify-end sm:items-end mt-8'
         >
-          <LinkButton
+          <SecondaryLinkButton
+            text='View More'
             href='/properties'
-            className='group max-sm:w-full'
-            variant='default'
-          >
-            View All Properties
-            <ArrowRightIcon className='text-white group-hover:translate-x-2 transition-transform duration-200 size-4' />
-          </LinkButton>
+            className='w-full md:w-auto'
+          />
         </MotionPreset>
       </div>
     </section>
