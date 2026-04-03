@@ -29,7 +29,7 @@ const AccountLayout = async ({ children }: { children: React.ReactNode }) => {
       <SidebarProvider
         style={
           {
-            '--sidebar-width': '17rem',
+            '--sidebar-width': '15rem',
           } as React.CSSProperties
         }
         mobileSidebarWidth='50%'

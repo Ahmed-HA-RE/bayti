@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 export const getMyBookings = async (
   userId: string,
   page: number,
-  limit = 10,
+  limit = 5,
 ) => {
   if (!userId) {
     return redirect('/login');

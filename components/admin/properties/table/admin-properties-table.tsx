@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/table';
 import { capitalizeFirstLetter, cn } from '@/lib/utils';
 import { Card } from '../../../ui/card';
-import { PropertyList, PropertyStatus } from '@/lib/generated/prisma/client';
+import { PropertyStatus } from '@/lib/generated/prisma/client';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {

@@ -31,7 +31,7 @@ const AccountBookingsPage = async () => {
     return redirect('/login');
   }
   return (
-    <div className='space-y-4 container'>
+    <div className='space-y-6 container'>
       <h1 className='text-foreground/70 font-medium text-sm'>
         Track and manage your bookings applications
       </h1>

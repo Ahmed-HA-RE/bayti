@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Status } from './generated/prisma';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -43,5 +44,22 @@ export const formatUploadThingError = (
       : 'One or more files have a count mismatch. Please try again.';
   } else {
     return 'An unknown error occurred. Please try again.';
+  }
+};
+
+export const bookingStatusColors = (status: Status) => {
+  switch (status) {
+    case 'PENDING':
+      return 'bg-yellow-500';
+    case 'CONFIRMED':
+      return 'bg-fuchsia-500';
+    case 'CANCELLED':
+      return 'bg-blue-500';
+    case 'COMPLETED':
+      return 'bg-green-500';
+    case 'REJECTED':
+      return 'bg-red-500';
+    default:
+      return 'bg-gray-500';
   }
 };
