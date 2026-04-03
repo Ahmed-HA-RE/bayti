@@ -68,9 +68,8 @@ const BookVisitDialog = ({
             <FaCalendarAlt className='size-5' />
             <AlertTitle>
               You have a {booking?.toLowerCase()} reservation for this property.
-              Please check your{' '}
-              <Link href='/account/reservations'>reservations</Link> in your
-              account settings for details.
+              Please check your <Link href='/account/bookings'>bookings</Link>{' '}
+              in your account for more details.
             </AlertTitle>
           </Alert>
         ) : (

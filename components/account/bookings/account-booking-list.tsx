@@ -2,7 +2,7 @@
 
 import { Avatar } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { getMyBookings } from '@/lib/actions/account/get-my-bookings';
 import { auth } from '@/lib/auth';
@@ -16,6 +16,7 @@ import { BsTelephone } from 'react-icons/bs';
 import { FiMail, FiMapPin } from 'react-icons/fi';
 import { LuCalendar, LuClock } from 'react-icons/lu';
 import AccountBookingSkeleton from './account-booking-skeleton';
+import CancelBookingDialog from './cancel-booking-dialog';
 
 const AccountBookingList = ({
   session,
@@ -60,20 +61,20 @@ const AccountBookingList = ({
       {data.myBookings.map((booking) => (
         <Card
           key={booking.id}
-          className='group overflow-hidden rounded-2xl border lg:border-0 bg-gray-50 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300 p-0 gap-0'
+          className='rounded-2xl border xl:border-0 bg-gray-50 transition-all duration-300 p-0 gap-0'
         >
-          <CardContent className='p-0 grid grid-cols-1 lg:grid-cols-11 gap-0'>
+          <CardContent className='p-0 grid grid-cols-1 xl:grid-cols-11 gap-0'>
             {/* Property Image */}
             <Link
               href={`/property/${booking.property.id}`}
-              className='relative shrink-0 lg:col-span-3 w-full h-56 lg:h-auto overflow-hidden'
+              className='relative xl:col-span-3 w-full h-56 xl:h-auto overflow-hidden group'
             >
               <Image
                 src={booking.property.propertyImages[0].url}
                 alt={booking.property.name}
                 fill
                 sizes='100vw'
-                className='object-cover transition-transform duration-500 group-hover:scale-110'
+                className='object-cover transition-transform duration-500 group-hover:scale-110 '
               />
               {/* Gradient overlay for better badge visibility */}
               <div className='absolute inset-0 bg-gradient-to-bl from-black/40 via-transparent to-transparent' />
@@ -134,7 +135,7 @@ const AccountBookingList = ({
                 </div>
                 <Separator className='my-4' />
                 {/* Date + Time Details */}
-                <div className='flex flex-wrap max-lg:justify-center gap-6 px-4'>
+                <div className='flex flex-wrap max-xl:justify-center gap-6 px-4'>
                   <div className='flex items-start gap-3'>
                     <div className='flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10'>
                       <LuCalendar className='size-4.5 text-accent' />
@@ -185,7 +186,7 @@ const AccountBookingList = ({
                   <span className='text-xs font-semibold text-muted-foreground uppercase tracking-wider'>
                     Your Agent
                   </span>
-                  <div className='flex items-start lg:items-center gap-4'>
+                  <div className='flex items-start xl:items-center gap-4'>
                     <Avatar className='size-12 shrink-0 ring-2 ring-accent/20'>
                       <Image
                         src={booking.property.agent.image}
@@ -195,7 +196,7 @@ const AccountBookingList = ({
                         className='object-cover rounded-full'
                       />
                     </Avatar>
-                    <div className='flex flex-col lg:flex-row lg:items-center gap-2 flex-1 min-w-0'>
+                    <div className='flex flex-col xl:flex-row xl:items-center gap-2 flex-1 min-w-0'>
                       <span className='text-base font-bold truncate'>
                         {booking.property.agent.name}
                       </span>
@@ -225,10 +226,12 @@ const AccountBookingList = ({
                   </div>
                 </div>
               </div>
-              <Separator className='my-4' />
-              {/* {booking.status==='PENDING'&&(
-              
-              )} */}
+
+              <div className='p-4 flex items-end justify-end'>
+                {booking.status === 'PENDING' && (
+                  <CancelBookingDialog bookingId={booking.id} />
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
