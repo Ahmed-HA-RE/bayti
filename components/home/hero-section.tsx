@@ -1,6 +1,10 @@
 import { MotionPreset } from '../shared/motion-preset';
 import { LuArrowUpRight } from 'react-icons/lu';
 import LinkButton from '../shared/link-button';
+import { ArrowUpRight } from 'lucide-react';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import MainLinkButton from '../shared/link-button';
 
 const HeroSection = () => {
   return (
@@ -44,14 +48,11 @@ const HeroSection = () => {
           delay={0.4}
           className='mt-14 flex flex-col md:items-center gap-4 md:flex-row md:gap-6'
         >
-          <LinkButton size='lg' href='/properties'>
-            Explore Properties
-            <LuArrowUpRight className='size-5' />
-          </LinkButton>
-          <LinkButton size='lg' href='/about-us' variant='secondary'>
-            Learn More
-            <LuArrowUpRight className='size-5' />
-          </LinkButton>
+          <MainLinkButton
+            text='Explore Properties'
+            href='/properties'
+            size={'default'}
+          />
         </MotionPreset>
       </div>
     </section>

@@ -1,9 +1,9 @@
-import { Card, CardContent } from './ui/card';
-import { Skeleton } from './ui/skeleton';
+import { Card, CardContent } from '../ui/card';
+import { Skeleton } from '../ui/skeleton';
 
-const SkeletonPropertyCard = () => {
-  return (
-    <Card className='border-0 gap-5 py-0 rounded-none'>
+const PropertySkeletonCard = ({ length }: { length: number }) => {
+  return Array.from({ length }).map((_, idx) => (
+    <Card className='border-0 gap-5 py-0 rounded-none' key={idx}>
       <CardContent className='p-0'>
         <div className='relative h-[500px] w-full'>
           <Skeleton className='h-full w-full rounded-none' />
@@ -14,7 +14,7 @@ const SkeletonPropertyCard = () => {
         </div>
       </CardContent>
     </Card>
-  );
+  ));
 };
 
-export default SkeletonPropertyCard;
+export default PropertySkeletonCard;

@@ -5,9 +5,10 @@ import { PropertyList } from '@/lib/generated/prisma';
 import PropertyCard from '../shared/property-card';
 import { Alert, AlertTitle } from '../ui/alert';
 import { CircleAlertIcon } from 'lucide-react';
-import SkeletonPropertyCard from '../skeleton-property-card';
+
 import Pagination from '../shared/pagination';
 import { getProperties } from '@/lib/actions/get-properties';
+import PropertySkeletonCard from '../shared/property-skeleton-card';
 
 type PropertiesListProps = {
   search?: string;
@@ -43,18 +44,18 @@ const PropertiesList = ({
           </Alert>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4'>
-            {isFetching || isLoading
-              ? Array.from({ length: 8 }).map((_, index) => (
-                  <SkeletonPropertyCard key={index} />
-                ))
-              : data?.properties.map((property) => (
-                  <div
-                    className='h-[350px] md:h-[500px] overflow-hidden'
-                    key={property.id}
-                  >
-                    <PropertyCard property={property} key={property.id} />
-                  </div>
-                ))}
+            {isFetching || isLoading ? (
+              <PropertySkeletonCard length={8} />
+            ) : (
+              data?.properties.map((property) => (
+                <div
+                  className='h-[350px] md:h-[500px] overflow-hidden'
+                  key={property.id}
+                >
+                  <PropertyCard property={property} key={property.id} />
+                </div>
+              ))
+            )}
           </div>
         )}
         {data && data?.totalPages > 1 && (

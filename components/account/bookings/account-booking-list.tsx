@@ -17,6 +17,7 @@ import { FiMail, FiMapPin } from 'react-icons/fi';
 import { LuCalendar, LuClock } from 'react-icons/lu';
 import AccountBookingSkeleton from './account-booking-skeleton';
 import CancelBookingDialog from './cancel-booking-dialog';
+import Pagination from '@/components/shared/pagination';
 
 const AccountBookingList = ({
   session,
@@ -28,7 +29,7 @@ const AccountBookingList = ({
 
   const { data, isLoading } = useQuery({
     queryKey: ['myBookings', userId, page],
-    queryFn: async () => await getMyBookings(userId, Number(page)),
+    queryFn: async () => await getMyBookings(Number(page)),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -236,6 +237,7 @@ const AccountBookingList = ({
           </CardContent>
         </Card>
       ))}
+      <Pagination totalPages={data.totalPages} />
     </div>
   );
 };

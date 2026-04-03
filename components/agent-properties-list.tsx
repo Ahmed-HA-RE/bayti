@@ -5,7 +5,7 @@ import { getAgentProperties } from '@/lib/actions/get-agent-properties';
 import { useQuery } from '@tanstack/react-query';
 import { Alert, AlertTitle } from './ui/alert';
 import { IoMdAlert } from 'react-icons/io';
-import SkeletonPropertyCard from './skeleton-property-card';
+import PropertySkeletonCard from './shared/property-skeleton-card';
 import PropertyCard from './shared/property-card';
 import Pagination from './shared/pagination';
 
@@ -22,9 +22,7 @@ const AgentPropertiesList = ({ agentId }: { agentId: string }) => {
     <>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {isLoading || isFetching ? (
-          Array.from({ length: 6 }).map((_, idx) => (
-            <SkeletonPropertyCard key={idx} />
-          ))
+          <PropertySkeletonCard length={6} />
         ) : data && data.properties.length === 0 ? (
           <Alert variant='warning' className='col-span-full max-w-sm mx-auto'>
             <IoMdAlert className='text-2xl' />

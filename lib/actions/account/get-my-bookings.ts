@@ -1,20 +1,21 @@
 'use server';
 
+import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 
-export const getMyBookings = async (
-  userId: string,
-  page: number,
-  limit = 5,
-) => {
-  if (!userId) {
-    return redirect('/login');
+export const getMyBookings = async (page: number, limit = 1) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    throw new Error('Unauthorized');
   }
 
   const myBookings = await prisma.booking.findMany({
     where: {
-      userId,
+      userId: session.user.id,
     },
     include: {
       property: {
@@ -49,7 +50,7 @@ export const getMyBookings = async (
 
   const totalBookings = await prisma.booking.count({
     where: {
-      userId,
+      userId: session.user.id,
     },
   });
 
