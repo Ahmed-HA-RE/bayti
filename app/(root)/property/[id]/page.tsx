@@ -4,6 +4,7 @@ import PropertyHeaderSection from '@/components/property/property-header-section
 import PropertyMap from '@/components/property/property-map';
 import RelatedPropertiesSection from '@/components/property/related-properties';
 import { auth } from '@/lib/auth';
+import { Prisma } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
@@ -74,7 +75,7 @@ const PropertyPage = async ({
       agent: true,
       favoriteProperties: {
         where: {
-          userId: session?.user.id,
+          userId: session?.user.id || Prisma.skip,
         },
         select: {
           id: true,

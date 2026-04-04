@@ -1,4 +1,5 @@
 import AccountBookingList from '@/components/account/bookings/account-booking-list';
+import AccountHeaderLayout from '@/components/shared/account-header-layout';
 import { auth } from '@/lib/auth';
 import { APP_NAME } from '@/lib/constants';
 import { Metadata } from 'next';
@@ -31,12 +32,12 @@ const AccountBookingsPage = async () => {
     return redirect('/login');
   }
   return (
-    <div className='space-y-6 container'>
-      <h1 className='text-foreground/70 font-medium text-sm'>
-        Track and manage your bookings applications
-      </h1>
+    <AccountHeaderLayout
+      title='My Bookings'
+      subtitle='View and manage all your bookings in one place.'
+    >
       <AccountBookingList session={session} />
-    </div>
+    </AccountHeaderLayout>
   );
 };
 

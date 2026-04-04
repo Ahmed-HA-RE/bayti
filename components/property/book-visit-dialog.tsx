@@ -12,12 +12,12 @@ import {
 import { auth } from '@/lib/auth';
 import { Property, Status } from '@/lib/generated/prisma/client';
 import { usePathname } from 'next/navigation';
-import LinkButton from '../shared/main-link-button';
 import { FaCalendarAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import BookVisitDialogForm from './book-visit-dialog-form';
+import MainLinkButton from '../shared/main-link-button';
 
 type BookVisitDialogProps = {
   property: Property;
@@ -37,10 +37,11 @@ const BookVisitDialog = ({
   // If no session, show login link
   if (!session) {
     return (
-      <LinkButton href={`/login?callbackUrl=${pathname}`} className='group'>
-        Book a Visit
-        <FaCalendarAlt className='size-4' />
-      </LinkButton>
+      <MainLinkButton
+        text='Book a Visit'
+        href={`/login?callbackUrl=${pathname}`}
+        className='group'
+      />
     );
   }
 

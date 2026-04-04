@@ -23,11 +23,11 @@ import { User2Icon } from 'lucide-react';
 import { FiMail } from 'react-icons/fi';
 import { Alert, AlertTitle } from '../ui/alert';
 import { auth } from '@/lib/auth';
-import LinkButton from '../shared/main-link-button';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { contactAgent } from '@/lib/actions/contact-agent';
 import { Input } from '../ui/input';
+import Link from 'next/link';
 
 const AgentContactForm = ({
   session,
@@ -138,9 +138,11 @@ const AgentContactForm = ({
         />
 
         {!session ? (
-          <LinkButton className='mt-2' href={`/login?callbackUrl=${pathname}`}>
-            Login to Contact Agent
-          </LinkButton>
+          <Button asChild className='mt-2'>
+            <Link href={`/login?callbackUrl=${pathname}`}>
+              Login to Contact Agent
+            </Link>
+          </Button>
         ) : (
           <Button
             disabled={form.formState.isSubmitting}

@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 
-export const getMyBookings = async (page: number, limit = 1) => {
+export const getMyBookings = async (page: number, limit = 5) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
