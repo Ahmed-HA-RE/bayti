@@ -20,6 +20,8 @@ import { Suspense } from 'react';
 import { UploadButton } from '@/lib/uploadthing';
 import toast from 'react-hot-toast';
 import { Spinner } from '@/components/ui/spinner';
+import Link from 'next/link';
+import { updatePersonalInformation } from '@/lib/actions/user/update-personal-information';
 
 const PersonalInformation = ({
   session,
@@ -33,18 +35,24 @@ const PersonalInformation = ({
     defaultValues: {
       name: session.user.name,
       image: session.user.image,
-      phoneNumber: session.user.phoneNumber || '',
+      phoneNumber: session.user.phoneNumber,
     },
     mode: 'onChange',
   });
 
   const onSubmit = async (data: UpdateUserFormData) => {
-    console.log(data);
+    const res = await updatePersonalInformation(data);
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+    toast.success(res.message);
   };
 
   const isNotAuthProvider = accountProviderId === 'credential';
   // ignore eslint-disable-next-line react-hooks/rules-of-hooks
   const userImage = form.watch('image') || session.user.image;
+  const isPending = form.formState.isSubmitting;
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className='pt-14'>
@@ -86,11 +94,12 @@ const PersonalInformation = ({
                   </FieldLabel>
                   {isNotAuthProvider && (
                     <Button
-                      className='hover:text-accent'
+                      className='hover:text-accent py-1'
                       variant='ghost'
                       size='sm'
+                      asChild
                     >
-                      Change Email
+                      <Link href='/account/settings/email'>Change Email</Link>
                     </Button>
                   )}
                 </div>
@@ -126,7 +135,8 @@ const PersonalInformation = ({
                         type='tel'
                         placeholder='Enter your phone number'
                         className='-ms-px rounded-l-none shadow-none'
-                        {...field}
+                        value={field.value || ''}
+                        onChange={(e) => field.onChange(e.target.value)}
                         aria-invalid={fieldState.invalid}
                       />
                     </div>
@@ -206,6 +216,14 @@ const PersonalInformation = ({
                   />
                 </div>
               </div>
+              <Button
+                type='submit'
+                className='self-end rounded-full'
+                size='sm'
+                disabled={isPending}
+              >
+                {isPending ? 'Saving...' : 'Save Changes'}
+              </Button>
             </FieldGroup>
           </CardContent>
         </Card>

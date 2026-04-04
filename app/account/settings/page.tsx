@@ -41,8 +41,6 @@ const AccountSettingsPage = async () => {
     return redirect('/login');
   }
 
-  console.log(accountProviderId);
-
   return (
     <AccountHeaderLayout
       title='Account Settings'

@@ -6,6 +6,8 @@ import parsePhoneNumberFromString from 'libphonenumber-js';
 
 export const optionalPhoneNumber = z
   .string({ error: 'Invalid phone number' })
+  .optional()
+  .nullable()
   .refine((val) => {
     if (!val) return true; // Allow empty or null values
 
