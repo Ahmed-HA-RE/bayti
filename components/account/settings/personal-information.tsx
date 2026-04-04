@@ -42,7 +42,7 @@ const PersonalInformation = ({
     console.log(data);
   };
 
-  const isNotAuthProvider = accountProviderId !== 'credential';
+  const isNotAuthProvider = accountProviderId === 'credential';
   // ignore eslint-disable-next-line react-hooks/rules-of-hooks
   const userImage = form.watch('image') || session.user.image;
 

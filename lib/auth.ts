@@ -11,6 +11,7 @@ import { dash } from '@better-auth/infra';
 import { APP_NAME } from './constants';
 import { createAuthMiddleware } from 'better-auth/api';
 import { Role } from './generated/prisma';
+import EmailChangeEmailConfirmation from '@/emails/email-change-email-confirmation';
 
 const domain = process.env.DOMAIN;
 
@@ -29,6 +30,24 @@ export const auth = betterAuth({
     }),
   },
 
+  user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
+        void resend.emails.send({
+          from: `Bayti <no-reply@${domain}>`,
+          to: user.email,
+          subject: 'Confirm your new email address',
+          react: EmailChangeEmailConfirmation({
+            userName: user.name,
+            newEmail,
+            url,
+          }),
+        });
+      },
+    },
+  },
+
   appName: APP_NAME,
   emailAndPassword: {
     enabled: true,
@@ -37,7 +56,7 @@ export const auth = betterAuth({
     resetPasswordTokenExpiresIn: 60 * 60 * 1000, // 1 hour
 
     sendResetPassword: async ({ user, url }) => {
-      await resend.emails.send({
+      void resend.emails.send({
         from: `Bayti <no-reply@${domain}>`,
         to: user.email,
         subject: 'Reset Your Password',
@@ -59,7 +78,7 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     expiresIn: 24 * 60 * 60 * 1000, // 24 hours
     sendVerificationEmail: async ({ user, url }) => {
-      await resend.emails.send({
+      void resend.emails.send({
         from: `Bayti <no-reply@${domain}>`,
         to: user.email,
         subject: 'Verify Your Email Address',
