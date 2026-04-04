@@ -237,7 +237,7 @@ const AccountBookingList = ({
           </CardContent>
         </Card>
       ))}
-      <Pagination totalPages={data.totalPages} />
+      {data.totalPages > 1 && <Pagination totalPages={data.totalPages} />}
     </div>
   );
 };

@@ -3,11 +3,11 @@
 import { auth } from '@/lib/auth';
 import { Prisma, Role } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
-import { UserFormData, userSchema } from '@/schema/user';
+import { AdminUserFormData, adminUserSchema } from '@/schema/user';
 import { headers } from 'next/headers';
 import { UTApi } from 'uploadthing/server';
 
-export const editUser = async (data: UserFormData, id: string) => {
+export const editUser = async (data: AdminUserFormData, id: string) => {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -16,7 +16,7 @@ export const editUser = async (data: UserFormData, id: string) => {
     if (!session || session.user.role !== 'ADMIN')
       throw new Error('Unauthorized');
 
-    const validatedData = userSchema.safeParse(data);
+    const validatedData = adminUserSchema.safeParse(data);
 
     if (!validatedData.success) throw new Error('Invalid data');
 

@@ -14,7 +14,7 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { Role, User } from '@/lib/generated/prisma';
-import { UserFormData, userSchema } from '@/schema/user';
+import { AdminUserFormData, adminUserSchema } from '@/schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import Link from 'next/link';
@@ -36,8 +36,8 @@ const EditUserForm = ({
   const router = useRouter();
   const querClient = useQueryClient();
 
-  const form = useForm<UserFormData>({
-    resolver: zodResolver(userSchema),
+  const form = useForm<AdminUserFormData>({
+    resolver: zodResolver(adminUserSchema),
     defaultValues: {
       name: user.name ?? '',
       email: user.email ?? '',
@@ -48,7 +48,7 @@ const EditUserForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: UserFormData) => {
+  const onSubmit = async (data: AdminUserFormData) => {
     const res = await editUser(data, user.id);
 
     if (!res.success) {

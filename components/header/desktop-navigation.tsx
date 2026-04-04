@@ -56,7 +56,7 @@ const DesktopNavigation = ({
                 {navItem.title}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className='w-80 grid grid-cols-2 gap-2'>
+                <ul className='w-80 grid grid-cols-2 '>
                   {navItem.items.map((item) => (
                     <li key={item.title}>
                       <NavigationMenuLink

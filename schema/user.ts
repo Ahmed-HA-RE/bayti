@@ -2,24 +2,22 @@ import z from 'zod';
 import { signUpSchema } from './auth';
 import { z_enumFromArray } from './agent';
 import { Role } from '@/lib/generated/prisma';
-import { parsePhoneNumberWithError } from 'libphonenumber-js';
+import parsePhoneNumberFromString from 'libphonenumber-js';
 
 export const optionalPhoneNumber = z
   .string({ error: 'Invalid phone number' })
-  .optional()
-  .nullable()
   .refine((val) => {
-    if (val === '' || val === null) return true; // Allow empty or null values
+    if (!val) return true; // Allow empty or null values
 
     if (val) {
-      const parsedNumber = parsePhoneNumberWithError(val, 'AE');
-      if (!parsedNumber.isValid()) return false; // Invalid phone number
+      if (!/^\d+$/.test(val)) return false; // Ensure the phone number contains only digits
+      const parsedNumber = parsePhoneNumberFromString(val, 'AE');
+      if (!parsedNumber) return false;
+      return parsedNumber.isValid();
     }
-
-    return true; // Valid phone number
   }, 'Please enter a valid phone number');
 
-export const userSchema = z.object({
+export const adminUserSchema = z.object({
   name: signUpSchema.shape.name,
   email: signUpSchema.shape.email,
   phoneNumber: optionalPhoneNumber,
@@ -30,4 +28,11 @@ export const userSchema = z.object({
   imageKey: z.string().optional(),
 });
 
-export type UserFormData = z.infer<typeof userSchema>;
+export type AdminUserFormData = z.infer<typeof adminUserSchema>;
+
+export const updateUserSchema = adminUserSchema.omit({
+  role: true,
+  email: true,
+});
+
+export type UpdateUserFormData = z.infer<typeof updateUserSchema>;
