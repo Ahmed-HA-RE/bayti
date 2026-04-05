@@ -81,7 +81,7 @@ const ProfileDropdown = ({
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-auto' align='end'>
+      <DropdownMenuContent className='w-62' align='end'>
         <DropdownMenuLabel className='flex items-center gap-2 p-2 font-normal'>
           <Avatar className='size-10.5'>
             <Suspense

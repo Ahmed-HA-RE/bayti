@@ -22,6 +22,7 @@ import toast from 'react-hot-toast';
 import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
 import { updatePersonalInformation } from '@/lib/actions/user/update-personal-information';
+import { RiArrowRightWideFill } from 'react-icons/ri';
 
 const PersonalInformation = ({
   session,
@@ -87,29 +88,24 @@ const PersonalInformation = ({
                   </Field>
                 )}
               />
-              <Field>
-                <div className='flex items-center justify-between'>
-                  <FieldLabel>
-                    Email <span className='text-destructive'>*</span>
-                  </FieldLabel>
-                  {isNotAuthProvider && (
-                    <Button
-                      className='hover:text-accent py-1'
-                      variant='ghost'
-                      size='sm'
-                      asChild
-                    >
-                      <Link href='/account/settings/email'>Change Email</Link>
-                    </Button>
-                  )}
-                </div>
-                <Input
-                  type='email'
-                  placeholder='Enter your email'
-                  value={session.user.email}
-                  disabled
-                />
-              </Field>
+              {/* Email */}
+              {isNotAuthProvider && (
+                <Field>
+                  <FieldLabel>Email</FieldLabel>
+                  <Link
+                    href='/account/settings/email'
+                    className='group flex items-center justify-between rounded-md border border-input bg-transparent px-3 h-12 text-sm ring-offset-background transition-colors hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+                  >
+                    <span className='text-muted-foreground'>
+                      {session.user.email}
+                    </span>
+                    <span className='flex items-center gap-1 text-xs font-medium text-accent shrink-0'>
+                      Change
+                      <RiArrowRightWideFill className='size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
+                    </span>
+                  </Link>
+                </Field>
+              )}
               {/* Phone */}
               <Controller
                 name='phoneNumber'

@@ -11,7 +11,7 @@ const HeroSection = () => {
         loop
         muted
         className='absolute inset-0 w-full h-full object-cover'
-        src='/hero-vedio.mp4'
+        src='/hero-ved.mp4'
       />
       <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/15 z-0' />
       <div className='container min-h-screen flex flex-col items-center justify-center relative z-10'>

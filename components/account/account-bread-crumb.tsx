@@ -35,7 +35,7 @@ const AccountBreadCrumb = () => {
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbPage className='capitalize'>
-            {currentLink?.label || 'Page'}
+            {currentLink?.label || 'Email Settings'}
           </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>

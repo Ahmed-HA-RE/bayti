@@ -65,12 +65,12 @@ function DialogContent({
             render={
               <Button
                 variant='ghost'
-                className='absolute top-3 right-3 hover:text-[#ff6b00]'
+                className='absolute top-2 right-2 hover:text-[#ff6b00]'
                 size='icon-sm'
               />
             }
           >
-            <XIcon className='size-5' />
+            <XIcon className='size-4' />
             <span className='sr-only'>Close</span>
           </DialogPrimitive.Close>
         )}
@@ -83,7 +83,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot='dialog-header'
-      className={cn('flex flex-col gap-2 mt-6', className)}
+      className={cn('flex flex-col gap-2', className)}
       {...props}
     />
   );
