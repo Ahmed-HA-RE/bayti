@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Field,
   FieldError,
@@ -23,13 +22,15 @@ import { Spinner } from '@/components/ui/spinner';
 import Link from 'next/link';
 import { updatePersonalInformation } from '@/lib/actions/user/update-personal-information';
 import { RiArrowRightWideFill } from 'react-icons/ri';
+import { Account } from 'better-auth';
+import SettingsCard from './settings-card';
 
 const PersonalInformation = ({
   session,
-  accountProviderId,
+  account,
 }: {
   session: typeof auth.$Infer.Session;
-  accountProviderId: string;
+  account: Account;
 }) => {
   const form = useForm<UpdateUserFormData>({
     resolver: zodResolver(updateUserSchema),
@@ -50,92 +51,149 @@ const PersonalInformation = ({
     toast.success(res.message);
   };
 
-  const isNotAuthProvider = accountProviderId === 'credential';
+  const isNotAuthProvider = account.providerId === 'credential';
   // ignore eslint-disable-next-line react-hooks/rules-of-hooks
   const userImage = form.watch('image') || session.user.image;
   const isPending = form.formState.isSubmitting;
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className='pt-14'>
-      <div className='flex flex-col lg:flex-row gap-4'>
-        <div className='space-y-0.5 flex-1/3'>
-          <h2 className='text-xl font-medium'>Personal Information</h2>
-          <p className='text-xs text-muted-foreground'>
-            Update your personal information and contact details
-          </p>
-        </div>
-        <Card className='flex-2/3 shadow-sm border-gray-50'>
-          <CardContent className='px-6'>
-            <FieldGroup>
-              <Controller
-                name='name'
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Name <span className='text-destructive'>*</span>
-                    </FieldLabel>
-                    <Input
-                      type='name'
-                      id={field.name}
-                      aria-invalid={fieldState.invalid}
-                      placeholder='Enter your name'
-                      {...field}
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+    <SettingsCard
+      title='Personal Information'
+      subtitle='Update your personal information'
+    >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FieldGroup>
+          <Controller
+            name='name'
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>
+                  Name <span className='text-destructive'>*</span>
+                </FieldLabel>
+                <Input
+                  type='name'
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  placeholder='Enter your name'
+                  {...field}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
                 )}
-              />
-              {/* Email */}
-              {isNotAuthProvider && (
-                <Field>
-                  <FieldLabel>Email</FieldLabel>
-                  <Link
-                    href='/account/settings/email'
-                    className='group flex items-center justify-between rounded-md border border-input bg-transparent px-3 h-12 text-sm ring-offset-background transition-colors hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+              </Field>
+            )}
+          />
+          {/* Email */}
+          {isNotAuthProvider && (
+            <Field>
+              <FieldLabel>Email</FieldLabel>
+              <Link
+                href='/account/settings/email'
+                className='group flex items-center justify-between rounded-md border border-input bg-transparent px-3 h-12 text-sm ring-offset-background transition-colors hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+              >
+                <span className='text-muted-foreground'>
+                  {session.user.email}
+                </span>
+                <span className='flex items-center gap-1 text-xs font-medium text-accent shrink-0'>
+                  Change
+                  <RiArrowRightWideFill className='size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
+                </span>
+              </Link>
+            </Field>
+          )}
+          {/* Phone */}
+          <Controller
+            name='phoneNumber'
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
+                <div className='flex rounded-md'>
+                  <span
+                    className={cn(
+                      'border-input inline-flex items-center rounded-l-md border px-3',
+                      fieldState.invalid && 'border-destructive',
+                    )}
                   >
-                    <span className='text-muted-foreground'>
-                      {session.user.email}
-                    </span>
-                    <span className='flex items-center gap-1 text-xs font-medium text-accent shrink-0'>
-                      Change
-                      <RiArrowRightWideFill className='size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
-                    </span>
-                  </Link>
-                </Field>
-              )}
-              {/* Phone */}
+                    <Image
+                      src='/svg/uae-flag.svg'
+                      alt='UAE Flag'
+                      width={34}
+                      height={34}
+                    />
+                  </span>
+                  <Input
+                    type='tel'
+                    placeholder='Enter your phone number'
+                    className='-ms-px rounded-l-none shadow-none'
+                    value={field.value || ''}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    aria-invalid={fieldState.invalid}
+                  />
+                </div>
+                {fieldState.error && (
+                  <FieldError className='text-xs' errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <div className='flex flex-col gap-4'>
+            <span className='font-medium'>Avatar</span>
+            <div className='flex items-center gap-4'>
+              <Avatar className='size-20'>
+                <Suspense
+                  fallback={
+                    <AvatarFallback>
+                      {session.user.name.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  }
+                >
+                  <Image
+                    src={userImage}
+                    alt={`${session.user.name}'s Avatar`}
+                    width={80}
+                    height={80}
+                    className='object-cover rounded-full'
+                  />
+                </Suspense>
+              </Avatar>
               <Controller
-                name='phoneNumber'
+                name='image'
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
-                    <div className='flex rounded-md'>
-                      <span
-                        className={cn(
-                          'border-input inline-flex items-center rounded-l-md border px-3',
-                          fieldState.invalid && 'border-destructive',
-                        )}
-                      >
-                        <Image
-                          src='/svg/uae-flag.svg'
-                          alt='UAE Flag'
-                          width={34}
-                          height={34}
-                        />
-                      </span>
-                      <Input
-                        type='tel'
-                        placeholder='Enter your phone number'
-                        className='-ms-px rounded-l-none shadow-none'
-                        value={field.value || ''}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        aria-invalid={fieldState.invalid}
-                      />
-                    </div>
+                    <UploadButton
+                      endpoint={'profileImage'}
+                      onClientUploadComplete={(res) => {
+                        const result = res[0];
+                        field.onChange(result.ufsUrl);
+                        form.setValue('imageKey', result.key);
+                        toast.success('Avatar updated successfully');
+                      }}
+                      onUploadError={(error) => {
+                        const customizedError = formatUploadThingError(
+                          error.message,
+                          'single',
+                        );
+                        toast.error(customizedError);
+                      }}
+                      className='ut-button:rounded-full ut-button:bg-transparent items-start flex-col-reverse gap-3 ut-button:border ut-button:border-input ut-button:h-9 ut-button:text-xs ut-button:text-foreground ut-button:w-30 uut-uploading:cursor-not-allowed ut-uploading:opacity-50 ut-allowed-content:text-sm ut-allowed-content:text-muted-foreground ut-button:hover:border-accent ut-button:transition-colors ut-button:duration-300'
+                      content={{
+                        button({ ready, isUploading }) {
+                          if (isUploading) {
+                            return <Spinner className='size-4.5' />;
+                          } else if (!ready) {
+                            return 'Preparing...';
+                          }
+
+                          return 'Change Avatar';
+                        },
+                        allowedContent({}) {
+                          return 'Max file size: 1MB';
+                        },
+                      }}
+                    />
                     {fieldState.error && (
                       <FieldError
                         className='text-xs'
@@ -145,86 +203,19 @@ const PersonalInformation = ({
                   </Field>
                 )}
               />
-              <div className='flex flex-col gap-4'>
-                <span className='font-medium'>Avatar</span>
-                <div className='flex items-center gap-4'>
-                  <Avatar className='size-20'>
-                    <Suspense
-                      fallback={
-                        <AvatarFallback>
-                          {session.user.name.slice(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      }
-                    >
-                      <Image
-                        src={userImage}
-                        alt={`${session.user.name}'s Avatar`}
-                        width={80}
-                        height={80}
-                        className='object-cover rounded-full'
-                      />
-                    </Suspense>
-                  </Avatar>
-                  <Controller
-                    name='image'
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <UploadButton
-                          endpoint={'profileImage'}
-                          onClientUploadComplete={(res) => {
-                            const result = res[0];
-                            field.onChange(result.ufsUrl);
-                            form.setValue('imageKey', result.key);
-                            toast.success('Avatar updated successfully');
-                          }}
-                          onUploadError={(error) => {
-                            const customizedError = formatUploadThingError(
-                              error.message,
-                              'single',
-                            );
-                            toast.error(customizedError);
-                          }}
-                          className='ut-button:rounded-full ut-button:bg-transparent items-start flex-col-reverse gap-3 ut-button:border ut-button:border-input ut-button:h-9 ut-button:text-xs ut-button:text-foreground ut-button:w-30 uut-uploading:cursor-not-allowed ut-uploading:opacity-50 ut-allowed-content:text-sm ut-allowed-content:text-muted-foreground ut-button:hover:border-accent ut-button:transition-colors ut-button:duration-300'
-                          content={{
-                            button({ ready, isUploading }) {
-                              if (isUploading) {
-                                return <Spinner className='size-4.5' />;
-                              } else if (!ready) {
-                                return 'Preparing...';
-                              }
-
-                              return 'Change Avatar';
-                            },
-                            allowedContent({}) {
-                              return 'Max file size: 1MB';
-                            },
-                          }}
-                        />
-                        {fieldState.error && (
-                          <FieldError
-                            className='text-xs'
-                            errors={[fieldState.error]}
-                          />
-                        )}
-                      </Field>
-                    )}
-                  />
-                </div>
-              </div>
-              <Button
-                type='submit'
-                className='self-end rounded-full'
-                size='sm'
-                disabled={isPending}
-              >
-                {isPending ? 'Saving...' : 'Save Changes'}
-              </Button>
-            </FieldGroup>
-          </CardContent>
-        </Card>
-      </div>
-    </form>
+            </div>
+          </div>
+          <Button
+            type='submit'
+            className='self-end rounded-full'
+            size='sm'
+            disabled={isPending}
+          >
+            {isPending ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </FieldGroup>
+      </form>
+    </SettingsCard>
   );
 };
 

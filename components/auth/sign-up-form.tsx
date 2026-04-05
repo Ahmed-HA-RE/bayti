@@ -84,7 +84,9 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Name <span className='text-destructive'>*</span>
+              </FieldLabel>
               <Input
                 id={field.name}
                 type='text'
@@ -103,7 +105,9 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Email <span className='text-destructive'>*</span>
+              </FieldLabel>
               <Input
                 id={field.name}
                 type='email'
@@ -122,7 +126,9 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Password <span className='text-destructive'>*</span>
+              </FieldLabel>
               <div className='relative'>
                 <Input
                   id={field.name}
@@ -155,7 +161,9 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
+              <FieldLabel htmlFor={field.name}>
+                Confirm Password <span className='text-destructive'>*</span>
+              </FieldLabel>
               <div className='relative'>
                 <Input
                   id={field.name}

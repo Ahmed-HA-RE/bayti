@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import SetPassword from '@/components/account/settings/set-password';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -32,12 +33,11 @@ const AccountSettingsPage = async () => {
     return redirect('/login');
   }
 
-  const accountProviderId = await prisma.account.findFirst({
+  const account = await prisma.account.findFirst({
     where: { userId: session.user.id },
-    select: { providerId: true },
   });
 
-  if (!accountProviderId) {
+  if (!account) {
     return redirect('/login');
   }
 
@@ -46,11 +46,11 @@ const AccountSettingsPage = async () => {
       title='Account Settings'
       subtitle='Manage your account information and preferences'
     >
-      <div className='grid grid-cols-1 gap-4'>
-        <PersonalInformation
-          session={session}
-          accountProviderId={accountProviderId.providerId}
-        />
+      <div className='grid grid-cols-1 gap-12 pt-14'>
+        <PersonalInformation session={session} account={account} />
+        {account.providerId !== 'credential' && !account.password && (
+          <SetPassword />
+        )}
       </div>
     </AccountHeaderLayout>
   );
