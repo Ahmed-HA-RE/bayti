@@ -61,15 +61,11 @@ const EmailChangeEmailConfirmation = ({
                 Hi {userName},
               </Heading>
 
-              <Text className='text-gray-700 text-base mt-4 leading-7'>
+              <Text className='text-gray-700 text-base mt-4 mb-0 leading-7'>
                 You recently requested to change your email address for your{' '}
                 {APP_NAME}&apos;s account. Click the button below to confirm
-                your new email address and complete the update.
-              </Text>
-
-              <Text className='text-gray-700 text-base mt-4 mb-0 leading-7'>
-                New Email:{' '}
-                <span className='font-semibold text-black'>{newEmail}</span>
+                that you want to update your email to{' '}
+                <span className='font-semibold text-black'>{newEmail}</span>.
               </Text>
 
               <Button

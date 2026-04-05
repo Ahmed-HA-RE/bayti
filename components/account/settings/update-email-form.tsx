@@ -1,7 +1,8 @@
 'use client';
 
+import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
   Field,
   FieldError,
@@ -9,9 +10,12 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { updateUserEmail } from '@/lib/actions/account/update-user-email';
 import { UpdateEmailFormData, updateEmailSchema } from '@/schema/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { GoAlertFill } from 'react-icons/go';
 
 const UpdateEmailForm = ({ userEmail }: { userEmail: string }) => {
   const form = useForm<UpdateEmailFormData>({
@@ -23,7 +27,15 @@ const UpdateEmailForm = ({ userEmail }: { userEmail: string }) => {
   });
 
   const onSubmit = async (data: UpdateEmailFormData) => {
-    console.log(data);
+    const res = await updateUserEmail(data.newEmail, data.password);
+    if (!res.success) {
+      form.setError('root', {
+        message: res.message,
+      });
+      return;
+    }
+    toast.success(res.message);
+    form.reset();
   };
 
   const isPending = form.formState.isSubmitting;
@@ -31,6 +43,14 @@ const UpdateEmailForm = ({ userEmail }: { userEmail: string }) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <Card className='border-gray-50 shadow-sm py-6'>
+        {form.formState.errors.root && (
+          <CardHeader>
+            <Alert variant='error'>
+              <GoAlertFill />
+              <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+            </Alert>
+          </CardHeader>
+        )}
         <CardContent>
           <FieldGroup>
             <Field>

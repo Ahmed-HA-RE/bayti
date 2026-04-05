@@ -41,19 +41,17 @@ const VerifyEmail = ({ name, url }: { name: string; url: string }) => {
         }}
       >
         <Body className='mx-auto my-auto bg-white px-2 font-sans'>
-          <Preview>Finish setting up your account.</Preview>
+          <Preview>Almost done! Just one click to confirm your email.</Preview>
           <Container className='mx-auto my-[40px] max-w-[600px]'>
             <Section className='rounded border border-[#eaeaea] border-solid px-6 py-4'>
-              <Heading>
-                Welcome to {APP_NAME}, {name}.
-              </Heading>
+              <Heading>Hi {name},</Heading>
               <Text className='text-base text-gray-600'>
-                You&apos;re receiving this email because you recently signed up
-                for a {APP_NAME} account.
+                You&apos;re receiving this email to confirm your email address
+                for your account.
               </Text>
               <Text className='text-base text-gray-600 mb-0'>
                 Confirm your email address by clicking the button below. This
-                step adds an extra layer of security to your account.
+                helps keep your account secure.
               </Text>
               <Button
                 href={url}
@@ -62,8 +60,7 @@ const VerifyEmail = ({ name, url }: { name: string; url: string }) => {
                 Verify Email
               </Button>
               <Text className='text-base text-gray-600 my-0'>
-                If you did not create an account, you can safely ignore this
-                email.
+                If you did not request this, you can safely ignore this email.
               </Text>
               <Hr className='border-gray-200 my-4' />
               <span className='text-sm text-gray-400'>
