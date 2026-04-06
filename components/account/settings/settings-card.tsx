@@ -15,7 +15,7 @@ const SettingsCard = ({
         <h2 className='text-xl font-medium'>{title}</h2>
         <p className='text-xs text-muted-foreground lg:max-w-sm'>{subtitle}</p>
       </div>
-      <Card className='shadow-sm border-gray-50 lg:flex-2/3'>
+      <Card className='shadow-sm border-gray-50 lg:flex-2/3 py-6'>
         <CardContent className='px-6'>{children}</CardContent>
       </Card>
     </div>

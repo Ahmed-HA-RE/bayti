@@ -56,3 +56,17 @@ export const setPasswordSchema = z
   });
 
 export type SetPasswordFormData = z.infer<typeof setPasswordSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: signUpSchema.shape.password,
+    newPassword: signUpSchema.shape.password,
+    confirmPassword: signUpSchema.shape.confirmPassword,
+    revokeSession: z.boolean().default(false),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;

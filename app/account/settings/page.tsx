@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import SetPassword from '@/components/account/settings/set-password';
+import ChangePassword from '@/components/account/settings/change-password';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -48,6 +49,9 @@ const AccountSettingsPage = async () => {
       <div className='grid grid-cols-1 gap-12 pt-10 md:pt-14'>
         <PersonalInformation session={session} />
         {credentialsCount === 0 && <SetPassword />}
+        {credentialsCount !== 0 && (
+          <ChangePassword userEmail={session.user.email} />
+        )}
       </div>
     </AccountHeaderLayout>
   );
