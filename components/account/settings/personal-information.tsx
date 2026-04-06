@@ -15,23 +15,23 @@ import { Controller, useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { cn, formatUploadThingError } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { UploadButton } from '@/lib/uploadthing';
 import toast from 'react-hot-toast';
 import { Spinner } from '@/components/ui/spinner';
-import Link from 'next/link';
 import { updatePersonalInformation } from '@/lib/actions/user/update-personal-information';
-import { RiArrowRightWideFill } from 'react-icons/ri';
-import { Account } from 'better-auth';
 import SettingsCard from './settings-card';
+import { Alert, AlertTitle } from '@/components/ui/alert';
+import { GoAlertFill } from 'react-icons/go';
+import UpdateEmailDialog from './update-email-dialog';
+import { TiPencil } from 'react-icons/ti';
 
 const PersonalInformation = ({
   session,
-  account,
 }: {
   session: typeof auth.$Infer.Session;
-  account: Account;
 }) => {
+  const [openModal, setOpenModal] = useState(false);
   const form = useForm<UpdateUserFormData>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
@@ -51,8 +51,6 @@ const PersonalInformation = ({
     toast.success(res.message);
   };
 
-  const isNotAuthProvider = account.providerId === 'credential';
-  // ignore eslint-disable-next-line react-hooks/rules-of-hooks
   const userImage = form.watch('image') || session.user.image;
   const isPending = form.formState.isSubmitting;
 
@@ -61,6 +59,12 @@ const PersonalInformation = ({
       title='Personal Information'
       subtitle='Update your personal information'
     >
+      {form.formState.errors.root && (
+        <Alert variant='error' className='mb-4'>
+          <GoAlertFill />
+          <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+        </Alert>
+      )}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller
@@ -85,23 +89,25 @@ const PersonalInformation = ({
             )}
           />
           {/* Email */}
-          {isNotAuthProvider && (
-            <Field>
+          <Field>
+            <div className='flex items-center justify-between'>
               <FieldLabel>Email</FieldLabel>
-              <Link
-                href='/account/settings/email'
-                className='group flex items-center justify-between rounded-md border border-input bg-transparent px-3 h-12 text-sm ring-offset-background transition-colors hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+              <Button
+                variant='ghost'
+                size='sm'
+                className='py-0 px-0 hover:text-accent'
+                type='button'
+                onClick={() => setOpenModal(true)}
               >
-                <span className='text-muted-foreground'>
-                  {session.user.email}
-                </span>
-                <span className='flex items-center gap-1 text-xs font-medium text-accent shrink-0'>
-                  Change
-                  <RiArrowRightWideFill className='size-3.5 transition-transform duration-200 group-hover:translate-x-0.5' />
-                </span>
-              </Link>
-            </Field>
-          )}
+                <TiPencil />
+                Change Email
+              </Button>
+            </div>
+            <Input disabled value={session.user.email} />
+            <p className='text-xs text-muted-foreground text-right'>
+              This email is associated with your account
+            </p>
+          </Field>
           {/* Phone */}
           <Controller
             name='phoneNumber'
@@ -127,6 +133,7 @@ const PersonalInformation = ({
                     type='tel'
                     placeholder='Enter your phone number'
                     className='-ms-px rounded-l-none shadow-none'
+                    id={field.name}
                     value={field.value || ''}
                     onChange={(e) => field.onChange(e.target.value)}
                     aria-invalid={fieldState.invalid}
@@ -215,6 +222,7 @@ const PersonalInformation = ({
           </Button>
         </FieldGroup>
       </form>
+      <UpdateEmailDialog open={openModal} onOpenChange={setOpenModal} />
     </SettingsCard>
   );
 };

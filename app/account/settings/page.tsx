@@ -46,11 +46,9 @@ const AccountSettingsPage = async () => {
       title='Account Settings'
       subtitle='Manage your account information and preferences'
     >
-      <div className='grid grid-cols-1 gap-12 pt-14'>
-        <PersonalInformation session={session} account={account} />
-        {account.providerId !== 'credential' && !account.password && (
-          <SetPassword />
-        )}
+      <div className='grid grid-cols-1 gap-12 pt-10 md:pt-14'>
+        <PersonalInformation session={session} />
+        {!account.password && <SetPassword />}
       </div>
     </AccountHeaderLayout>
   );

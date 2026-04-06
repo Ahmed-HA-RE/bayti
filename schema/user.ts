@@ -39,12 +39,11 @@ export const updateUserSchema = adminUserSchema.omit({
 
 export type UpdateUserFormData = z.infer<typeof updateUserSchema>;
 
-export const updateEmailSchema = z.object({
+export const updateUserEmailSchema = z.object({
   newEmail: signUpSchema.shape.email,
-  password: signUpSchema.shape.password,
 });
 
-export type UpdateEmailFormData = z.infer<typeof updateEmailSchema>;
+export type UpdateUserEmailFormData = z.infer<typeof updateUserEmailSchema>;
 
 export const setPasswordSchema = z
   .object({
