@@ -33,13 +33,12 @@ const AccountSettingsPage = async () => {
     return redirect('/login');
   }
 
-  const account = await prisma.account.findFirst({
-    where: { userId: session.user.id },
+  const credentialsCount = await prisma.account.count({
+    where: {
+      userId: session.user.id,
+      providerId: { equals: 'credential' },
+    },
   });
-
-  if (!account) {
-    return redirect('/login');
-  }
 
   return (
     <AccountHeaderLayout
@@ -48,7 +47,7 @@ const AccountSettingsPage = async () => {
     >
       <div className='grid grid-cols-1 gap-12 pt-10 md:pt-14'>
         <PersonalInformation session={session} />
-        {!account.password && <SetPassword />}
+        {credentialsCount === 0 && <SetPassword />}
       </div>
     </AccountHeaderLayout>
   );

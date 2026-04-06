@@ -16,6 +16,10 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { setPassword } from '@/lib/actions/user/set-password';
+import toast from 'react-hot-toast';
+import { Alert, AlertTitle } from '@/components/ui/alert';
+import { GoAlertFill } from 'react-icons/go';
 
 const SetPassword = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,8 +33,13 @@ const SetPassword = () => {
   });
 
   const onSubmit = async (data: SetPasswordFormData) => {
-    // Implement the logic to set the password for the user
-    console.log(data);
+    const res = await setPassword(data);
+    if (!res.success) {
+      form.setError('root', { message: res.message });
+      return;
+    }
+    toast.success(res.message);
+    form.reset();
   };
 
   const isPending = form.formState.isSubmitting;
@@ -114,6 +123,13 @@ const SetPassword = () => {
               </Field>
             )}
           />
+
+          {form.formState.errors.root && (
+            <Alert variant='error'>
+              <GoAlertFill />
+              <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+            </Alert>
+          )}
           <Button
             type='submit'
             className='self-end rounded-full min-w-25'
