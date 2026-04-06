@@ -11,13 +11,11 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { authClient } from '@/lib/authClient';
 import { SERVER_URL } from '@/lib/constants';
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -26,20 +24,10 @@ const ForgotPasswordForm = () => {
     },
   });
 
-  if (!executeRecaptcha) {
-    return;
-  }
-
   const onSubmit = async (data: ForgotPasswordFormData) => {
-    const token = await executeRecaptcha('forgot_password');
     const res = await authClient.requestPasswordReset({
       email: data.email,
       redirectTo: `${SERVER_URL}/reset-password`,
-      fetchOptions: {
-        headers: {
-          'x-captcha-response': token,
-        },
-      },
     });
     if (res.error) {
       toast.error(

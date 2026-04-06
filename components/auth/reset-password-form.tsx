@@ -14,14 +14,17 @@ import { resetPasswordSchema } from '@/schema/auth';
 import { ResetPasswordFormData } from '@/types/auth';
 import { authClient } from '@/lib/authClient';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { auth } from '@/lib/auth';
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({
+  session,
+}: {
+  session: typeof auth.$Infer.Session | null;
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const token = useSearchParams().get('token');
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
@@ -31,22 +34,15 @@ const ResetPasswordForm = () => {
     },
   });
 
-  if (!executeRecaptcha) {
-    return;
-  }
+  const sucessMessage = session
+    ? 'Password changed successfully!'
+    : 'Password reset successfully. Please log in with your new password.';
 
   const onSubmit = async (data: ResetPasswordFormData) => {
     if (token) {
-      const recaptchaToken = await executeRecaptcha('reset_password');
-
       const res = await authClient.resetPassword({
         newPassword: data.newPassword,
         token,
-        fetchOptions: {
-          headers: {
-            'x-captcha-response': recaptchaToken,
-          },
-        },
       });
 
       if (res.error) {
@@ -60,9 +56,8 @@ const ResetPasswordForm = () => {
         return;
       }
 
-      toast.success('Password reset successfully!');
-
-      setTimeout(() => router.push('/login'), 3000);
+      toast.success(sucessMessage);
+      router.push(session ? '/account/settings' : '/login');
     }
   };
 
@@ -86,6 +81,7 @@ const ResetPasswordForm = () => {
                   {...field}
                 />
                 <Button
+                  type='button'
                   variant='ghost'
                   size='icon'
                   onClick={() => setIsVisible((prevState) => !prevState)}
@@ -118,6 +114,7 @@ const ResetPasswordForm = () => {
                   {...field}
                 />
                 <Button
+                  type='button'
                   variant='ghost'
                   size='icon'
                   onClick={() => setIsConfirmVisible((prevState) => !prevState)}

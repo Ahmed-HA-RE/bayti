@@ -116,6 +116,7 @@ export const auth = betterAuth({
     captcha({
       provider: 'google-recaptcha',
       secretKey: process.env.GOOGLE_RECAPTCHA as string,
+      endpoints: ['/sign-up/email', '/sign-in/email'],
     }),
     dash(),
     admin({
