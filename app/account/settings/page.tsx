@@ -7,6 +7,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import SetPassword from '@/components/account/settings/set-password';
 import ChangePassword from '@/components/account/settings/change-password';
+import SessionManagement from '@/components/account/settings/session-management';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -26,8 +27,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const AccountSettingsPage = async () => {
+  const requestHeaders = await headers();
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: requestHeaders,
   });
 
   if (!session) {
@@ -41,6 +43,10 @@ const AccountSettingsPage = async () => {
     },
   });
 
+  const allSessions = await auth.api.listSessions({
+    headers: requestHeaders,
+  });
+
   return (
     <AccountHeaderLayout
       title='Account Settings'
@@ -52,6 +58,7 @@ const AccountSettingsPage = async () => {
         {credentialsCount !== 0 && (
           <ChangePassword userEmail={session.user.email} />
         )}
+        <SessionManagement allSessions={allSessions} session={session} />
       </div>
     </AccountHeaderLayout>
   );

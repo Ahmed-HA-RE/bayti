@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Status } from './generated/prisma';
+import { UAParser } from 'ua-parser-js';
+import { Session } from 'better-auth';
+import { format } from 'date-fns';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -61,5 +64,37 @@ export const bookingStatusColors = (status: Status) => {
       return 'bg-red-500';
     default:
       return 'bg-gray-500';
+  }
+};
+
+export const formatUAParser = (session: Session) => {
+  const userAgent = session.userAgent;
+  if (!userAgent) {
+    return {
+      browser: 'Unknown Browser',
+      os: 'Unknown OS',
+      device: 'Unknown Device',
+      createdAt: format(session.createdAt, 'MMM d, yyyy, h:mm a'),
+      expiresAt: format(session.expiresAt, 'MMM d, yyyy, h:mm a'),
+    };
+  } else {
+    const { browser, os, device } = UAParser(userAgent);
+    const browserName = browser.name || 'Unknown Browser';
+    const osName = os.name || 'Unknown OS';
+    const deviceType =
+      device.type === 'mobile'
+        ? 'mobile'
+        : device.type === 'tablet'
+          ? 'tablet'
+          : 'desktop';
+    const createdAt = format(session.createdAt, 'MMM d, yyyy, h:mm a');
+    const expiresAt = format(session.expiresAt, 'MMM d, yyyy, h:mm a');
+    return {
+      browser: browserName,
+      os: osName,
+      device: deviceType,
+      createdAt,
+      expiresAt,
+    };
   }
 };

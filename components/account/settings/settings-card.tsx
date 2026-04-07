@@ -11,7 +11,7 @@ const SettingsCard = ({
 }) => {
   return (
     <div className='flex flex-col lg:flex-row gap-6'>
-      <div className='space-y-1.5 lg:flex-1/3'>
+      <div className='space-y-1 lg:flex-1/3'>
         <h2 className='text-xl font-medium'>{title}</h2>
         <p className='text-xs text-muted-foreground lg:max-w-sm'>{subtitle}</p>
       </div>

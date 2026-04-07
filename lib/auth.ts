@@ -22,10 +22,15 @@ export const auth = betterAuth({
 
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
-      const isBanned = ctx.query?.error;
+      const error = ctx.query?.error;
+      const isBanned = error === 'banned';
+      const isCanceled =
+        error === 'please_restart_the_process' || error === 'access_denied';
 
       if (isBanned) {
         return ctx.redirect('/banned');
+      } else if (isCanceled) {
+        return ctx.redirect('/login');
       }
     }),
   },

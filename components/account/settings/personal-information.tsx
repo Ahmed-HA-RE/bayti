@@ -57,7 +57,7 @@ const PersonalInformation = ({
   return (
     <SettingsCard
       title='Personal Information'
-      subtitle='Update your personal information'
+      subtitle='Update your personal information.'
     >
       {form.formState.errors.root && (
         <Alert variant='error' className='mb-4'>
