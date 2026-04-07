@@ -10,7 +10,10 @@ import {
 } from 'react-icons/hi2';
 import { MdOutlineDeviceUnknown } from 'react-icons/md';
 import SessionManagementCard from './session-management-card';
-import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
+import { authClient } from '@/lib/authClient';
+import { useRouter } from 'next/navigation';
+import RevokeSessionDialog from './revoke-session-dialog';
 
 type SessionManagementProps = {
   session: Session;
@@ -21,9 +24,9 @@ const SessionManagement = ({
   session,
   allSessions,
 }: SessionManagementProps) => {
-  const currentSession = allSessions.filter(
-    (s) => s.token === session.token,
-  )[0];
+  const router = useRouter();
+
+  const currentSession = allSessions.find((s) => s.token === session.token)!;
 
   const devicesIcons = {
     mobile: HiOutlineDevicePhoneMobile,
@@ -41,7 +44,41 @@ const SessionManagement = ({
     (s) => s.token !== currentSession.token,
   );
 
-  const formatOtherSessions = otherSessions.map((s) => formatUAParser(s));
+  const handleRevokeSession = async (token: string) => {
+    try {
+      const res = await authClient.revokeSession({ token });
+
+      if (res.error) {
+        throw new Error(res.error.message);
+      }
+      toast.success('Session revoked successfully');
+      router.refresh();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'An error occurred while revoking the session',
+      );
+    }
+  };
+
+  const handleRevokeAllSessions = async () => {
+    try {
+      const res = await authClient.revokeOtherSessions();
+
+      if (res.error) {
+        throw new Error(res.error.message);
+      }
+      toast.success('All sessions revoked successfully');
+      router.refresh();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'An error occurred while revoking all sessions',
+      );
+    }
+  };
 
   return (
     <SettingsCard
@@ -58,31 +95,33 @@ const SessionManagement = ({
         isCurrentSession={true}
       />
       {/* Other Active Sessions */}
-      {formatOtherSessions.length > 0 && (
+      {otherSessions.length > 0 && (
         <div className='mt-8 flex flex-col gap-4'>
           <div className='flex flex-col justify-between xl:items-center gap-2 xl:flex-row'>
             <h4 className='text-lg font-medium'>Other Active Sessions</h4>
-            <Button
-              className='bg-red-500 text-white hover:bg-red-600'
-              size='sm'
-            >
-              Revoke Other Sessions
-            </Button>
+            <RevokeSessionDialog
+              allSessions={true}
+              onRevoke={handleRevokeAllSessions}
+            />
           </div>
 
-          <div className='grid grid-cols-1 gap-2'>
-            {formatOtherSessions.map((sessionInfo, index) => (
-              <SessionManagementCard
-                browser={sessionInfo.browser}
-                os={sessionInfo.os}
-                DeviceIcon={
-                  devicesIcons[sessionInfo.device as keyof typeof devicesIcons]
-                }
-                key={index}
-                createdAt={sessionInfo.createdAt}
-                expiresAt={sessionInfo.expiresAt}
-              />
-            ))}
+          <div className='grid grid-cols-1 gap-4'>
+            {otherSessions.map((sessionInfo, index) => {
+              const { browser, createdAt, expiresAt, os, device } =
+                formatUAParser(sessionInfo);
+
+              return (
+                <SessionManagementCard
+                  browser={browser}
+                  os={os}
+                  DeviceIcon={devicesIcons[device as keyof typeof devicesIcons]}
+                  key={index}
+                  createdAt={createdAt}
+                  expiresAt={expiresAt}
+                  onRevoke={() => handleRevokeSession(sessionInfo.token)}
+                />
+              );
+            })}
           </div>
         </div>
       )}
