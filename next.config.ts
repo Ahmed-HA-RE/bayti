@@ -31,6 +31,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'dl-web.dropbox.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
         hostname: 'images.better-auth.com',
         port: '',
       },

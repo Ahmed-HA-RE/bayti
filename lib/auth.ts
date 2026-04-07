@@ -98,6 +98,10 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       prompt: 'consent',
     },
+    dropbox: {
+      clientId: process.env.DROPBOX_CLIENT_ID as string,
+      clientSecret: process.env.DROPBOX_CLIENT_SECRET as string,
+    },
   },
 
   plugins: [

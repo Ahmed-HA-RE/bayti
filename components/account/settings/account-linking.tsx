@@ -119,23 +119,27 @@ const AccountLinking = ({ accounts }: { accounts: Account[] }) => {
         </div>
       )}
       {/* Unlinked Providers List */}
-      <h4 className='text-xl font-medium mt-8 mb-4'>Link Other Accounts</h4>
-      <div className='grid grid-cols-1 gap-4'>
-        {unlinkedProviders.map((provider, index) => {
-          const ProviderIcon = getProviderIconData(provider);
-          return (
-            <AccountLinkingCard
-              key={index}
-              isLinked={false}
-              ProviderIcon={ProviderIcon}
-              description={`Link your ${provider} account for easier login and enhanced security.`}
-              provider={provider}
-              action={() => handleLinkAccount(provider)}
-              isPending={isPending}
-            />
-          );
-        })}
-      </div>
+      {unlinkedProviders.length > 0 && (
+        <div className='mt-8 space-y-4'>
+          <h4 className='text-xl font-medium mt-8'>Link Other Accounts</h4>
+          <div className='grid grid-cols-1 gap-4'>
+            {unlinkedProviders.map((provider, index) => {
+              const ProviderIcon = getProviderIconData(provider);
+              return (
+                <AccountLinkingCard
+                  key={index}
+                  isLinked={false}
+                  ProviderIcon={ProviderIcon}
+                  description={`Link your ${provider} account for easier login and enhanced security.`}
+                  provider={provider}
+                  action={() => handleLinkAccount(provider)}
+                  isPending={isPending}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
     </SettingsCard>
   );
 };

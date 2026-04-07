@@ -7,6 +7,7 @@ import { Separator } from '../ui/separator';
 import { authClient } from '@/lib/authClient';
 import { Spinner } from '../ui/spinner';
 import { useTransition } from 'react';
+import { FaDropbox } from 'react-icons/fa';
 
 const Login = ({ callbackUrl }: { callbackUrl: string }) => {
   const [isPending, startTransition] = useTransition();
@@ -20,28 +21,54 @@ const Login = ({ callbackUrl }: { callbackUrl: string }) => {
         </div>
 
         {/* Social Login */}
-        <Button
-          onClick={() => {
-            startTransition(async () => {
-              await authClient.signIn.social({
-                provider: 'google',
-                callbackURL: callbackUrl,
+        <div className='flex items-center gap-4'>
+          <Button
+            onClick={() => {
+              startTransition(async () => {
+                await authClient.signIn.social({
+                  provider: 'google',
+                  callbackURL: callbackUrl,
+                });
               });
-            });
-          }}
-          size={'default'}
-          variant='outline'
-          className='w-full'
-          disabled={isPending}
-        >
-          {isPending ? (
-            <Spinner className='size-5' />
-          ) : (
-            <>
-              <FcGoogle className='size-5' /> Sign in with Google
-            </>
-          )}
-        </Button>
+            }}
+            size={'default'}
+            variant='outline'
+            className='flex-1'
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Spinner className='size-5' />
+            ) : (
+              <>
+                <FcGoogle className='size-5' /> Sign in with Google
+              </>
+            )}
+          </Button>
+
+          <Button
+            onClick={() => {
+              startTransition(async () => {
+                await authClient.signIn.social({
+                  provider: 'dropbox',
+                  callbackURL: callbackUrl,
+                });
+              });
+            }}
+            size={'default'}
+            variant='outline'
+            className='flex-1'
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Spinner className='size-5' />
+            ) : (
+              <>
+                <FaDropbox className='size-5 text-blue-600' /> Sign in with
+                Dropbox
+              </>
+            )}
+          </Button>
+        </div>
 
         <div className='flex items-center gap-4'>
           <Separator className='flex-1' />
