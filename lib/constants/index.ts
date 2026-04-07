@@ -444,3 +444,23 @@ export const BOOKING_STATUSES = [
   { name: 'Completed', value: 'COMPLETED', color: 'green' },
   { name: 'Rejected', value: 'REJECTED', color: 'red' },
 ];
+
+export const ACCOUNT_DELETION_WARNINGS = [
+  {
+    id: 1,
+    description:
+      'All your bookings, favorites will be permanently deleted from our system.',
+  },
+  {
+    id: 2,
+    description: 'Your account will be permanently deleted.',
+  },
+  {
+    id: 3,
+    description: 'All your personal information will be removed.',
+  },
+  {
+    id: 4,
+    description: 'Your saved data and settings will be lost.',
+  },
+];

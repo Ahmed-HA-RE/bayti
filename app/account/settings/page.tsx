@@ -9,6 +9,8 @@ import SetPassword from '@/components/account/settings/set-password';
 import ChangePassword from '@/components/account/settings/change-password';
 import SessionManagement from '@/components/account/settings/session-management';
 import AccountLinking from '@/components/account/settings/account-linking';
+import AccountDeletion from '@/components/account/settings/account-deletion';
+import AccountDeletionDialog from '@/components/account/settings/account-deletion-dialog';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -64,6 +66,7 @@ const AccountSettingsPage = async () => {
         )}
         <SessionManagement allSessions={allSessions} session={session} />
         <AccountLinking accounts={userAccounts} />
+        <AccountDeletionDialog />
       </div>
     </AccountHeaderLayout>
   );
