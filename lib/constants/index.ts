@@ -31,6 +31,8 @@ export const APP_NAME = 'Bayti';
 
 export const DOMAIN = process.env.DOMAIN;
 
+export const APP_PROVIDERS = ['google', 'dropbox'];
+
 export const navigationData = [
   {
     title: 'Home',

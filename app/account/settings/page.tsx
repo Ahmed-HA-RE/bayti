@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 import SetPassword from '@/components/account/settings/set-password';
 import ChangePassword from '@/components/account/settings/change-password';
 import SessionManagement from '@/components/account/settings/session-management';
+import AccountLinking from '@/components/account/settings/account-linking';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -36,16 +37,19 @@ const AccountSettingsPage = async () => {
     return redirect('/login');
   }
 
-  const credentialsCount = await prisma.account.count({
+  const userAccounts = await prisma.account.findMany({
     where: {
       userId: session.user.id,
-      providerId: { equals: 'credential' },
     },
   });
 
   const allSessions = await auth.api.listSessions({
     headers: requestHeaders,
   });
+
+  const credentialsCount = userAccounts.filter(
+    (a) => a.providerId === 'credential',
+  ).length;
 
   return (
     <AccountHeaderLayout
@@ -59,6 +63,7 @@ const AccountSettingsPage = async () => {
           <ChangePassword userEmail={session.user.email} />
         )}
         <SessionManagement allSessions={allSessions} session={session} />
+        <AccountLinking accounts={userAccounts} />
       </div>
     </AccountHeaderLayout>
   );
