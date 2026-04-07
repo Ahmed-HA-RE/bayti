@@ -12,6 +12,7 @@ import { APP_NAME } from './constants';
 import { createAuthMiddleware } from 'better-auth/api';
 import { Role } from './generated/prisma';
 import EmailChangeEmailConfirmation from '@/emails/email-change-email-confirmation';
+import ConfirmAccountDeletion from '@/emails/confirm-account-deletion';
 
 const domain = process.env.DOMAIN;
 
@@ -40,12 +41,27 @@ export const auth = betterAuth({
       enabled: true,
       sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
         void resend.emails.send({
-          from: `Bayti <no-reply@${domain}>`,
+          from: `Bayti <support@${domain}>`,
           to: user.email,
           subject: 'Confirm your new email address',
           react: EmailChangeEmailConfirmation({
             userName: user.name,
             newEmail,
+            url,
+          }),
+        });
+      },
+    },
+    deleteUser: {
+      enabled: true,
+      deleteTokenExpiresIn: 60 * 60 * 1000, // 1 hour
+      sendDeleteAccountVerification: async ({ user, url }) => {
+        void resend.emails.send({
+          from: `Bayti <support@${domain}>`,
+          to: user.email,
+          subject: 'Confirm your account deletion',
+          react: ConfirmAccountDeletion({
+            userName: user.name,
             url,
           }),
         });

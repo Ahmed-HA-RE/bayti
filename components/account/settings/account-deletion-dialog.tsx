@@ -13,13 +13,39 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
+import { authClient } from '@/lib/authClient';
 import { OctagonAlert } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import toast from 'react-hot-toast';
 
 const AccountDeletionDialog = () => {
   const [confirmation, setConfirmation] = useState('');
+  const [isPending, startTransition] = useTransition();
 
   const isDeleteEnabled = confirmation === 'DELETE';
+
+  const handleDeleteAccount = () => {
+    startTransition(async () => {
+      try {
+        const res = await authClient.deleteUser({
+          callbackURL: '/',
+        });
+
+        if (res.error) {
+          throw new Error(res.error.message || 'Failed to delete account.');
+        }
+
+        toast.success('Please check your email to confirm the process.');
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred.';
+        toast.error(errorMessage);
+      }
+    });
+  };
 
   return (
     <AlertDialog>
@@ -54,8 +80,12 @@ const AccountDeletionDialog = () => {
 
         <AlertDialogFooter className='mt-2 sm:justify-center'>
           <AlertDialogCancel variant='outline'>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant='destructive' disabled={!isDeleteEnabled}>
-            Continue
+          <AlertDialogAction
+            variant='destructive'
+            disabled={!isDeleteEnabled || isPending}
+            onClick={handleDeleteAccount}
+          >
+            {isPending ? <Spinner /> : 'Continue'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
