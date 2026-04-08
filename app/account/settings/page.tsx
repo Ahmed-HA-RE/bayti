@@ -5,11 +5,10 @@ import prisma from '@/lib/prisma';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import SetPassword from '@/components/account/settings/set-password';
-import ChangePassword from '@/components/account/settings/change-password';
 import SessionManagement from '@/components/account/settings/session-management';
 import AccountLinking from '@/components/account/settings/account-linking';
 import AccountDeletionDialog from '@/components/account/settings/account-deletion-dialog';
+import AccountSecurity from '@/components/account/settings/account-security';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -38,19 +37,16 @@ const AccountSettingsPage = async () => {
     return redirect('/login');
   }
 
-  const userAccounts = await prisma.account.findMany({
-    where: {
-      userId: session.user.id,
-    },
-  });
-
-  const allSessions = await auth.api.listSessions({
-    headers: requestHeaders,
-  });
-
-  const credentialsCount = userAccounts.filter(
-    (a) => a.providerId === 'credential',
-  ).length;
+  const [userAccounts, allSessions] = await Promise.all([
+    prisma.account.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    }),
+    auth.api.listSessions({
+      headers: requestHeaders,
+    }),
+  ]);
 
   return (
     <AccountHeaderLayout
@@ -59,10 +55,10 @@ const AccountSettingsPage = async () => {
     >
       <div className='grid grid-cols-1 gap-12 pt-10 md:pt-14'>
         <PersonalInformation session={session} />
-        {credentialsCount === 0 && <SetPassword />}
-        {credentialsCount !== 0 && (
-          <ChangePassword userEmail={session.user.email} />
-        )}
+        <AccountSecurity
+          userEmail={session.user.email}
+          userAccounts={userAccounts}
+        />
         <SessionManagement allSessions={allSessions} session={session} />
         <AccountLinking accounts={userAccounts} />
         <AccountDeletionDialog />

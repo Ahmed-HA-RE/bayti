@@ -5,11 +5,11 @@ const ForgotPassword = () => {
   return (
     <div className='flex h-full flex-col items-center justify-center sm:px-5'>
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
-        <div className='space-y-4 text-center'>
+        <div className='space-y-0.5 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
             Forgot Your Password?
           </h2>
-          <p className='text-muted-foreground'>
+          <p className='text-muted-foreground text-sm'>
             Don&apos;t worry, we&apos;ll help you reset it.
           </p>
         </div>

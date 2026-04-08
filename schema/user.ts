@@ -45,17 +45,17 @@ export const updateUserEmailSchema = z.object({
 
 export type UpdateUserEmailFormData = z.infer<typeof updateUserEmailSchema>;
 
-export const setPasswordSchema = z
+export const setupPasswordSchema = z
   .object({
-    newPassword: signUpSchema.shape.password,
+    setPassword: signUpSchema.shape.password,
     confirmPassword: signUpSchema.shape.confirmPassword,
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine((data) => data.setPassword === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   });
 
-export type SetPasswordFormData = z.infer<typeof setPasswordSchema>;
+export type SetupPasswordFormData = z.infer<typeof setupPasswordSchema>;
 
 export const changePasswordSchema = z
   .object({

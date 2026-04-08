@@ -12,7 +12,6 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
 import { authClient } from '@/lib/authClient';
-import { SERVER_URL } from '@/lib/constants';
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
@@ -27,7 +26,7 @@ const ForgotPasswordForm = () => {
   const onSubmit = async (data: ForgotPasswordFormData) => {
     const res = await authClient.requestPasswordReset({
       email: data.email,
-      redirectTo: `${SERVER_URL}/reset-password`,
+      redirectTo: '/reset-password',
     });
     if (res.error) {
       toast.error(

@@ -9,11 +9,11 @@ const ResetPassword = async () => {
   return (
     <div className='flex h-full flex-col items-center justify-center sm:px-5'>
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
-        <div className='space-y-4 text-center'>
+        <div className='space-y-0.5 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
-            Reset Your Password
+            {!session ? 'Reset Your Password' : 'Set a Password'}
           </h2>
-          <p className='text-muted-foreground'>
+          <p className='text-muted-foreground text-sm'>
             {session
               ? 'Enter a new password for your account.'
               : 'Set a new password to regain access to your account.'}
