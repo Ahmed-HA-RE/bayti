@@ -55,11 +55,11 @@ const UpdateEmailDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-lg'>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <DialogHeader>
+          <DialogHeader className='mt-4'>
             <DialogTitle>Update Email</DialogTitle>
-            <DialogDescription className='max-w-sm text-sm'>
-              Enter your new email, and we&apos;ll send a confirmation link so
-              you can update your email safely.
+            <DialogDescription>
+              Enter your new email, you will receive a confirmation email for
+              both your current and new email addresses to verify the change.
             </DialogDescription>
           </DialogHeader>
           {form.formState.errors.root && (

@@ -13,6 +13,7 @@ import { createAuthMiddleware } from 'better-auth/api';
 import { Role } from './generated/prisma';
 import EmailChangeEmailConfirmation from '@/emails/email-change-email-confirmation';
 import ConfirmAccountDeletion from '@/emails/confirm-account-deletion';
+import { lastLoginMethod } from 'better-auth/plugins';
 
 const domain = process.env.DOMAIN;
 
@@ -147,6 +148,9 @@ export const auth = betterAuth({
     admin({
       defaultRole: Role.USER,
       adminRoles: [Role.ADMIN],
+    }),
+    lastLoginMethod({
+      cookieName: 'lastLoginMethod',
     }),
   ],
 
