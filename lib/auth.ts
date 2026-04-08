@@ -4,7 +4,7 @@ import prisma from './prisma';
 import resend from './resend';
 import VerifyEmail from '@/emails/verify-email';
 import { nextCookies } from 'better-auth/next-js';
-import { admin, customSession } from 'better-auth/plugins';
+import { admin, twoFactor } from 'better-auth/plugins';
 import ResetPasswordEmail from '@/emails/reset-password';
 import { captcha } from 'better-auth/plugins';
 import { dash } from '@better-auth/infra';
@@ -123,22 +123,6 @@ export const auth = betterAuth({
 
   plugins: [
     nextCookies(),
-    customSession(async ({ user, session }) => {
-      const userRole = await prisma.user.findUnique({
-        where: { id: user.id },
-        select: { role: true, phoneNumber: true },
-      });
-      return {
-        ...session,
-        user: {
-          ...user,
-          image: user.image as string,
-          role: userRole?.role,
-          phoneNumber: userRole?.phoneNumber,
-        },
-      };
-    }),
-
     captcha({
       provider: 'google-recaptcha',
       secretKey: process.env.GOOGLE_RECAPTCHA as string,
@@ -152,6 +136,7 @@ export const auth = betterAuth({
     lastLoginMethod({
       cookieName: 'lastLoginMethod',
     }),
+    twoFactor(),
   ],
 
   advanced: {

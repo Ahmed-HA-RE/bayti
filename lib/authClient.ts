@@ -3,6 +3,7 @@ import {
   customSessionClient,
   adminClient,
   lastLoginMethodClient,
+  twoFactorClient,
 } from 'better-auth/client/plugins';
 
 import { auth } from './auth';
@@ -13,5 +14,6 @@ export const authClient = createAuthClient({
     lastLoginMethodClient({
       cookieName: 'lastLoginMethod',
     }),
+    twoFactorClient({}),
   ],
 });

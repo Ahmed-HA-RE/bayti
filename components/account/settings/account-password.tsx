@@ -1,9 +1,9 @@
 import ChangePasswordForm from './change-password-form';
 import SettingsCard from './settings-card';
 import { Account } from 'better-auth';
-import TwoStepVerification from './two-step-verification';
 import SetupPassword from './setup-password';
-const AccountSecurity = ({
+
+const AccountPassword = ({
   userEmail,
   userAccounts,
 }: {
@@ -14,14 +14,11 @@ const AccountSecurity = ({
 
   return (
     <SettingsCard
-      title='Account Security'
-      subtitle='Manage your password and 2FA settings.'
+      title='Account Password'
+      subtitle='Manage your account password.'
     >
       {hasPassword ? (
-        <div className='space-y-6'>
-          <ChangePasswordForm userEmail={userEmail} />
-          <TwoStepVerification />
-        </div>
+        <ChangePasswordForm userEmail={userEmail} />
       ) : (
         <SetupPassword />
       )}
@@ -29,4 +26,4 @@ const AccountSecurity = ({
   );
 };
 
-export default AccountSecurity;
+export default AccountPassword;

@@ -8,7 +8,8 @@ import { redirect } from 'next/navigation';
 import SessionManagement from '@/components/account/settings/session-management';
 import AccountLinking from '@/components/account/settings/account-linking';
 import AccountDeletionDialog from '@/components/account/settings/account-deletion-dialog';
-import AccountSecurity from '@/components/account/settings/account-security';
+import AccountPassword from '@/components/account/settings/account-password';
+import TwoStepVerification from '@/components/account/settings/two-step-verification';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const session = await auth.api.getSession({
@@ -55,11 +56,15 @@ const AccountSettingsPage = async () => {
     >
       <div className='grid grid-cols-1 gap-12 pt-10 md:pt-14'>
         <PersonalInformation session={session} />
-        <AccountSecurity
+        <AccountPassword
           userEmail={session.user.email}
           userAccounts={userAccounts}
         />
-        <SessionManagement allSessions={allSessions} session={session} />
+        <TwoStepVerification user={session.user} />
+        <SessionManagement
+          allSessions={allSessions}
+          session={session.session}
+        />
         <AccountLinking accounts={userAccounts} />
         <AccountDeletionDialog />
       </div>

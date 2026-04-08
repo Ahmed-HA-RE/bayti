@@ -70,3 +70,10 @@ export const changePasswordSchema = z
   });
 
 export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
+
+// This schema is used to confirm the user's password before enabling two-factor authentication. It ensures that the user provides their current password for verification.
+export const confirmTwoFactorSchema = z.object({
+  currentPassword: signUpSchema.shape.password,
+});
+
+export type ConfirmTwoFactorFormData = z.infer<typeof confirmTwoFactorSchema>;

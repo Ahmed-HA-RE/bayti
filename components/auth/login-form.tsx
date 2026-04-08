@@ -45,6 +45,14 @@ const LoginForm = () => {
       rememberMe: data.rememberMe,
       callbackURL: callbackUrl,
       fetchOptions: {
+        async onSuccess(context) {
+          if (context.data.twoFactorEnabled) {
+            router.push(`/two-factor?callbackUrl=${callbackUrl}`);
+          } else {
+            toast.success('Login successful');
+            router.push(callbackUrl);
+          }
+        },
         headers: {
           'x-captcha-response': token,
         },
@@ -55,8 +63,6 @@ const LoginForm = () => {
       toast.error(res.error.message || 'An error occurred during login');
       return;
     }
-    toast.success('Logged in successfully');
-    router.push(callbackUrl);
   };
 
   return (
@@ -71,7 +77,6 @@ const LoginForm = () => {
               <FieldLabel htmlFor={field.name}>Email</FieldLabel>
               <Input
                 id={field.name}
-                type='email'
                 placeholder='Enter your email address'
                 className='text-foreground'
                 aria-invalid={fieldState.invalid}

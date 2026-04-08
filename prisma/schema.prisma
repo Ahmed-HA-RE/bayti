@@ -53,6 +53,7 @@ enum BlogStatus {
 }
 
 // Users
+
 model User {
   id                 String             @id
   name               String
@@ -71,6 +72,8 @@ model User {
   accounts           Account[]
   bookings           Booking[]
   favoriteProperties FavoriteProperty[]
+  twoFactorEnabled   Boolean?           @default(false)
+  twofactors         TwoFactor[]
 
   @@unique([email])
   @@map("user")
@@ -226,4 +229,16 @@ model FavoriteProperty {
   updatedAt  DateTime @updatedAt
 
   @@unique([userId, propertyId], name: "favorite_user_property")
+}
+
+model TwoFactor {
+  id          String @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
 }
