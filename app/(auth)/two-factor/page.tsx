@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RiPhoneLockLine } from 'react-icons/ri';
 import { LuKeyRound } from 'react-icons/lu';
+import BackUpCodeForm from '@/components/auth/backup-code-form';
 
 export const metadata: Metadata = {
   title: 'Two-Factor Authentication (2FA)',
@@ -10,22 +11,27 @@ export const metadata: Metadata = {
     'Enable two-factor authentication (2FA) to add an extra layer of security to your account. Protect your data with OTP verification and backup codes for safe login.',
 };
 
-const tabs = [
-  {
-    name: 'Authenticater App',
-    value: 'authenticator-app',
-    icon: RiPhoneLockLine,
-    content: <OTPInputForm />,
-  },
-  {
-    name: 'Backup Codes',
-    value: 'backup-codes',
-    icon: LuKeyRound,
-    content: <></>,
-  },
-];
+const TwoFactorPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) => {
+  const callbackUrl = (await searchParams).callbackUrl || '/';
 
-const TwoFactorPage = () => {
+  const tabs = [
+    {
+      name: 'Authenticator App',
+      value: 'authenticator-app',
+      icon: RiPhoneLockLine,
+      content: <OTPInputForm callbackUrl={callbackUrl} />,
+    },
+    {
+      name: 'Backup Codes',
+      value: 'backup-codes',
+      icon: LuKeyRound,
+      content: <BackUpCodeForm callbackUrl={callbackUrl} />,
+    },
+  ];
   return (
     <div className='flex flex-col items-center justify-center h-full gap-6 px-5'>
       <div className='space-y-1.5'>

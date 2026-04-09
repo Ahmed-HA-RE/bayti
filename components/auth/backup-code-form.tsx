@@ -1,41 +1,46 @@
 'use client';
 
 import {
-  TwoStepOtpFormData,
-  TwoStepOtpOutputFormData,
-  twoStepOtpSchema,
+  TwoStepBackupCodeFormData,
+  TwoStepBackupCodeOutputFormData,
+  twoStepBackupCodeSchema,
 } from '@/schema/two-step';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import TwoFactorOTPInput from '../shared/two-factor-otp-input';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
-import { Button } from '../ui/button';
-import toast from 'react-hot-toast';
+import { Input } from '../ui/input';
 import { Checkbox } from '../ui/checkbox';
+import { Button } from '../ui/button';
 import { authClient } from '@/lib/authClient';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
+const BackUpCodeForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const router = useRouter();
-  const form = useForm<TwoStepOtpFormData, unknown, TwoStepOtpOutputFormData>({
-    resolver: zodResolver(twoStepOtpSchema),
+  const form = useForm<
+    TwoStepBackupCodeFormData,
+    unknown,
+    TwoStepBackupCodeOutputFormData
+  >({
+    resolver: zodResolver(twoStepBackupCodeSchema),
     defaultValues: {
-      otp: '',
+      backupCode: '',
       trustDevice: false,
     },
     mode: 'onSubmit',
   });
 
-  const onSubmit = async (data: TwoStepOtpOutputFormData) => {
+  const onSubmit = async (data: TwoStepBackupCodeFormData) => {
     try {
-      const { error } = await authClient.twoFactor.verifyTotp(
+      const { error } = await authClient.twoFactor.verifyBackupCode(
         {
-          code: data.otp,
+          code: data.backupCode,
           trustDevice: data.trustDevice,
+          disableSession: false,
         },
         {
           onSuccess: () => {
-            toast.success('OTP verified successfully');
+            toast.success('Backup code verified successfully');
             form.reset();
             router.push(callbackUrl);
           },
@@ -56,20 +61,17 @@ const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
+        {/* Backup code */}
         <Controller
-          name='otp'
+          name='backupCode'
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <TwoFactorOTPInput
-                value={field.value}
-                onChange={field.onChange}
-              />
-              {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              <Input {...field} aria-invalid={fieldState.invalid} />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
-
         {/* Trusted device */}
         <Controller
           name='trustDevice'
@@ -92,18 +94,17 @@ const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
             </Field>
           )}
         />
-
         <Button
           size='sm'
           className='rounded-full'
           type='submit'
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+          {isSubmitting ? 'Verifying...' : 'Verify Backup Code'}
         </Button>
       </FieldGroup>
     </form>
   );
 };
 
-export default OTPInputForm;
+export default BackUpCodeForm;

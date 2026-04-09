@@ -16,9 +16,12 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import { LuTriangleAlert } from 'react-icons/lu';
 import { authClient } from '@/lib/authClient';
 import toast from 'react-hot-toast';
-import { cn } from '@/lib/utils';
 import TwoFactorOTPInput from '@/components/shared/two-factor-otp-input';
-import { TwoStepOtpFormData, twoStepOtpSchema } from '@/schema/two-step';
+import {
+  TwoStepOtpFormData,
+  TwoStepOtpOutputFormData,
+  twoStepOtpSchema,
+} from '@/schema/two-step';
 
 type QrCodeDialogProps = {
   totpURI: string;
@@ -37,7 +40,7 @@ const QrCodeDialog = ({
   hasTwoFactorEnabled,
   setHasTwoFactorEnabled,
 }: QrCodeDialogProps) => {
-  const form = useForm<TwoStepOtpFormData>({
+  const form = useForm<TwoStepOtpFormData, unknown, TwoStepOtpOutputFormData>({
     resolver: zodResolver(twoStepOtpSchema),
     defaultValues: {
       otp: '',
@@ -45,7 +48,7 @@ const QrCodeDialog = ({
     mode: 'onSubmit',
   });
 
-  const onSubmit = async (data: TwoStepOtpFormData) => {
+  const onSubmit = async (data: TwoStepOtpOutputFormData) => {
     try {
       const { error } = await authClient.twoFactor.verifyTotp({
         code: data.otp,
@@ -56,7 +59,6 @@ const QrCodeDialog = ({
       }
       toast.success('Two-factor authentication enabled successfully');
       setHasTwoFactorEnabled(true);
-      setOpenQrCodeDialog(false);
       form.reset();
     } catch (error) {
       const errorMessage =
@@ -69,7 +71,7 @@ const QrCodeDialog = ({
 
   return (
     <Dialog open={openQrCodeDialog} onOpenChange={setOpenQrCodeDialog}>
-      <DialogContent className='ring-0 rounded-sm pt-0 [&>button:last-child]:hidden sm:max-w-2xl'>
+      <DialogContent className='ring-0 rounded-sm pt-0 [&>button:last-child]:hidden md:max-w-3xl'>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
           <DialogHeader className='border-b py-3'>
             <DialogTitle className='text-xl font-semibold'>
@@ -101,6 +103,13 @@ const QrCodeDialog = ({
                   </li>
                 ))}
               </ul>
+              <Alert variant='warning'>
+                <LuTriangleAlert />
+                <AlertTitle>
+                  Make sure to save these backup codes in a secure place. You
+                  will not be able to view them again.
+                </AlertTitle>
+              </Alert>
             </div>
           ) : (
             <div className='space-y-6'>
@@ -137,25 +146,13 @@ const QrCodeDialog = ({
               {form.formState.errors.otp && (
                 <Alert variant='error'>
                   <LuTriangleAlert />
-                  <AlertTitle> {form.formState.errors.otp?.message}</AlertTitle>
+                  <AlertTitle> {form.formState.errors.otp.message}</AlertTitle>
                 </Alert>
               )}
             </div>
           )}
           <DialogFooter className='px-6 flex flex-row justify-end'>
-            <DialogClose
-              render={
-                <Button
-                  variant='secondary'
-                  className={cn(
-                    hasTwoFactorEnabled && 'bg-green-600 hover:bg-green-700',
-                  )}
-                >
-                  {' '}
-                  {hasTwoFactorEnabled ? 'Done' : 'Close'}
-                </Button>
-              }
-            />
+            <DialogClose render={<Button variant='secondary'>Close</Button>} />
             {hasTwoFactorEnabled ? null : (
               <Button type='submit' disabled={isPending}>
                 {isPending ? 'Verifying...' : 'Verify'}

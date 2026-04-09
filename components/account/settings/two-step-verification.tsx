@@ -135,32 +135,19 @@ const TwoStepVerification = ({
             </Alert>
           )}
 
-          <div className='flex items-center justify-end gap-4'>
-            {hasTwoFactorEnabled && (
-              <Button
-                variant='secondary'
-                type='button'
-                className='focus-visible:ring-0 rounded-full'
-                size='sm'
-                onClick={() => setOpenQrCodeDialog(true)}
-              >
-                Show Backup Codes
-              </Button>
-            )}
-            <Button
-              variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
-              type='submit'
-              size='sm'
-              disabled={isPending}
-              className='rounded-full'
-            >
-              {isPending
-                ? 'Processing...'
-                : hasTwoFactorEnabled
-                  ? 'Disable 2FA'
-                  : 'Enable 2FA'}{' '}
-            </Button>
-          </div>
+          <Button
+            variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
+            type='submit'
+            size='sm'
+            disabled={isPending}
+            className='rounded-full'
+          >
+            {isPending
+              ? 'Processing...'
+              : hasTwoFactorEnabled
+                ? 'Disable 2FA'
+                : 'Enable 2FA'}{' '}
+          </Button>
         </FieldGroup>
       </form>
       <QrCodeDialog
