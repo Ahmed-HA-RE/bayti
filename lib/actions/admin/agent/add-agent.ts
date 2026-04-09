@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/lib/auth';
-import { AgentStatus } from '@/lib/generated/prisma';
+import { AgentRole, AgentStatus } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
 import { AgentFormData, agentSchema } from '@/schema/agent';
 import { headers } from 'next/headers';
@@ -58,11 +58,12 @@ export const addAgent = async (data: AgentFormData) => {
     await prisma.agent.create({
       data: {
         name: validatedData.data.name,
+        description: validatedData.data.description,
         email: validatedData.data.email,
         phoneNumber: validatedData.data.phoneNumber,
         city: validatedData.data.city,
         location: validatedData.data.location,
-        role: validatedData.data.role,
+        role: validatedData.data.role as AgentRole,
         status: validatedData.data.status as AgentStatus,
         image: imageUrl,
         imageKey: imageKey,

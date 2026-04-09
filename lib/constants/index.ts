@@ -153,6 +153,45 @@ export const USER_NAVIGATION: UserNavigationItem[] = [
   },
 ];
 
+export const AGENT_ROLES = [
+  {
+    name: 'Sales Agent',
+    value: 'SALES',
+  },
+  {
+    name: 'Leasing Agent',
+    value: 'LEASING',
+  },
+  {
+    name: 'Property Manager',
+    value: 'PROPERTY_MANAGER',
+  },
+  {
+    name: 'Listing Agent',
+    value: 'LISTING',
+  },
+  {
+    name: 'Buyers Agent',
+    value: 'BUYERS_AGENT',
+  },
+  {
+    name: 'Luxury Specialist',
+    value: 'LUXURY_SPECIALIST',
+  },
+  {
+    name: 'Commercial Agent',
+    value: 'COMMERCIAL',
+  },
+  {
+    name: 'Rental Consultant',
+    value: 'RENTAL_CONSULTANT',
+  },
+  {
+    name: 'Consultant',
+    value: 'CONSULTANT',
+  },
+];
+
 export const STATISTICS = [
   { value: '350+', label: 'Premium Properties' },
   { value: '1200+', label: 'Happy Clients' },
@@ -380,34 +419,29 @@ export const PROPERTY_LIST_TYPES = [
 
 export const FAQS = [
   {
-    question: 'What type of properties are available on Bayti?',
+    question: 'What types of properties are available on Bayti?',
     answer:
-      'Bayti offers a wide range of premium properties across the UAE, including apartments, villas, townhouses, penthouses, duplexes, studios, traditional homes, and luxury properties. Whether you are looking for a cozy apartment or a spacious villa, we have options to suit every preference and lifestyle.',
+      'Bayti offers apartments, villas, townhouses, penthouses, duplexes, studios, traditional homes, and luxury properties across the UAE. We have options to suit every preference and lifestyle.',
   },
   {
     question: 'What kind of customer support does Bayti offer?',
     answer:
-      'Bayti offers 24/7 customer support. Whether you have questions about a property, need assistance with scheduling a viewing, or require help during the buying or renting process, our dedicated support team is always available to assist you promptly and efficiently.',
+      'Bayti provides 24/7 support. Our team can help with property questions, scheduling visits, and assistance during buying or renting.',
   },
   {
-    question: 'How can I schedule a property viewing?',
+    question: 'How can I book a property visit?',
     answer:
-      'You can schedule a property viewing by logging to your account, selecting the property you are interested in, and clicking on the "Schedule Viewing" button. You can choose a convenient date and time for the viewing, pay a small fee so we can confirm the appointment, and our team will be in touch to confirm the details.',
+      'Log in, select the property, and click "Book a Visit." Choose a convenient date and time, and an agent will confirm your appointment.',
   },
   {
-    question: 'How secure are transactions on Bayti?',
+    question: 'What happens after I reserve a visit?',
     answer:
-      'Bayti ensures secure transactions through encrypted payment gateways and strict verification processes. Your personal and financial information is protected at all times, providing a safe and trustworthy environment for all property transactions.',
+      'Our agent confirms your booking with date, time, and property details. On the scheduled day, you can visit the property in person with the agent.',
   },
   {
-    question: 'What happens after I reserve a property viewing?',
+    question: 'How long do I have to confirm a booked visit?',
     answer:
-      'Once you reserve a property viewing on Bayti, our clients will review and confirm your appointment. You will receive a confirmation with the selected date and time, along with the property details. On the scheduled day, you can visit the property with our team and explore it in person before making any further decisions.',
-  },
-  {
-    question: 'How long is a property reservation valid?',
-    answer:
-      'A property viewing reservation on Bayti is valid for 24 hours. This reservation temporarily secures your viewing slot and prevents scheduling conflicts with other users. If the viewing is not confirmed within that period, the reservation may expire and the time slot will become available again.',
+      'After booking, the agent will confirm your visit within 24 hours. Once confirmed, your appointment is secured, and you can visit the property at the scheduled time.',
   },
 ];
 

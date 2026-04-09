@@ -5,11 +5,13 @@ import SecondaryLinkButton from '../shared/secondary-link-button';
 const HeroSection = () => {
   return (
     <section className='relative'>
-      {/* Vedio player */}
+      {/* Video player */}
       <video
         autoPlay
         loop
         muted
+        playsInline
+        controls={false}
         className='absolute inset-0 w-full h-full object-cover'
         src='/hero-vid.mp4'
       />

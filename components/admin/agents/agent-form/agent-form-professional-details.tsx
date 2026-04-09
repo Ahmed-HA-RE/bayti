@@ -12,7 +12,7 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from '@/components/ui/native-select';
-import { CITIES } from '@/lib/constants';
+import { AGENT_ROLES, CITIES } from '@/lib/constants';
 import { AgentFormData } from '@/schema/agent';
 import { Controller, UseFormReturn } from 'react-hook-form';
 import { ImUserTie } from 'react-icons/im';
@@ -37,13 +37,18 @@ const AgentFormProfessionalDetails = ({
                 <FieldLabel htmlFor={field.name}>
                   Role <span className='text-destructive'>*</span>
                 </FieldLabel>
-                <Input
+                <NativeSelect
                   id={field.name}
-                  type='text'
-                  placeholder='e.g. Senior Agent, Property Consultant'
                   {...field}
                   aria-invalid={fieldState.invalid}
-                />
+                >
+                  <NativeSelectOption value=''>Select role</NativeSelectOption>
+                  {AGENT_ROLES.map((role) => (
+                    <NativeSelectOption key={role.value} value={role.value}>
+                      {role.name}
+                    </NativeSelectOption>
+                  ))}
+                </NativeSelect>
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}

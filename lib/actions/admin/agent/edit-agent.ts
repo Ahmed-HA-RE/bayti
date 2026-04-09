@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from '@/lib/auth';
-import { AgentStatus } from '@/lib/generated/prisma';
+import { AgentRole, AgentStatus } from '@/lib/generated/prisma';
 import prisma from '@/lib/prisma';
 import { AgentFormData, agentSchema } from '@/schema/agent';
 import { headers } from 'next/headers';
@@ -71,11 +71,12 @@ export const editAgent = async (
       where: { id },
       data: {
         name: validatedData.data.name,
+        description: validatedData.data.description,
         email: validatedData.data.email,
         phoneNumber: validatedData.data.phoneNumber,
         city: validatedData.data.city,
         location: validatedData.data.location,
-        role: validatedData.data.role,
+        role: validatedData.data.role as AgentRole,
         status: validatedData.data.status as AgentStatus,
         image: imageUrl || isAgent.image, // Keep existing image if no new image is uploaded
         imageKey: imageKey || isAgent.imageKey, // Keep existing image key if no new image is uploaded

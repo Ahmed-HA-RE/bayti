@@ -47,13 +47,24 @@ enum AgentStatus {
   INACTIVE
 }
 
+enum AgentRole {
+  SALES
+  LEASING
+  PROPERTY_MANAGER
+  LISTING
+  BUYERS_AGENT
+  LUXURY_SPECIALIST
+  COMMERCIAL
+  RENTAL_CONSULTANT
+  CONSULTANT
+}
+
 enum BlogStatus {
   DRAFT
   PUBLISHED
 }
 
 // Users
-
 model User {
   id                 String             @id
   name               String
@@ -189,11 +200,12 @@ model Booking {
 model Agent {
   id               String      @id @default(uuid())
   name             String
+  description      String
   email            String      @unique
   image            String
   imageKey         String
   phoneNumber      String
-  role             String
+  role             AgentRole
   location         String
   city             String
   status           AgentStatus @default(ACTIVE)

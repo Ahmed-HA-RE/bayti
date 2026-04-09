@@ -7,7 +7,7 @@ import LatestPropertiesSection from '@/components/home/latest-properties-section
 import TestimonialsSection from '@/components/home/testimonials-section';
 import TrustedBySection from '@/components/home/trusted-by-section';
 import BlogSkeletonCard from '@/components/shared/blog-skeleton-card';
-import FAQ from '@/components/shared/faq-section';
+import FAQ from '@/components/home/faq-section';
 import PropertySkeletonCard from '@/components/shared/property-skeleton-card';
 import { Suspense } from 'react';
 

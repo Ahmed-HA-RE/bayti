@@ -1,6 +1,6 @@
 import z from 'zod';
 import { phoneNumber } from './contact-agent';
-import { CITIES, SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
+import { AGENT_ROLES, CITIES, SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants';
 import { AgentStatus } from '@/lib/generated/prisma';
 
 export function z_enumFromArray(array: string[], errorMessage?: string) {
@@ -13,6 +13,10 @@ export const agentSchema = z.object({
     .min(1, 'Name is required')
     .max(100, 'Name must be less than 100 characters')
     .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
+  description: z
+    .string()
+    .min(50, 'Add a descriptive info about the agent')
+    .max(1000, 'Description must be less than 1000 characters'),
   email: z.email('Invalid email address'),
   image: z
     .file({ error: 'Image is required' })
@@ -23,10 +27,10 @@ export const agentSchema = z.object({
     .max(1_000_000, 'Image size must be 1MB or less')
     .optional(),
   phoneNumber: phoneNumber,
-  role: z
-    .string()
-    .min(1, 'Role is required')
-    .max(50, 'Role must be less than 50 characters'),
+  role: z_enumFromArray(
+    AGENT_ROLES.map((role) => role.value),
+    'Select a valid role',
+  ),
   location: z
     .string()
     .min(1, 'Location is required')

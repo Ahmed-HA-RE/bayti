@@ -9,6 +9,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { AgentFormData } from '@/schema/agent';
 import Image from 'next/image';
@@ -162,6 +163,25 @@ const AgentFormPersonalDetails = ({
             )}
           />
         </div>
+        <Controller
+          name='description'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>
+                Description <span className='text-destructive'>*</span>
+              </FieldLabel>
+              <Textarea
+                id={field.name}
+                placeholder='Enter a brief description about the agent'
+                {...field}
+                aria-invalid={fieldState.invalid}
+                className='min-h-42'
+              />
+              <FieldError errors={[fieldState.error]} />
+            </Field>
+          )}
+        />
       </FieldGroup>
     </CardFormStepsLayout>
   );
