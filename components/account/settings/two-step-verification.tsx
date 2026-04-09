@@ -89,82 +89,88 @@ const TwoStepVerification = ({
       title='Two-Step Verification'
       subtitle='Add an extra layer of security to your account by enabling two-step verification.'
     >
-      <div className='space-y-4'>
-        <div className='flex items-center justify-between'>
-          <h3 className='text-lg font-medium'>Status:</h3>
-          <Badge variant={hasTwoFactorEnabled ? 'success' : 'destructive'}>
-            {hasTwoFactorEnabled ? 'Enabled' : 'Disabled'}
-          </Badge>
-        </div>
-
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
-            <Controller
-              name='currentPassword'
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`${field.name}-2fa`}>
-                    Current Password <span className='text-destructive'>*</span>
-                  </FieldLabel>
-                  <InputGroup>
-                    <InputGroupInput
-                      id={`${field.name}-2fa`}
-                      {...field}
-                      type={isVisible ? 'text' : 'password'}
-                      placeholder='Enter your current password'
-                      aria-invalid={fieldState.invalid}
-                    ></InputGroupInput>
-                    <InputGroupAddon align='inline-end'>
-                      <InputGroupButton
-                        onClick={() => setIsVisible(!isVisible)}
-                      >
-                        {isVisible ? (
-                          <RiEyeCloseLine className='size-4' />
-                        ) : (
-                          <FaRegEye className='size-4' />
-                        )}
-                      </InputGroupButton>
-                    </InputGroupAddon>
-                  </InputGroup>
-                  {fieldState.error && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            {form.formState.errors.root && (
-              <Alert variant='error'>
-                <LuTriangleAlert />
-                <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
-              </Alert>
-            )}
-
-            <div className='flex items-center justify-end gap-2'>
-              <QrCodeDialog
-                totpURI={totpURI}
-                backupCodes={backupCodes}
-                openQrCodeDialog={openQrCodeDialog}
-                setOpenQrCodeDialog={setOpenQrCodeDialog}
-                hasTwoFactorEnabled={hasTwoFactorEnabled}
-                setHasTwoFactorEnabled={setHasTwoFactorEnabled}
-              />
-              <Button
-                variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
-                type='submit'
-                size='sm'
-                disabled={isPending}
-              >
-                {isPending
-                  ? 'Processing...'
-                  : hasTwoFactorEnabled
-                    ? 'Disable 2FA'
-                    : 'Enable 2FA'}{' '}
-              </Button>
-            </div>
-          </FieldGroup>
-        </form>
+      <div className='flex items-center justify-between mb-4'>
+        <h3 className='text-lg font-medium'>Status:</h3>
+        <Badge variant={hasTwoFactorEnabled ? 'success' : 'destructive'}>
+          {hasTwoFactorEnabled ? 'Enabled' : 'Disabled'}
+        </Badge>
       </div>
+
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FieldGroup>
+          <Controller
+            name='currentPassword'
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={`${field.name}-2fa`}>
+                  Current Password <span className='text-destructive'>*</span>
+                </FieldLabel>
+                <InputGroup>
+                  <InputGroupInput
+                    id={`${field.name}-2fa`}
+                    {...field}
+                    type={isVisible ? 'text' : 'password'}
+                    placeholder='Enter your current password'
+                    aria-invalid={fieldState.invalid}
+                  ></InputGroupInput>
+                  <InputGroupAddon align='inline-end'>
+                    <InputGroupButton onClick={() => setIsVisible(!isVisible)}>
+                      {isVisible ? (
+                        <RiEyeCloseLine className='size-4' />
+                      ) : (
+                        <FaRegEye className='size-4' />
+                      )}
+                    </InputGroupButton>
+                  </InputGroupAddon>
+                </InputGroup>
+                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+          {form.formState.errors.root && (
+            <Alert variant='error'>
+              <LuTriangleAlert />
+              <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+            </Alert>
+          )}
+
+          <div className='flex items-center justify-end gap-4'>
+            {hasTwoFactorEnabled && (
+              <Button
+                variant='secondary'
+                type='button'
+                className='focus-visible:ring-0 rounded-full'
+                size='sm'
+                onClick={() => setOpenQrCodeDialog(true)}
+              >
+                Show Backup Codes
+              </Button>
+            )}
+            <Button
+              variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
+              type='submit'
+              size='sm'
+              disabled={isPending}
+              className='rounded-full'
+            >
+              {isPending
+                ? 'Processing...'
+                : hasTwoFactorEnabled
+                  ? 'Disable 2FA'
+                  : 'Enable 2FA'}{' '}
+            </Button>
+          </div>
+        </FieldGroup>
+      </form>
+      <QrCodeDialog
+        totpURI={totpURI}
+        backupCodes={backupCodes}
+        openQrCodeDialog={openQrCodeDialog}
+        setOpenQrCodeDialog={setOpenQrCodeDialog}
+        hasTwoFactorEnabled={hasTwoFactorEnabled}
+        setHasTwoFactorEnabled={setHasTwoFactorEnabled}
+      />
     </SettingsCard>
   );
 };

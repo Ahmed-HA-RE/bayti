@@ -8,7 +8,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { QRCode, QRCodeSvg } from '@/components/ui/qr-code';
 import {
@@ -83,19 +82,6 @@ const QrCodeDialog = ({
 
   return (
     <Dialog open={openQrCodeDialog} onOpenChange={setOpenQrCodeDialog}>
-      {hasTwoFactorEnabled && (
-        <DialogTrigger
-          render={
-            <Button
-              className='focus-visible:ring-0'
-              size='sm'
-              onClick={() => setOpenQrCodeDialog(true)}
-            >
-              Show Backup Codes
-            </Button>
-          }
-        />
-      )}
       <DialogContent className='ring-0 rounded-sm pt-0 [&>button:last-child]:hidden sm:max-w-2xl'>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
           <DialogHeader className='border-b py-3'>
