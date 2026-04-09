@@ -44,6 +44,7 @@
         "license_key": "${LICENSE_KEY}"
       }
     },
-    "@mapcn": "https://mapcn.dev/r/{name}.json"
+    "@mapcn": "https://mapcn.dev/r/{name}.json",
+    "@diceui": "https://diceui.com/r/{name}.json"
   }
 }

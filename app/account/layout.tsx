@@ -32,11 +32,11 @@ const AccountLayout = async ({ children }: { children: React.ReactNode }) => {
             '--sidebar-width': '15rem',
           } as React.CSSProperties
         }
-        mobileSidebarWidth='50%'
+        mobileSidebarWidth='80%'
       >
         <AccountSidebar session={session} />
         <div className='flex flex-1 flex-col'>
-          <header className='bg-white border-b sticky top-0 z-50 '>
+          <header className='bg-white border-b sticky top-0 z-20'>
             <div className='container flex items-center justify-between gap-6 h-16 md:h-18'>
               <SidebarTrigger className='[&_svg]:!size-5 block md:hidden' />
               {/* title */}

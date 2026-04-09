@@ -58,7 +58,7 @@ const AccountSidebar = ({
                 }
               >
                 <Image
-                  src={session.user.image}
+                  src={session.user.image as string}
                   alt={session.user.name}
                   width={48}
                   height={48}

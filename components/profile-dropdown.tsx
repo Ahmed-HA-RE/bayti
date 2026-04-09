@@ -71,7 +71,7 @@ const ProfileDropdown = ({
               }
             >
               <Image
-                src={session?.user?.image}
+                src={session?.user?.image as string}
                 alt={session?.user?.name || 'User Profile'}
                 width={32}
                 height={32}
@@ -90,7 +90,7 @@ const ProfileDropdown = ({
               }
             >
               <Image
-                src={session?.user?.image}
+                src={session?.user?.image as string}
                 alt={session?.user?.name || 'User Profile'}
                 width={42}
                 height={42}

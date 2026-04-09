@@ -55,7 +55,7 @@ const UpdateEmailDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-lg'>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <DialogHeader className='mt-4'>
+          <DialogHeader>
             <DialogTitle>Update Email</DialogTitle>
             <DialogDescription>
               Enter your new email, you will receive a confirmation email for

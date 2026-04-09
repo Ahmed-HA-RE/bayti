@@ -36,7 +36,7 @@ const PersonalInformation = ({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       name: session.user.name,
-      image: session.user.image,
+      image: session.user.image as string,
       phoneNumber: session.user.phoneNumber,
     },
     mode: 'onChange',
@@ -51,7 +51,7 @@ const PersonalInformation = ({
     toast.success(res.message);
   };
 
-  const userImage = form.watch('image') || session.user.image;
+  const userImage = form.watch('image') || (session.user.image as string);
   const isPending = form.formState.isSubmitting;
 
   return (

@@ -68,6 +68,12 @@ export const auth = betterAuth({
         });
       },
     },
+    additionalFields: {
+      phoneNumber: {
+        type: 'string',
+        required: false,
+      },
+    },
   },
 
   appName: APP_NAME,
@@ -136,7 +142,11 @@ export const auth = betterAuth({
     lastLoginMethod({
       cookieName: 'lastLoginMethod',
     }),
-    twoFactor(),
+    twoFactor({
+      backupCodeOptions: {
+        amount: 5,
+      },
+    }),
   ],
 
   advanced: {

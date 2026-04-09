@@ -29,16 +29,20 @@ import toast from 'react-hot-toast';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { LuTriangleAlert } from 'react-icons/lu';
 import { authClient } from '@/lib/authClient';
-import { useRouter } from 'next/navigation';
+import QrCodeDialog from './qr-code-dialog';
 
 const TwoStepVerification = ({
   user,
 }: {
   user: typeof auth.$Infer.Session.user;
 }) => {
+  const [openQrCodeDialog, setOpenQrCodeDialog] = useState(false);
+  const [totpURI, setTotpURI] = useState('');
+  const [backupCodes, setBackupCodes] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState(false);
-  const hasTwoFactorEnabled = user.twoFactorEnabled;
-  const router = useRouter();
+  const [hasTwoFactorEnabled, setHasTwoFactorEnabled] = useState(
+    user.twoFactorEnabled,
+  );
 
   const form = useForm<ConfirmTwoFactorFormData>({
     resolver: zodResolver(confirmTwoFactorSchema),
@@ -57,7 +61,9 @@ const TwoStepVerification = ({
         if (error) {
           throw new Error(error.message);
         } else {
-          // add qr code modal
+          setTotpURI(res.totpURI);
+          setBackupCodes(res.backupCodes);
+          setOpenQrCodeDialog(true);
         }
       } else {
         const { error } = await authClient.twoFactor.disable({
@@ -67,7 +73,7 @@ const TwoStepVerification = ({
           throw new Error(error.message);
         }
         toast.success('Two-factor authentication has been disabled');
-        router.refresh();
+        setHasTwoFactorEnabled(false);
       }
     } catch (error) {
       const errorMessage =
@@ -133,18 +139,29 @@ const TwoStepVerification = ({
                 <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
               </Alert>
             )}
-            <Button
-              variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
-              type='submit'
-              size='sm'
-              disabled={isPending}
-            >
-              {isPending
-                ? 'Processing...'
-                : hasTwoFactorEnabled
-                  ? 'Disable 2FA'
-                  : 'Enable 2FA'}{' '}
-            </Button>
+
+            <div className='flex items-center justify-end gap-2'>
+              <QrCodeDialog
+                totpURI={totpURI}
+                backupCodes={backupCodes}
+                openQrCodeDialog={openQrCodeDialog}
+                setOpenQrCodeDialog={setOpenQrCodeDialog}
+                hasTwoFactorEnabled={hasTwoFactorEnabled}
+                setHasTwoFactorEnabled={setHasTwoFactorEnabled}
+              />
+              <Button
+                variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
+                type='submit'
+                size='sm'
+                disabled={isPending}
+              >
+                {isPending
+                  ? 'Processing...'
+                  : hasTwoFactorEnabled
+                    ? 'Disable 2FA'
+                    : 'Enable 2FA'}{' '}
+              </Button>
+            </div>
           </FieldGroup>
         </form>
       </div>
