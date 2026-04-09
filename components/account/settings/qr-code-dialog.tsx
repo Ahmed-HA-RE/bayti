@@ -10,14 +10,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { QRCode, QRCodeSvg } from '@/components/ui/qr-code';
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from '@/components/ui/input-otp';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
-import z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, AlertTitle } from '@/components/ui/alert';
@@ -25,6 +17,8 @@ import { LuTriangleAlert } from 'react-icons/lu';
 import { authClient } from '@/lib/authClient';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
+import TwoFactorOTPInput from '@/components/shared/two-factor-otp-input';
+import { TwoStepOtpFormData, twoStepOtpSchema } from '@/schema/two-step';
 
 type QrCodeDialogProps = {
   totpURI: string;
@@ -35,14 +29,6 @@ type QrCodeDialogProps = {
   setHasTwoFactorEnabled: (enabled: boolean) => void;
 };
 
-const qrCodeSchema = z.object({
-  otp: z
-    .string({ error: 'OTP is required' })
-    .min(6, 'Please enter the 6-digit code'),
-});
-
-type QrCodeFormData = z.infer<typeof qrCodeSchema>;
-
 const QrCodeDialog = ({
   totpURI,
   backupCodes,
@@ -51,15 +37,15 @@ const QrCodeDialog = ({
   hasTwoFactorEnabled,
   setHasTwoFactorEnabled,
 }: QrCodeDialogProps) => {
-  const form = useForm<QrCodeFormData>({
-    resolver: zodResolver(qrCodeSchema),
+  const form = useForm<TwoStepOtpFormData>({
+    resolver: zodResolver(twoStepOtpSchema),
     defaultValues: {
       otp: '',
     },
     mode: 'onSubmit',
   });
 
-  const onSubmit = async (data: QrCodeFormData) => {
+  const onSubmit = async (data: TwoStepOtpFormData) => {
     try {
       const { error } = await authClient.twoFactor.verifyTotp({
         code: data.otp,
@@ -71,6 +57,7 @@ const QrCodeDialog = ({
       toast.success('Two-factor authentication enabled successfully');
       setHasTwoFactorEnabled(true);
       setOpenQrCodeDialog(false);
+      form.reset();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Something went wrong';
@@ -138,24 +125,10 @@ const QrCodeDialog = ({
                       name='otp'
                       control={form.control}
                       render={({ field }) => (
-                        <InputOTP
-                          maxLength={6}
-                          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-                          required
-                          {...field}
-                        >
-                          <InputOTPGroup className='gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border'>
-                            <InputOTPSlot index={0} className='size-10' />
-                            <InputOTPSlot index={1} className='size-10' />
-                            <InputOTPSlot index={2} className='size-10' />
-                          </InputOTPGroup>
-                          <InputOTPSeparator className="[&_svg:not([class*='size-'])]:size-8 text-accent" />
-                          <InputOTPGroup className='gap-2 *:data-[slot=input-otp-slot]:rounded-none *:data-[slot=input-otp-slot]:border'>
-                            <InputOTPSlot index={3} className='size-10' />
-                            <InputOTPSlot index={4} className='size-10' />
-                            <InputOTPSlot index={5} className='size-10' />
-                          </InputOTPGroup>
-                        </InputOTP>
+                        <TwoFactorOTPInput
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
                       )}
                     />
                   </div>

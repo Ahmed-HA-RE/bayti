@@ -44,9 +44,10 @@ const LoginForm = () => {
       password: data.password,
       rememberMe: data.rememberMe,
       callbackURL: callbackUrl,
+
       fetchOptions: {
         async onSuccess(context) {
-          if (context.data.twoFactorEnabled) {
+          if (context.data.twoFactorRedirect) {
             router.push(`/two-factor?callbackUrl=${callbackUrl}`);
           } else {
             toast.success('Login successful');
