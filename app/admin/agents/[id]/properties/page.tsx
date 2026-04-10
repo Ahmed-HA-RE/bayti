@@ -1,4 +1,4 @@
-import AgentPropertiesList from '@/components/agent-properties-list';
+import AgentPropertiesList from '@/components/agent/agent-properties-list';
 import prisma from '@/lib/prisma';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';

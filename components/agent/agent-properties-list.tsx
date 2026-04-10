@@ -3,11 +3,11 @@
 import { useFilters } from '@/hooks/useFilters';
 import { getAgentProperties } from '@/lib/actions/get-agent-properties';
 import { useQuery } from '@tanstack/react-query';
-import { Alert, AlertTitle } from './ui/alert';
+import { Alert, AlertTitle } from '../ui/alert';
 import { IoMdAlert } from 'react-icons/io';
-import PropertySkeletonCard from './shared/property-skeleton-card';
-import PropertyCard from './shared/property-card';
-import Pagination from './shared/pagination';
+import PropertySkeletonCard from '../shared/property-skeleton-card';
+import PropertyCard from '../shared/property-card';
+import Pagination from '../shared/pagination';
 
 const AgentPropertiesList = ({ agentId }: { agentId: string }) => {
   const [{ page }] = useFilters();

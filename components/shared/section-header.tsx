@@ -13,7 +13,7 @@ const SectionHeader = ({
   return (
     <section className='section-top-spacing'>
       <div className='container'>
-        <div className='flex flex-col items-center justify-center gap-2.5'>
+        <div className='flex flex-col items-center justify-center gap-2'>
           <MotionPreset fade slide={{ direction: 'right' }} delay={0.1} blur>
             <SectionEyebrow title={eyebrowTitle} />
           </MotionPreset>
@@ -22,7 +22,7 @@ const SectionHeader = ({
             slide={{ direction: 'left' }}
             delay={0.2}
             blur
-            className='space-y-4 lg:space-y-6'
+            className='space-y-2'
           >
             <h1 className='text-4xl lg:text-6xl max-w-4xl mx-auto text-center leading-tight'>
               {title}
