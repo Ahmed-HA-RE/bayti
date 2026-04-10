@@ -7,7 +7,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { Suspense } from 'react';
 import Image from 'next/image';
-import { cn, formatCityName } from '@/lib/utils';
+import { cn, formatAgentRole, formatCityName } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import AgentTableActions from './agent-table-actions';
@@ -94,6 +94,13 @@ export const columns: ColumnDef<Agent & { _count: { properties: number } }>[] =
       header: 'City',
       accessorKey: 'city',
       cell: ({ row }) => <span>{formatCityName(row.original.city)}</span>,
+    },
+    {
+      header: 'Role',
+      accessorKey: 'role',
+      cell: ({ row }) => {
+        return <span>{formatAgentRole(row.original.role)}</span>;
+      },
     },
 
     {

@@ -4,6 +4,7 @@ import { Status } from './generated/prisma';
 import { UAParser } from 'ua-parser-js';
 import { Session } from 'better-auth';
 import { format } from 'date-fns';
+import { AGENT_ROLES } from './constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -97,4 +98,8 @@ export const formatUAParser = (session: Session) => {
       expiresAt,
     };
   }
+};
+
+export const formatAgentRole = (role: string) => {
+  return AGENT_ROLES.find((r) => r.value === role)?.name;
 };

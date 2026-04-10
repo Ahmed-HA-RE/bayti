@@ -41,11 +41,12 @@ import { columns } from './property-table-columns';
 
 const AdminPropertiesTable = () => {
   const isAdminDashboard = usePathname() === '/admin/dashboard';
-  const [{ search, type, location, status }, setFilters] = useFilters();
+  const [{ search, type, location, status, page }, setFilters] = useFilters();
   const filters = {
     search,
     type,
     location,
+    page,
     status: status as PropertyStatus,
   };
   const [sorting, setSorting] = useState<SortingState>([]);

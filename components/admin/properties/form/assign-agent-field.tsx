@@ -26,7 +26,7 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from 'use-debounce';
 import { Agent } from '@/lib/generated/prisma';
-import { cn } from '@/lib/utils';
+import { cn, formatAgentRole } from '@/lib/utils';
 
 const AssignAgentField = ({
   form,
@@ -72,7 +72,7 @@ const AssignAgentField = ({
                 role='combobox'
                 aria-expanded={open}
                 className={cn(
-                  'w-full justify-between px-0 pl-4 pr-2.5 h-12 py-1',
+                  'w-full justify-between px-0 pl-4 pr-2.5 h-12 py-1 hover:bg-transparent hover:text-none',
                   fieldState.invalid && 'border-destructive',
                 )}
               >
@@ -80,7 +80,7 @@ const AssignAgentField = ({
                   <p className='text-muted-foreground'>Loading...</p>
                 ) : agent ? (
                   <span className='flex items-center gap-2'>
-                    <Avatar className='size-6'>
+                    <Avatar className='size-7.5'>
                       <Suspense
                         fallback={
                           <AvatarFallback>
@@ -91,9 +91,9 @@ const AssignAgentField = ({
                         <Image
                           src={agent.image}
                           alt={agent.name}
-                          width={24}
-                          height={24}
-                          className='rounded-full'
+                          width={30}
+                          height={30}
+                          className='rounded-full object-cover'
                         />
                       </Suspense>
                     </Avatar>
@@ -159,14 +159,14 @@ const AssignAgentField = ({
                                   alt={agent.name}
                                   width={35}
                                   height={35}
-                                  className='rounded-full'
+                                  className='rounded-full object-cover'
                                 />
                               </Suspense>
                             </Avatar>
                             <span className='flex flex-col'>
                               <span className='font-medium'>{agent.name}</span>
                               <span className='text-muted-foreground text-xs'>
-                                {agent.role}
+                                {formatAgentRole(agent.role)}
                               </span>
                             </span>
                           </span>

@@ -56,7 +56,7 @@ const AgentForm = ({
   const onSubmit = async (data: AgentFormData) => {
     if (!isImageUploaded) {
       form.setError('image', {
-        type: 'manual',
+        type: 'onChange',
         message: 'Image is required',
       });
       return;

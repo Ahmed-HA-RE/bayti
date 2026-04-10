@@ -61,7 +61,7 @@ const PropertyLocationFields = ({
                 role='combobox'
                 aria-expanded={open}
                 className={cn(
-                  'w-full justify-between pr-2 pl-3 text-muted-foreground font-normal',
+                  'w-full justify-between pr-2 pl-3 text-muted-foreground font-normal hover:text-muted-foreground hover:bg-transparent',
                   fieldState.invalid && 'border-destructive',
                 )}
               >

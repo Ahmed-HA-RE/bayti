@@ -29,8 +29,9 @@ const PropertyFormFeatures = ({
                 orientation='horizontal'
               >
                 <Checkbox
-                  id={field.name}
+                  id={amenity.name}
                   aria-invalid={fieldState.invalid}
+                  className='cursor-pointer'
                   checked={field.value.includes(amenity.name)}
                   onCheckedChange={(e) => {
                     const isChecked = e;
