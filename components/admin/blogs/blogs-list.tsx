@@ -1,6 +1,7 @@
 import BlogCard from '@/components/shared/blog-card';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import prisma from '@/lib/prisma';
+import { AlertTriangleIcon } from 'lucide-react';
 
 const BlogsList = async () => {
   const blogs = await prisma.blog.findMany({
@@ -10,9 +11,12 @@ const BlogsList = async () => {
   });
 
   if (blogs.length === 0) {
-    <Alert variant={'info'}>
-      <AlertTitle>No Blogs Found</AlertTitle>
-    </Alert>;
+    return (
+      <Alert variant={'info'}>
+        <AlertTriangleIcon />
+        <AlertTitle>No Blogs Found</AlertTitle>
+      </Alert>
+    );
   }
 
   return (

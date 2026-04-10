@@ -67,7 +67,7 @@ const BlogViewPage = async ({ params }: Props) => {
     },
     {
       icon: <LuClock3 className='size-4.5' />,
-      text: `${blog.readTime} min`,
+      text: `${blog.readTime} min read`,
     },
     {
       icon: <FaRegCalendar className='size-4.5' />,

@@ -104,7 +104,7 @@ const PropertyPage = async ({
         take: 1,
       },
     },
-    take: 3,
+    take: 2,
     orderBy: { createdAt: 'desc' },
   });
 

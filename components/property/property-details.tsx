@@ -14,6 +14,7 @@ import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import BookVisitDialog from './book-visit-dialog';
 import SecondaryLinkButton from '../shared/secondary-link-button';
+import { formatCityName } from '@/lib/utils';
 
 const PropertyDetails = async ({
   property,
@@ -102,7 +103,7 @@ const PropertyDetails = async ({
               <div className='flex flex-col gap-0.5'>
                 <h3 className='text-lg'>{property.agent.name}</h3>
                 <span className='text-sm text-muted-foreground'>
-                  {property.agent.city}, UAE
+                  {formatCityName(property.agent.city)}, UAE
                 </span>
               </div>
             </div>
@@ -137,7 +138,9 @@ const PropertyDetails = async ({
               {/* Location */}
               <div className='flex items-center gap-2.5'>
                 <LuMapPin className='size-5' />
-                <span className='text-base'>{property.agent.city}, UAE</span>
+                <span className='text-base'>
+                  {formatCityName(property.agent.city)}, UAE
+                </span>
               </div>
             </div>
             {/* Contact Form */}
