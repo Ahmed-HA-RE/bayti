@@ -2,6 +2,7 @@
 
 import CardFormStepsLayout from '@/components/shared/card-form-steps-layout';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import {
   Field,
   FieldError,
@@ -15,7 +16,9 @@ import { AgentFormData } from '@/schema/agent';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { RiFileUserFill } from 'react-icons/ri';
+import slugify from 'slugify';
 
 type AgentFormPersonalDetailsProps = {
   form: UseFormReturn<AgentFormData>;
@@ -56,25 +59,69 @@ const AgentFormPersonalDetails = ({
           />
 
           <Controller
-            name='email'
+            name='slug'
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={field.name}>
-                  Email Address <span className='text-destructive'>*</span>
-                </FieldLabel>
-                <Input
-                  id={field.name}
-                  type='email'
-                  placeholder='Enter email address'
-                  {...field}
-                  aria-invalid={fieldState.invalid}
-                />
+                <div className='flex items-center justify-between'>
+                  <FieldLabel htmlFor={field.name}>
+                    Slug <span className='text-destructive'>*</span>
+                  </FieldLabel>
+                  <small>This will be used in the URL</small>
+                </div>
+                <ButtonGroup>
+                  <Input
+                    disabled
+                    value={field.value}
+                    aria-invalid={fieldState.invalid}
+                  />
+                  <Button
+                    type='button'
+                    variant='outline'
+                    size='sm'
+                    className={
+                      fieldState.invalid ? 'border-destructive' : 'border-input'
+                    }
+                    aria-label='Generate Slug'
+                    onClick={() => {
+                      const agentName = form.getValues('name');
+                      if (agentName) {
+                        const slug = slugify(agentName, { lower: true });
+                        toast.success('Slug generated successfully');
+                        field.onChange(slug);
+                      }
+                    }}
+                  >
+                    Generate
+                  </Button>
+                </ButtonGroup>
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}
           />
+        </div>
 
+        <Controller
+          name='email'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>
+                Email Address <span className='text-destructive'>*</span>
+              </FieldLabel>
+              <Input
+                id={field.name}
+                type='email'
+                placeholder='Enter email address'
+                {...field}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldError errors={[fieldState.error]} />
+            </Field>
+          )}
+        />
+
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
           <Controller
             name='phoneNumber'
             control={form.control}
@@ -163,6 +210,7 @@ const AgentFormPersonalDetails = ({
             )}
           />
         </div>
+
         <Controller
           name='description'
           control={form.control}

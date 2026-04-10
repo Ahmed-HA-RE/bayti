@@ -71,6 +71,7 @@ export const editAgent = async (
       where: { id },
       data: {
         name: validatedData.data.name,
+        slug: validatedData.data.slug,
         description: validatedData.data.description,
         email: validatedData.data.email,
         phoneNumber: validatedData.data.phoneNumber,

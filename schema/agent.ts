@@ -13,6 +13,10 @@ export const agentSchema = z.object({
     .min(1, 'Name is required')
     .max(100, 'Name must be less than 100 characters')
     .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
+  slug: z
+    .string({ error: 'Slug is required' })
+    .min(1, 'Slug is required')
+    .max(50, 'Slug must be less than 50 characters'),
   description: z
     .string()
     .min(50, 'Add a descriptive info about the agent')

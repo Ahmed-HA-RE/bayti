@@ -39,6 +39,7 @@ const AgentForm = ({
     resolver: zodResolver(agentSchema),
     defaultValues: {
       name: agent?.name || '',
+      slug: agent?.slug || '',
       description: agent?.description || '',
       email: agent?.email || '',
       phoneNumber: agent?.phoneNumber || '',

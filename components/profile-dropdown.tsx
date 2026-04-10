@@ -15,12 +15,13 @@ import { Button } from './ui/button';
 import Image from 'next/image';
 import { auth } from '@/lib/auth';
 import { LuUser, LuLogOut } from 'react-icons/lu';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { authClient } from '@/lib/authClient';
 import toast from 'react-hot-toast';
 import { useMedia } from 'react-use';
 import { USER_NAVIGATION } from '@/lib/constants';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const ProfileDropdown = ({
   session,
@@ -41,6 +42,7 @@ const ProfileDropdown = ({
   const isMobile = useMedia('(min-width: 768px)', false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -114,7 +116,14 @@ const ProfileDropdown = ({
           {navigationList.map((item, index) => {
             const Icon = item.icon;
             return (
-              <DropdownMenuItem asChild key={index} className='p-2 '>
+              <DropdownMenuItem
+                asChild
+                key={index}
+                className={cn(
+                  'p-2',
+                  pathname === item.href && 'bg-orange-50 text-accent',
+                )}
+              >
                 <Link href={item.href}>
                   <Icon className='size-4.5' />
                   {item.label}

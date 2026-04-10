@@ -200,6 +200,7 @@ model Booking {
 model Agent {
   id               String      @id @default(uuid())
   name             String
+  slug             String      @unique
   description      String
   email            String      @unique
   image            String

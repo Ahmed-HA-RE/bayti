@@ -58,6 +58,7 @@ export const addAgent = async (data: AgentFormData) => {
     await prisma.agent.create({
       data: {
         name: validatedData.data.name,
+        slug: validatedData.data.slug,
         description: validatedData.data.description,
         email: validatedData.data.email,
         phoneNumber: validatedData.data.phoneNumber,
