@@ -51,7 +51,7 @@ export const agentSchema = z.object({
     .array(
       z.object({
         platform: z_enumFromArray(
-          SOCIAL_MEDIA_PLATFORMS.map((platform) => platform.value),
+          SOCIAL_MEDIA_PLATFORMS.map((platform) => platform.platform),
           'Select a valid platform',
         ),
         url: z.url({ error: 'Invalid URL format' }).min(1, 'URL is required'),

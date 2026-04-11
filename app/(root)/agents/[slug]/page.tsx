@@ -97,7 +97,7 @@ const AgentPage = async ({ params }: Props) => {
   return (
     <>
       {/* Hero Name */}
-      <section className='section-top-spacing'>
+      <section className='section-header-spacing'>
         <div className='container'>
           <MotionPreset
             component='h1'

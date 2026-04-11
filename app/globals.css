@@ -133,8 +133,15 @@
   .section-spacing {
     @apply py-14 sm:py-16 lg:py-24;
   }
-  .section-top-spacing {
+  .section-header-spacing {
     @apply pt-27 md:pt-34;
+  }
+
+  .section-top-spacing {
+    @apply pt-14 sm:pt-16 lg:pt-24;
+  }
+  .section-bottom-spacing {
+    @apply pb-14 sm:pb-16 lg:pb-24;
   }
 
   .section-title {

@@ -107,10 +107,10 @@ const AgentFormSocial = ({ form }: AgentFormSocialProps) => {
                             </NativeSelectOption>
                             {SOCIAL_MEDIA_PLATFORMS.map((platform) => (
                               <NativeSelectOption
-                                key={platform.value}
-                                value={platform.value}
+                                key={platform.platform}
+                                value={platform.platform}
                                 disabled={selectedSocialMediaLinks?.includes(
-                                  platform.value,
+                                  platform.platform,
                                 )}
                               >
                                 {platform.name}

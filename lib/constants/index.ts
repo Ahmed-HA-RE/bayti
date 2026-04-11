@@ -1,7 +1,7 @@
-import { FaSwimmingPool } from 'react-icons/fa';
+import { FaRegFileAlt, FaSwimmingPool } from 'react-icons/fa';
 import { GiHomeGarage } from 'react-icons/gi';
-import { PiSecurityCameraFill } from 'react-icons/pi';
-import { LuFence, LuUser } from 'react-icons/lu';
+import { PiChartLineUp, PiSecurityCameraFill } from 'react-icons/pi';
+import { LuFence, LuUser, LuUsers } from 'react-icons/lu';
 import { TbTableRow } from 'react-icons/tb';
 import { LuProjector } from 'react-icons/lu';
 import { RiSmartphoneFill } from 'react-icons/ri';
@@ -192,14 +192,60 @@ export const AGENT_ROLES = [
   },
 ];
 
-export const STATISTICS = [
+export const HOME_STATISTICS = [
   { value: '350+', label: 'Premium Properties' },
   { value: '1200+', label: 'Happy Clients' },
   { value: '5+', label: 'UAE Cities Covered' },
-  { value: '250+', label: 'Luxury Apartments' },
-  { value: '50+', label: 'Villas Sold' },
-  { value: '15+', label: 'Years of Experience' },
 ];
+
+export const ABOUT_STATISTICS = [
+  {
+    value: '250+',
+    label: 'Luxury Apartments',
+    description:
+      'A curated portfolio of premium apartments in prime locations, offering modern design, comfort, and long-term value.',
+  },
+  {
+    value: '15+',
+    label: 'Years of Experience',
+    description:
+      'Over a decade of industry expertise, providing deep market knowledge and reliable guidance at every step.',
+  },
+  {
+    value: '50+',
+    label: 'Properties Sold',
+    description:
+      'Successfully delivered high-end properties to clients, ensuring quality, trust, and a seamless buying experience.',
+  },
+  {
+    value: '400M+',
+    label: 'Project Value',
+    description:
+      'A portfolio of high-value properties managed with precision, discretion, and long-term investment focus.',
+  },
+];
+
+export const OUR_PURPOSE = [
+  {
+    title: 'Your Goals, Our Priority',
+    description:
+      'We listen to your needs and tailor our services to help you find the perfect property that aligns with your lifestyle and investment goals.',
+    icon: LuUsers,
+  },
+  {
+    title: 'Reliable Guidance, Every Step',
+    description:
+      'With deep market knowledge and years of experience, we provide honest advice and strategic insights for confident decisions.',
+    icon: FaRegFileAlt,
+  },
+  {
+    title: 'Building for Today & Tomorrow',
+    description:
+      'We focus on sustainable development and innovative solutions to create lasting value for our clients.',
+    icon: PiChartLineUp,
+  },
+];
+
 export const STEPS = [
   {
     title: 'Explore Our Properties',

@@ -1,4 +1,4 @@
-import { APP_NAME, STATISTICS } from '@/lib/constants';
+import { APP_NAME, HOME_STATISTICS } from '@/lib/constants';
 import { MotionPreset } from '../shared/motion-preset';
 import Image from 'next/image';
 import { NumberTicker } from '../ui/number-ticker';
@@ -49,7 +49,7 @@ const HomeAboutSection = () => {
               </p>
             </div>
             <div className='grid grid-cols-2 md:grid-cols-3 justify-between gap-8'>
-              {STATISTICS.filter((_, index) => index < 3).map((stat) => (
+              {HOME_STATISTICS.filter((_, index) => index < 3).map((stat) => (
                 <div
                   className='flex flex-col gap-2 items-start'
                   key={stat.label}

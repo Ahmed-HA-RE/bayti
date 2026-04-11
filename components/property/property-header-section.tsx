@@ -48,7 +48,7 @@ const PropertyHeaderSection = ({
   };
 
   return (
-    <section className='section-top-spacing'>
+    <section className='section-header-spacing'>
       <div className='container'>
         <div className='grid grid-cols-1 gap-4'>
           <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>

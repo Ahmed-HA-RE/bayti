@@ -11,7 +11,7 @@ const SectionHeader = ({
   subtitle: string;
 }) => {
   return (
-    <section className='section-top-spacing'>
+    <section className='section-header-spacing'>
       <div className='container'>
         <div className='flex flex-col items-center justify-center gap-2'>
           <MotionPreset fade slide={{ direction: 'right' }} delay={0.1} blur>

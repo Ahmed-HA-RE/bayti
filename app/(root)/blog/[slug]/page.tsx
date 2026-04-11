@@ -71,7 +71,7 @@ const BlogPage = async ({ params }: Props) => {
         fade
         slide={{ direction: 'down' }}
         delay={0.1}
-        className='section-top-spacing container'
+        className='section-header-spacing container'
       >
         <BlogHeaderSection blog={blog} />
       </MotionPreset>
