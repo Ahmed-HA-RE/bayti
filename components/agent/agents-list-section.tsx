@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader } from '../ui/card';
 const AgentsListSection = ({
   agents,
 }: {
-  agents: Pick<Agent, 'id' | 'name' | 'image' | 'role'>[];
+  agents: Pick<Agent, 'id' | 'name' | 'image' | 'role' | 'slug'>[];
 }) => {
   return (
     <section className='section-spacing'>
@@ -26,7 +26,7 @@ const AgentsListSection = ({
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
             {agents.map((agent, index) => (
-              <Link href={`/agent/${agent.id}`} key={agent.id}>
+              <Link href={`/agents/${agent.slug}`} key={agent.id}>
                 <Card className='border-0 shadow-none'>
                   <CardHeader className='px-0'>
                     <MotionPreset fade blur zoom delay={0.1 + index * 0.1}>

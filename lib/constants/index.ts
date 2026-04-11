@@ -455,19 +455,19 @@ export const RESERVING_TIMES = [
 export const SOCIAL_MEDIA_PLATFORMS = [
   {
     name: 'Facebook',
-    value: 'facebook',
+    platform: 'facebook',
   },
   {
     name: 'Instagram',
-    value: 'instagram',
+    platform: 'instagram',
   },
   {
     name: 'LinkedIn',
-    value: 'linkedin',
+    platform: 'linkedin',
   },
   {
     name: 'Threads',
-    value: 'threads',
+    platform: 'threads',
   },
 ];
 

@@ -23,6 +23,7 @@ const AgentsPage = async () => {
     select: {
       id: true,
       name: true,
+      slug: true,
       image: true,
       role: true,
     },

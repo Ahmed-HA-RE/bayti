@@ -51,7 +51,7 @@ const MotionPreset = ({
   children,
   className,
   component = 'div',
-  transition = { type: 'tween', duration: 0.6, ease: 'easeOut' },
+  transition = { type: 'keyframes', duration: 0.6, ease: 'easeOut' },
   delay = 0,
   inView = true,
   inViewMargin = '0px',
