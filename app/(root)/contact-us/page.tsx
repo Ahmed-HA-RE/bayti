@@ -30,7 +30,7 @@ const ContactUsPage = async () => {
         </div>
 
         {/* Right Col */}
-        <div className='h-full relative rounded-xl max-lg:hidden overflow-hidden'>
+        <div className='h-full min-h-[620px] relative rounded-xl max-lg:hidden overflow-hidden'>
           <Image
             src='/images/contact-us.jpg'
             alt='Contact Us'

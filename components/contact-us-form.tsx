@@ -11,7 +11,8 @@ import { cn } from '@/lib/utils';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Spinner } from './ui/spinner';
-
+import { contactUs } from '@/lib/actions/contact-us';
+import toast from 'react-hot-toast';
 const ContactUsForm = ({
   session,
 }: {
@@ -29,7 +30,13 @@ const ContactUsForm = ({
   });
 
   const onSubmit = async (data: ContactUsFormData) => {
-    console.log(data);
+    const res = await contactUs(data);
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+    toast.success(res.message);
+    form.reset();
   };
 
   const { isSubmitting } = form.formState;

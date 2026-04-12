@@ -41,6 +41,10 @@ export default function RootLayout({
         <Toaster
           toastOptions={{
             duration: 4000,
+            style: {
+              width: 'auto',
+              maxWidth: '625px',
+            },
           }}
         />
       </body>
