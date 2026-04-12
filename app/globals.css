@@ -149,7 +149,7 @@
   }
 
   .section-subtitle {
-    @apply text-muted-foreground max-sm:text-base text-lg text-center md:text-left max-w-3xl;
+    @apply text-muted-foreground max-lg:text-base text-lg text-center md:text-left max-w-3xl;
   }
 }
 

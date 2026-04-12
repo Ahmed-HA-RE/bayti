@@ -1,6 +1,5 @@
 import { APP_NAME, STEPS } from '@/lib/constants';
 import { MotionPreset } from '../shared/motion-preset';
-import SectionHeader from '../shared/section-eyebrow';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import Image from 'next/image';
 import SectionEyebrow from '../shared/section-eyebrow';

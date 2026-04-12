@@ -50,10 +50,6 @@ export const navigationData = [
         href: '/about-us',
       },
       {
-        title: 'Team',
-        href: '/team',
-      },
-      {
         title: 'Talk to an Agent',
         href: '/contact-us',
       },
@@ -108,10 +104,6 @@ export const footerNavigationData = [
       {
         title: 'Talk to an Agent',
         href: '/contact-us',
-      },
-      {
-        title: 'Team',
-        href: '/team',
       },
     ],
   },
@@ -542,5 +534,38 @@ export const ACCOUNT_DELETION_WARNINGS = [
   {
     id: 4,
     description: 'Your saved data and settings will be lost.',
+  },
+];
+
+export const OUR_TEAM = [
+  {
+    name: 'Daniel Carter',
+    role: 'Founder & CEO',
+    image: '/images/team/daniel-carter.jpg',
+  },
+  {
+    name: 'Michael Turner',
+    role: 'Head of Operations',
+    image: '/images/team/michael-turner.jpg',
+  },
+  {
+    name: 'James Walker',
+    role: 'Lead Property Consultant',
+    image: '/images/team/james-walker.jpg',
+  },
+  {
+    name: 'Ethan Brooks',
+    role: 'Chief Technology Officer',
+    image: '/images/team/ethan-brooks.jpg',
+  },
+  {
+    name: 'Lucas Bennett',
+    role: 'Head of Product',
+    image: '/images/team/lucas-bennett.jpg',
+  },
+  {
+    name: 'Oliver Scott',
+    role: 'Lead Designer',
+    image: '/images/team/oliver-scott.jpg',
   },
 ];

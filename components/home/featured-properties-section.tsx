@@ -32,7 +32,7 @@ const FeaturedProperties = async () => {
     <section className='section-spacing'>
       <div className='container'>
         <div className='flex flex-col gap-10'>
-          <div className='space-y-4 text-center md:text-left'>
+          <div className='flex flex-col gap-4 items-center md:items-start'>
             <MotionPreset fade blur slide={{ direction: 'left' }} delay={0.1}>
               <SectionEyebrow title='featured properties' />
             </MotionPreset>

@@ -25,7 +25,7 @@ const LatestBlogsSection = async () => {
           fade
           blur
           slide={{ direction: 'left' }}
-          className='space-y-4 mb-10 text-center md:text-left'
+          className='mb-10 flex flex-col gap-4 items-center md:items-start'
         >
           <SectionEyebrow title='explore' />
           <h2 className='section-title'>Our Latest Blogs</h2>

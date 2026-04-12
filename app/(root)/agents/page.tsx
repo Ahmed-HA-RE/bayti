@@ -1,6 +1,6 @@
 import AgentSkeletonCard from '@/components/agent/agent-skeleton-card';
 import AgentsListSection from '@/components/agent/agents-list-section';
-import FAQ from '@/components/home/faq-section';
+import FAQ from '@/components/shared/faq-section';
 import SectionHeader from '@/components/shared/section-header';
 import prisma from '@/lib/prisma';
 import { Metadata } from 'next';

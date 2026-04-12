@@ -1,11 +1,16 @@
-import FAQ from '@/components/home/faq-section';
+import FAQ from '@/components/shared/faq-section';
 import { MotionPreset } from '@/components/shared/motion-preset';
 import SectionEyebrow from '@/components/shared/section-eyebrow';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { APP_NAME, ABOUT_STATISTICS, OUR_PURPOSE } from '@/lib/constants';
+import {
+  APP_NAME,
+  ABOUT_STATISTICS,
+  OUR_PURPOSE,
+  OUR_TEAM,
+} from '@/lib/constants';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { GoDotFill } from 'react-icons/go';
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -24,10 +29,9 @@ const AboutUsPage = () => {
               fade
               slide={{ direction: 'left' }}
               delay={0.1}
-              className='lg:col-span-1 inline-flex items-center gap-1.5 tracking-widest uppercase text-base'
+              className='lg:col-span-1'
             >
-              <GoDotFill className='text-[#ff6b00]' />
-              About {APP_NAME}
+              <SectionEyebrow title={`About ${APP_NAME}`} />
             </MotionPreset>
             <div className='space-y-4 lg:col-span-2'>
               <MotionPreset
@@ -95,22 +99,21 @@ const AboutUsPage = () => {
       {/* Our Story Section */}
       <section className='section-spacing'>
         <div className='container'>
-          <div className='grid grid-cols-1 lg:grid-cols-3 lg:justify-between items-start gap-2.5'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 lg:justify-between items-start gap-4'>
             {/* Eyebrow */}
             <MotionPreset
               fade
               slide={{ direction: 'left' }}
               delay={0.1}
-              className='lg:col-span-1 inline-flex items-center gap-1.5 tracking-widest uppercase text-sm md:text-base'
+              className='lg:col-span-1'
             >
-              <GoDotFill className='text-[#ff6b00]' />
-              Our Story
+              <SectionEyebrow title='our story' />
             </MotionPreset>
             <MotionPreset
               fade
               slide={{ direction: 'right' }}
               delay={0.15}
-              className='space-y-6 lg:col-span-2'
+              className='space-y-4 lg:col-span-2'
             >
               <h2 className='text-2xl md:text-4xl  leading-tight font-normal'>
                 At {APP_NAME}, we simplify the journey to your next home — where
@@ -222,6 +225,56 @@ const AboutUsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Our Team Section */}
+      <section className='section-spacing'>
+        <div className='container flex flex-col items-center justify-center gap-8'>
+          <MotionPreset
+            fade
+            slide={{ direction: 'up' }}
+            className='flex flex-col items-center justify-center gap-4'
+          >
+            <SectionEyebrow title='our team' />
+            <h2 className='section-title'>Meet the People Behind {APP_NAME}</h2>
+            <p className='section-subtitle !text-center md:!text-base !max-w-2xl'>
+              Our dedicated team of professionals is here to guide you through
+              every step — from viewing to owning your dream home with
+              confidence and ease.
+            </p>
+          </MotionPreset>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            {OUR_TEAM.map((member, index) => (
+              <MotionPreset
+                key={member.name}
+                fade
+                slide={{ direction: 'up' }}
+                delay={index * 0.1}
+              >
+                <Card className='rounded-3xl pt-2 pb-4 gap-8'>
+                  <CardHeader className='px-3'>
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={0}
+                      height={0}
+                      sizes='100vw'
+                      className='w-full min-h-[400px] object-cover rounded-xl'
+                    />
+                  </CardHeader>
+                  <CardContent className='px-3 flex flex-col gap-1 items-center justify-center'>
+                    <h3 className='text-2xl'>{member.name}</h3>
+                    <p className='text-muted-foreground text-base'>
+                      {member.role}
+                    </p>
+                  </CardContent>
+                </Card>
+              </MotionPreset>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
       <FAQ />
     </>
   );
