@@ -12,8 +12,8 @@ export const optionalPhoneNumber = z
     if (!val) return true; // Allow empty or null values
 
     if (val) {
-      if (!/^\d+$/.test(val)) return false; // Ensure the phone number contains only digits
       const parsedNumber = parsePhoneNumberFromString(val, 'AE');
+      console.log(parsedNumber);
       if (!parsedNumber) return false;
       return parsedNumber.isValid();
     }

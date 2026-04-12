@@ -1,8 +1,9 @@
 import BlogsListSection from '@/components/blogs-list-section';
 import SectionHeader from '@/components/shared/section-header';
 import { APP_NAME } from '@/lib/constants';
+import { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Blogs',
   description: `Browse ${APP_NAME} Blogs for real estate insights, home buying tips, rental guides, investment advice, and property market updates.`,
 };
