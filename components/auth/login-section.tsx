@@ -1,34 +1,12 @@
 'use client';
 
 import LoginForm from '@/components/auth/login-form';
-import { Button } from '../ui/button';
-import { FcGoogle } from 'react-icons/fc';
 import { Separator } from '../ui/separator';
-import { authClient } from '@/lib/authClient';
-import { Spinner } from '../ui/spinner';
-import { useEffect, useState, useTransition } from 'react';
-import { FaDropbox } from 'react-icons/fa';
-import { cn } from '@/lib/utils';
-import { Badge } from '../ui/badge';
+import { useEffect, useState } from 'react';
+import SocialAuthButtons from '../shared/social-auth-buttons';
 
 const Login = ({ callbackUrl }: { callbackUrl: string }) => {
-  const [isPending, startTransition] = useTransition();
-  const lastMethod = authClient.getLastUsedLoginMethod();
   const [isMounted, setIsMounted] = useState(false);
-
-  const socialProviders = [
-    {
-      id: 'google',
-      label: 'Continue with Google',
-      icon: <FcGoogle className='size-5 shrink-0' />,
-    },
-    {
-      id: 'dropbox',
-      label: 'Continue with Dropbox',
-      icon: <FaDropbox className='size-5 shrink-0 text-blue-500' />,
-    },
-  ];
-
   useEffect(() => {
     // ignore eslint-disable-next-line react-hooks/exhaustive-deps
     setIsMounted(true);
@@ -47,34 +25,7 @@ const Login = ({ callbackUrl }: { callbackUrl: string }) => {
         </div>
 
         {/* Social Login */}
-        <div className='flex flex-col gap-3'>
-          {socialProviders.map(({ id, label, icon }) => {
-            const isLast = lastMethod === id;
-            return (
-              <Button
-                key={id}
-                onClick={() => {
-                  startTransition(async () => {
-                    await authClient.signIn.social({
-                      provider: id,
-                      callbackURL: callbackUrl,
-                    });
-                  });
-                }}
-                variant='outline'
-                disabled={isPending}
-                className={cn('h-12 w-full justify-between px-4')}
-              >
-                <span className='flex items-center gap-3'>
-                  {isPending ? <Spinner className='size-4' /> : icon}
-                  <span>{label}</span>
-                </span>
-
-                {isLast && <Badge className='bg-green-600'>Last used</Badge>}
-              </Button>
-            );
-          })}
-        </div>
+        <SocialAuthButtons isLogin callbackUrl={callbackUrl} />
 
         <div className='flex items-center gap-4'>
           <Separator className='flex-1' />
@@ -85,7 +36,7 @@ const Login = ({ callbackUrl }: { callbackUrl: string }) => {
         </div>
 
         {/* Form */}
-        <LoginForm />
+        <LoginForm callbackUrl={callbackUrl} />
       </div>
     </div>
   );

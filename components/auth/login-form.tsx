@@ -13,14 +13,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schema/auth';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Spinner } from '../ui/spinner';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { authClient } from '@/lib/authClient';
 
-const LoginForm = () => {
+const LoginForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const callbackUrl = useSearchParams().get('callbackUrl') || '/';
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -43,7 +42,7 @@ const LoginForm = () => {
       email: data.email,
       password: data.password,
       rememberMe: data.rememberMe,
-      callbackURL: callbackUrl,
+      callbackURL: callbackUrl || '/',
 
       fetchOptions: {
         async onSuccess(context) {

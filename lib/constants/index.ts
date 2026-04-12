@@ -1,4 +1,4 @@
-import { FaRegFileAlt, FaSwimmingPool } from 'react-icons/fa';
+import { FaRegFileAlt, FaSwimmingPool, FaDropbox } from 'react-icons/fa';
 import { GiHomeGarage } from 'react-icons/gi';
 import { PiChartLineUp, PiSecurityCameraFill } from 'react-icons/pi';
 import { LuFence, LuUser, LuUsers } from 'react-icons/lu';
@@ -21,6 +21,7 @@ import { GiElevator } from 'react-icons/gi';
 import { TiHeartOutline } from 'react-icons/ti';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { UserNavigationItem } from '@/types/user-navigation';
+import { FcGoogle } from 'react-icons/fc';
 
 export const SERVER_URL =
   process.env.NODE_ENV === 'production'
@@ -567,5 +568,18 @@ export const OUR_TEAM = [
     name: 'Oliver Scott',
     role: 'Lead Designer',
     image: '/images/team/oliver-scott.jpg',
+  },
+];
+
+export const SOCIAL_PROVIDERS = [
+  {
+    id: 'google',
+    label: 'Continue with Google',
+    icon: FcGoogle,
+  },
+  {
+    id: 'dropbox',
+    label: 'Continue with Dropbox',
+    icon: FaDropbox,
   },
 ];

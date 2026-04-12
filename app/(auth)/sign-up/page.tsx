@@ -1,5 +1,8 @@
 import SignUp from '@/components/auth/sign-up-section';
+import GoogleRecaptcha from '@/components/shared/google-recaptcha';
+import HashLoader from '@/components/shared/hash-loader';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Sign Up',
@@ -9,11 +12,17 @@ export const metadata: Metadata = {
 const SignUpPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
-  const { callbackUrl } = (await searchParams) || '/';
+  const callbackUrl = (await searchParams).callbackUrl || '/';
 
-  return <SignUp callbackUrl={callbackUrl} />;
+  return (
+    <Suspense fallback={<HashLoader />}>
+      <GoogleRecaptcha>
+        <SignUp callbackUrl={callbackUrl} />
+      </GoogleRecaptcha>
+    </Suspense>
+  );
 };
 
 export default SignUpPage;

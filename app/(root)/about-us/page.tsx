@@ -164,9 +164,14 @@ const AboutUsPage = () => {
 
       {/* Our Purpose Section */}
       <section className='section-spacing'>
-        <div className='container flex flex-col gap-8 lg:gap-10'>
+        <div className='container flex flex-col gap-6'>
           <div className='space-y-2'>
-            <MotionPreset fade slide={{ direction: 'left' }} delay={0.3}>
+            <MotionPreset
+              fade
+              slide={{ direction: 'left' }}
+              delay={0.3}
+              className='flex flex-col gap-2.5 items-center md:items-start justify-center '
+            >
               <SectionEyebrow title='our purpose' />
               <h2 className='section-title lg:!max-w-3xl'>
                 Simplifying Real Estate,{' '}
@@ -192,7 +197,7 @@ const AboutUsPage = () => {
               />
             </MotionPreset>
             {/* Right Column */}
-            <div className='flex flex-col items-start xl:col-span-6 xl:pt-4'>
+            <div className='flex flex-col items-start xl:col-span-6 lg:pt-5'>
               {OUR_PURPOSE.map((purpose, index) => {
                 const Icon = purpose.icon;
                 return (

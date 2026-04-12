@@ -1,17 +1,8 @@
-'use client';
-
 import SignUpForm from './sign-up-form';
-import { Button } from '../ui/button';
-import { FcGoogle } from 'react-icons/fc';
 import { Separator } from '../ui/separator';
-import { useTransition } from 'react';
-import { Spinner } from '../ui/spinner';
-import { authClient } from '@/lib/authClient';
-import { FaDropbox } from 'react-icons/fa';
+import SocialAuthButtons from '../shared/social-auth-buttons';
 
 const SignUp = ({ callbackUrl }: { callbackUrl: string }) => {
-  const [isPending, startTransition] = useTransition();
-
   return (
     <div className='flex h-full flex-col items-center justify-center sm:px-5'>
       <div className='flex w-full max-w-lg flex-col gap-6 p-6'>
@@ -23,55 +14,8 @@ const SignUp = ({ callbackUrl }: { callbackUrl: string }) => {
             Join us to explore homes and book visits effortlessly.
           </p>
         </div>
-        {/* Social Login */}
-        <div className='flex items-center gap-4'>
-          <Button
-            onClick={() => {
-              startTransition(async () => {
-                await authClient.signIn.social({
-                  provider: 'google',
-                  callbackURL: callbackUrl,
-                });
-              });
-            }}
-            size={'default'}
-            variant='outline'
-            className='flex-1'
-            disabled={isPending}
-          >
-            {isPending ? (
-              <Spinner className='size-5' />
-            ) : (
-              <>
-                <FcGoogle className='size-5' /> Sign in with Google
-              </>
-            )}
-          </Button>
-
-          <Button
-            onClick={() => {
-              startTransition(async () => {
-                await authClient.signIn.social({
-                  provider: 'dropbox',
-                  callbackURL: callbackUrl,
-                });
-              });
-            }}
-            size={'default'}
-            variant='outline'
-            className='flex-1'
-            disabled={isPending}
-          >
-            {isPending ? (
-              <Spinner className='size-5' />
-            ) : (
-              <>
-                <FaDropbox className='size-5 text-blue-600' /> Sign in with
-                Dropbox
-              </>
-            )}
-          </Button>
-        </div>
+        {/* Social Sign Up */}
+        <SocialAuthButtons isLogin={false} callbackUrl={callbackUrl} />
 
         <div className='flex items-center gap-4'>
           <Separator className='flex-1' />

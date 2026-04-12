@@ -55,7 +55,7 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
       return;
     }
     setSuccessMessage(
-      'Account created successfully! Please check your email to verify your account.',
+      'Account created! Please check your email to verify your account.',
     );
     form.reset();
   };
@@ -63,17 +63,9 @@ const SignUpForm = ({ callbackUrl }: { callbackUrl: string }) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       {successMessage && (
-        <Alert className='rounded-lg border-l-6 border-green-400 bg-white text-green-400 mb-4 flex items-start justify-between'>
-          <CheckCircle2Icon className='size-5' />
-          <AlertTitle className='text-slate-700 flex-1'>
-            {successMessage}
-          </AlertTitle>
-          <button
-            className='cursor-pointer ml-4'
-            onClick={() => setSuccessMessage('')}
-          >
-            <X className='size-4 text-slate-700' />
-          </button>
+        <Alert variant='success' className='mb-4'>
+          <CheckCircle2Icon className='text-green-500' />
+          <AlertTitle>{successMessage}</AlertTitle>
         </Alert>
       )}
 

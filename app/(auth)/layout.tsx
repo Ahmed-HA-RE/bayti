@@ -1,4 +1,3 @@
-import GoogleRecaptcha from '@/components/shared/google-recaptcha';
 import Image from 'next/image';
 import Link from 'next/link';
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
@@ -25,7 +24,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </div>
         </div>
-        <GoogleRecaptcha>{children}</GoogleRecaptcha>
+        {children}
       </div>
     </main>
   );
