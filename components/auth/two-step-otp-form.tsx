@@ -15,7 +15,13 @@ import { Checkbox } from '../ui/checkbox';
 import { authClient } from '@/lib/authClient';
 import { useRouter } from 'next/navigation';
 
-const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
+const TwoStepOTPForm = ({
+  mode,
+  callbackUrl,
+}: {
+  mode: 'totp' | 'email-code';
+  callbackUrl: string;
+}) => {
   const router = useRouter();
   const form = useForm<TwoStepOtpFormData, unknown, TwoStepOtpOutputFormData>({
     resolver: zodResolver(twoStepOtpSchema),
@@ -28,21 +34,25 @@ const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
 
   const onSubmit = async (data: TwoStepOtpOutputFormData) => {
     try {
-      const { error } = await authClient.twoFactor.verifyTotp(
-        {
-          code: data.otp,
-          trustDevice: data.trustDevice,
-        },
-        {
-          onSuccess: () => {
-            toast.success('OTP verified successfully');
-            form.reset();
-            router.push(callbackUrl);
+      if (mode === 'totp') {
+        const { error } = await authClient.twoFactor.verifyTotp(
+          {
+            code: data.otp,
+            trustDevice: data.trustDevice,
           },
-        },
-      );
-      if (error) {
-        throw new Error(error.message);
+          {
+            onSuccess: () => {
+              toast.success('OTP verified successfully');
+              form.reset();
+              router.push(callbackUrl);
+            },
+          },
+        );
+        if (error) {
+          throw new Error(error.message);
+        }
+      } else if (mode === 'email-code') {
+        // Handle email OTP verification if needed
       }
     } catch (error) {
       const errorMessage =
@@ -60,7 +70,10 @@ const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
           name='otp'
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
+            <Field
+              className='max-w-xs mx-auto'
+              data-invalid={fieldState.invalid}
+            >
               <TwoFactorOTPInput
                 value={field.value}
                 onChange={field.onChange}
@@ -106,4 +119,4 @@ const OTPInputForm = ({ callbackUrl }: { callbackUrl: string }) => {
   );
 };
 
-export default OTPInputForm;
+export default TwoStepOTPForm;

@@ -71,7 +71,7 @@ const QrCodeDialog = ({
 
   return (
     <Dialog open={openQrCodeDialog} onOpenChange={setOpenQrCodeDialog}>
-      <DialogContent className='ring-0 rounded-sm pt-0 [&>button:last-child]:hidden md:max-w-3xl'>
+      <DialogContent className='ring-0 rounded-sm pt-0 [&>button:last-child]:hidden sm:max-w-2xl'>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
           <DialogHeader className='border-b py-3'>
             <DialogTitle className='text-xl font-semibold'>
@@ -152,7 +152,13 @@ const QrCodeDialog = ({
             </div>
           )}
           <DialogFooter className='px-6 flex flex-row justify-end'>
-            <DialogClose render={<Button variant='secondary'>Close</Button>} />
+            <DialogClose
+              render={
+                <Button variant='secondary' className=''>
+                  Close
+                </Button>
+              }
+            />
             {hasTwoFactorEnabled ? null : (
               <Button type='submit' disabled={isPending}>
                 {isPending ? 'Verifying...' : 'Verify'}

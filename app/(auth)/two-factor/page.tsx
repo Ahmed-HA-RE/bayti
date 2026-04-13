@@ -1,9 +1,11 @@
-import OTPInputForm from '@/components/auth/otp-input-form';
 import { Metadata } from 'next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RiPhoneLockLine } from 'react-icons/ri';
 import { LuKeyRound } from 'react-icons/lu';
 import BackUpCodeForm from '@/components/auth/backup-code-form';
+import TwoStepOTPForm from '@/components/auth/two-step-otp-form';
+import { IoLockClosedOutline } from 'react-icons/io5';
+import TwoStepEmailCode from '@/components/auth/two-step-email-code';
 
 export const metadata: Metadata = {
   title: 'Two-Factor Authentication (2FA)',
@@ -23,13 +25,19 @@ const TwoFactorPage = async ({
       name: 'Authenticator App',
       value: 'authenticator-app',
       icon: RiPhoneLockLine,
-      content: <OTPInputForm callbackUrl={callbackUrl} />,
+      content: <TwoStepOTPForm callbackUrl={callbackUrl} mode='totp' />,
     },
     {
       name: 'Backup Codes',
       value: 'backup-codes',
       icon: LuKeyRound,
       content: <BackUpCodeForm callbackUrl={callbackUrl} />,
+    },
+    {
+      name: 'Email OTP',
+      value: 'email-otp',
+      icon: IoLockClosedOutline,
+      content: <TwoStepEmailCode callbackUrl={callbackUrl} />,
     },
   ];
   return (

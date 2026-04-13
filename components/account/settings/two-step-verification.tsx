@@ -134,7 +134,6 @@ const TwoStepVerification = ({
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
             </Alert>
           )}
-
           <Button
             variant={hasTwoFactorEnabled ? 'destructive' : 'default'}
             type='submit'
@@ -148,6 +147,7 @@ const TwoStepVerification = ({
                 ? 'Disable 2FA'
                 : 'Enable 2FA'}{' '}
           </Button>
+          60
         </FieldGroup>
       </form>
       <QrCodeDialog
