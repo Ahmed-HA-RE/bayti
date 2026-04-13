@@ -34,11 +34,12 @@ const TwoStepOTPForm = ({
 
   const onSubmit = async (data: TwoStepOtpOutputFormData) => {
     try {
+      const { otp, trustDevice } = data;
       if (mode === 'totp') {
         const { error } = await authClient.twoFactor.verifyTotp(
           {
-            code: data.otp,
-            trustDevice: data.trustDevice,
+            code: otp,
+            trustDevice,
           },
           {
             onSuccess: () => {
@@ -52,7 +53,22 @@ const TwoStepOTPForm = ({
           throw new Error(error.message);
         }
       } else if (mode === 'email-code') {
-        // Handle email OTP verification if needed
+        const { error } = await authClient.twoFactor.verifyOtp(
+          {
+            code: otp,
+            trustDevice,
+          },
+          {
+            onSuccess: () => {
+              toast.success('OTP verified successfully');
+              form.reset();
+              router.push(callbackUrl);
+            },
+          },
+        );
+        if (error) {
+          throw new Error(error.message);
+        }
       }
     } catch (error) {
       const errorMessage =

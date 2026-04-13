@@ -14,6 +14,7 @@ import { Role } from './generated/prisma';
 import EmailChangeEmailConfirmation from '@/emails/email-change-email-confirmation';
 import ConfirmAccountDeletion from '@/emails/confirm-account-deletion';
 import { lastLoginMethod } from 'better-auth/plugins';
+import SendEmailOTP from '@/emails/send-otp-email';
 
 const domain = process.env.DOMAIN;
 
@@ -145,6 +146,17 @@ export const auth = betterAuth({
     twoFactor({
       backupCodeOptions: {
         amount: 5,
+      },
+      otpOptions: {
+        async sendOTP({ user, otp }) {
+          void resend.emails.send({
+            from: `Bayti <no-reply@${domain}>`,
+            to: user.email,
+            subject: 'Your One-Time Password (OTP) Code',
+            react: SendEmailOTP({ userName: user.name, code: otp }),
+          });
+        },
+        period: 30, // OTP code valid for 30 minutes
       },
     }),
   ],
