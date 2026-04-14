@@ -68,7 +68,7 @@ const FeaturedProperties = async () => {
             {featuredProperties.map((property) => (
               <Link
                 key={property.id}
-                href={`/properties/${property.id}`}
+                href={`/property/${property.id}`}
                 className='group'
               >
                 <div className='flex flex-col sm:flex-row md:flex-col gap-4 sm:items-center md:items-start'>
