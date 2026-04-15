@@ -29,7 +29,7 @@ const SocialAuthButtons = ({
   if (!isMounted) return null;
 
   return (
-    <div className='flex flex-row gap-3'>
+    <div className='flex flex-col md:flex-row gap-3'>
       {SOCIAL_PROVIDERS.map((social) => (
         <Button
           key={social.id}

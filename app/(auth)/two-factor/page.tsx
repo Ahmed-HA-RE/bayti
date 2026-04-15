@@ -41,9 +41,9 @@ const TwoFactorPage = async ({
     },
   ];
   return (
-    <div className='flex flex-col items-center justify-center h-full gap-6 px-5'>
-      <div className='space-y-1.5'>
-        <h1 className='text-3xl font-semibold text-center'>
+    <div className='flex flex-col md:items-center justify-center h-full gap-6 px-5'>
+      <div className='space-y-2'>
+        <h1 className='text-2xl md:text-3xl font-semibold text-center'>
           Two-Factor Authentication
         </h1>
         <p className='text-muted-foreground text-sm max-w-md text-center'>
@@ -53,15 +53,17 @@ const TwoFactorPage = async ({
       </div>
       {/* Tabs */}
       <Tabs defaultValue='authenticator-app' className='gap-6'>
-        <TabsList className='group-data-[orientation=horizontal]/tabs:h-fit bg-muted p-1.5 rounded-xl'>
+        <TabsList className='group-data-[orientation=horizontal]/tabs:h-fit bg-muted p-1.5 rounded-xl w-full'>
           {tabs.map(({ icon: Icon, name, value }) => (
             <TabsTrigger
               key={value}
               value={value}
-              className='flex flex-col items-center gap-1 px-6 py-3 cursor-pointer rounded-lg transition-all duration-200 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground  data-[state=active]:shadow-sm [&>svg]:size-5 data-[state=inactive]:text-muted-foreground hover:text-foreground'
+              className='flex md:flex-col items-center gap-1.5 px-3 py-2.5 md:px-6 md:py-3 cursor-pointer rounded-lg transition-all duration-200 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-sm [&>svg]:size-5 data-[state=inactive]:text-muted-foreground hover:text-foreground'
             >
-              <Icon />
-              <span className='text-sm font-medium'>{name}</span>
+              <Icon className='max-md:size-5' />
+              <span className='text-xs md:text-sm font-medium hidden sm:inline'>
+                {name}
+              </span>
             </TabsTrigger>
           ))}
         </TabsList>

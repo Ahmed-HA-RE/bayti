@@ -38,10 +38,14 @@ const PropertiesList = ({
     <section className='pb-8 sm:pb-14 lg:pb-20'>
       <div className='container'>
         {data && data.properties.length === 0 ? (
-          <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200'>
-            <CircleAlertIcon className='size-5' />
-            <AlertTitle className='text-base'>No properties found.</AlertTitle>
-          </Alert>
+          <div className='min-h-[25vh]'>
+            <Alert className='max-w-2xl mx-auto border p-4 rounded-none bg-yellow-100 text-yellow-700 border-yellow-200 '>
+              <CircleAlertIcon className='size-5' />
+              <AlertTitle className='text-base'>
+                No properties found.
+              </AlertTitle>
+            </Alert>
+          </div>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4'>
             {isFetching || isLoading ? (

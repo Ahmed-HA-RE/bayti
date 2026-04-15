@@ -147,7 +147,6 @@ const TwoStepVerification = ({
                 ? 'Disable 2FA'
                 : 'Enable 2FA'}{' '}
           </Button>
-          60
         </FieldGroup>
       </form>
       <QrCodeDialog
