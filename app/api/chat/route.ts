@@ -2,6 +2,8 @@ import { streamText, UIMessage, convertToModelMessages } from 'ai';
 import { google } from '@ai-sdk/google';
 import { AI_SYSTEM_CONFIG } from '@/lib/constants/ai-system';
 
+export const maxDuration = 15; // in seconds
+
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
@@ -10,6 +12,5 @@ export async function POST(req: Request) {
     messages: await convertToModelMessages(messages),
     system: AI_SYSTEM_CONFIG,
   });
-
   return result.toUIMessageStreamResponse();
 }

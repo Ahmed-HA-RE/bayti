@@ -45,6 +45,7 @@
       }
     },
     "@mapcn": "https://mapcn.dev/r/{name}.json",
-    "@diceui": "https://diceui.com/r/{name}.json"
+    "@diceui": "https://diceui.com/r/{name}.json",
+    "@ai-elements": "https://ai-sdk.dev/elements/api/registry/{name}.json"
   }
 }

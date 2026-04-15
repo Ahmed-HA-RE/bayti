@@ -583,3 +583,10 @@ export const SOCIAL_PROVIDERS = [
     icon: FaDropbox,
   },
 ];
+
+export const QUICK_AI_SUGGESTIONS = [
+  `What is ${APP_NAME}?`,
+  `What services does ${APP_NAME} offer?`,
+  `How to book a visit with ${APP_NAME}?`,
+  `How can I contact ${APP_NAME}'s support team?`,
+];

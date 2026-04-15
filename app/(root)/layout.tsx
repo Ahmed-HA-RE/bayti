@@ -1,3 +1,4 @@
+import ChatBot from '@/components/chat-bot';
 import Footer from '@/components/footer';
 import Header from '@/components/header/header';
 import { auth } from '@/lib/auth';
@@ -25,6 +26,8 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
       />
       {/* Footer */}
       <Footer />
+      {/* Chat Bot */}
+      <ChatBot session={session} />
     </div>
   );
 };
